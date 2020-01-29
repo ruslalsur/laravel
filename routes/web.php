@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+$a=1;
+$a=2;
+$a=3;
+
+die;
+phpinfo();
