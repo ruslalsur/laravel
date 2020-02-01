@@ -1,5 +1,5 @@
 @extends('layouts.main')
 
 @section('content')
-    <p class="hello">hello</p>
+    <p class="news">news</p>
 @endsection
