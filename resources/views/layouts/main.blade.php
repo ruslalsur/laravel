@@ -12,13 +12,18 @@
 <body>
 
 <div class="menu">
+    <h4>@{{ message }}</h4>
     <a href="/">hello</a>
     <a href="/news">news</a>
     <a href="/about">about</a>
 </div>
 
-@yield('content')
+<div id="content">
+    @yield('content')
+</div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/my-js.js"></script>
 </body>
 </html>
