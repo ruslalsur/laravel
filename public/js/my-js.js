@@ -88,7 +88,7 @@
 
 /***/ "./resources/js/my-js.js":
 /*!*******************************!*\
-  !*** ./resources/js/my-js.js ***!
+  !*** ./resources/js/my.js ***!
   \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -105,12 +105,12 @@ var app = new Vue({
 
 /***/ 1:
 /*!*************************************!*\
-  !*** multi ./resources/js/my-js.js ***!
+  !*** multi ./resources/js/my.js ***!
   \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /srv/http/laravel.local/resources/js/my-js.js */"./resources/js/my-js.js");
+module.exports = __webpack_require__(/*! /srv/http/laravel.local/resources/js/my.js */"./resources/js/my-js.js");
 
 
 /***/ })

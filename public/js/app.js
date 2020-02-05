@@ -49525,7 +49525,9 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 
 var app = new Vue({
   el: '#app'
-});
+}); //My js-scripts
+
+__webpack_require__(/*! ./my.js */ "./resources/js/my.js");
 
 /***/ }),
 
@@ -49643,6 +49645,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/my.js":
+/*!****************************!*\
+  !*** ./resources/js/my.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// alert('alert 6');
+var app = new Vue({
+  el: '.menu',
+  data: {
+    message: 'Menu'
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -49654,27 +49673,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/my-styles.sass":
-/*!***************************************!*\
-  !*** ./resources/sass/my-styles.sass ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
-/*!*********************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/my-styles.sass ***!
-  \*********************************************************************************************/
+/*!*************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /srv/http/laravel.local/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /srv/http/laravel.local/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /srv/http/laravel.local/resources/sass/my-styles.sass */"./resources/sass/my-styles.sass");
+module.exports = __webpack_require__(/*! /srv/http/laravel.local/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

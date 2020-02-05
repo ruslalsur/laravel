@@ -10884,3 +10884,40 @@ a.text-dark:focus {
   }
 }
 
+.menu a {
+  color: #636b6f;
+  margin-right: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  outline: none;
+  display: inline-flex;
+  transition: transform 250ms;
+}
+
+.menu a:hover {
+  color: red;
+  transform: scale(1.15);
+}
+
+.menu a:active {
+  color: red;
+  transform: scale(1);
+}
+
+.hello {
+  font-size: 36pt;
+  color: green;
+}
+
+.news {
+  font-size: 36pt;
+  color: red;
+}
+
+.about {
+  font-size: 36pt;
+  color: blue;
+}
+
