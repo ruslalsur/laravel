@@ -49524,7 +49524,10 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  data: {
+    message: 'BBC'
+  }
 }); //My js-scripts
 
 __webpack_require__(/*! ./my.js */ "./resources/js/my.js");
@@ -49653,12 +49656,6 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports) {
 
 // alert('alert 6');
-var app = new Vue({
-  el: '.menu',
-  data: {
-    message: 'Menu'
-  }
-});
 
 /***/ }),
 
