@@ -15,4 +15,5 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/my-js.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/my-styles.sass', 'public/css')
-    .browserSync('laravel.local');
+    .browserSync('laravel.local')
+    .disableNotifications();
