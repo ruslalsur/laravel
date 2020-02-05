@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('index', ['title'=>'Hello', 'current'=>'current']);
+    return view('index', ['title'=>'Hello']);
 });
 
 Route::get('/news', function () {
