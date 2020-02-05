@@ -12,28 +12,17 @@
 <body>
 
 <div id="app" class="container">
-    <nav class="navbar navbar-expand-sm navbar-light bg-faded">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content"
-                aria-controls="nav-content" aria-expanded="false" aria-label="Переключатель навигации">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Бренд -->
-        <a class="navbar-brand" href="{{ asset('/') }}">@{{ message }}</a>
-        <!-- Ссылки -->
-        <div class="collapse navbar-collapse" id="nav-content">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ asset('/') }}">hello</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ asset('/news') }}">news<span class="sr-only">(текущая)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ asset('/about') }}">about</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ asset('/') }}">hello</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ asset('/news') }}">news</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ asset('/about') }}">about</a>
+        </li>
+    </ul>
 
     <div class="content">
         @yield('content')

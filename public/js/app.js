@@ -49655,7 +49655,19 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// alert('alert 6');
+try {
+  $(document).ready(function () {
+    console.log('Success!');
+    $('.nav-item a').each(function () {
+      var location = window.location.href;
+      var link = $(this).attr('href');
+
+      if (link == location) {
+        $(this).addClass('active');
+      }
+    });
+  });
+} catch (e) {}
 
 /***/ }),
 
