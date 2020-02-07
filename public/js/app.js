@@ -49657,7 +49657,6 @@ __webpack_require__.r(__webpack_exports__);
 
 try {
   $(document).ready(function () {
-    console.log('Success!');
     $('.nav-item a').each(function () {
       var location = window.location.href;
       var link = $(this).attr('href');

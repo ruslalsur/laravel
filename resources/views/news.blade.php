@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <p class="news">news</p>
+    <div class="content py-3">
+        <p class="news">Категории новостей</p>
+    </div>
 @endsection
