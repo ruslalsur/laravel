@@ -46,8 +46,12 @@ class NewsController extends Controller
 
     private function getCategoryNameById($id)
     {
-        $category = $this->categories[array_search($id, array_column($this->categories, 'id'))];
-        return $category['name'];
+        $currentCategory = $this->categories[array_search($id, array_column($this->categories, 'id'))];
+
+//                dump($id);
+//        dump($currentCategory);
+
+        return $currentCategory['name'];
     }
 
     private function getNewsOneById($id)
@@ -55,7 +59,7 @@ class NewsController extends Controller
         return $this->news[array_search($id, array_column($this->news, 'id'))];
     }
 
-    public function categories()
+    public function getAllCategories()
     {
         return view('categories', ['title' => 'Категории', 'categories' => $this->categories]);
     }
@@ -74,5 +78,11 @@ class NewsController extends Controller
             ['title' => 'Новости', 'category' => $this->getCategoryNameById($id), 'currentCatNews' => $currentCatNews]);
     }
 
+    public function getNewsOne($id)
+    {
+        $currentNewsOne = $this->getNewsOneById($id);
+        $currentCategoryName = $this->getCategoryNameById($currentNewsOne['category_id']);
 
+        return view('newsOne', ['title' => 'Новость', 'category' => $currentCategoryName, 'newsOne' => $currentNewsOne]);
+    }
 }
