@@ -2,31 +2,22 @@
 
 @section('content')
     <div class="content py-3">
-        <h1 class="py-3">Страница приветствия</h1>
+        <h1 class="mt-3 mb-5">Новости глубокого погружения</h1>
 
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h4>Приветствие</h4>
+            <h4>Глубокое</h4>
         </div>
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h4>Приветствие</h4>
+            <h4>Погружение</h4>
         </div>
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h4>Приветствие</h4>
+            <h4>В <strong>Laravel</strong></h4>
         </div>
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h4>Приветствие</h4>
+            <h4>Приветствует </h4>
         </div>
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h4>Приветствие</h4>
-        </div>
-        <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h4>Приветствие</h4>
-        </div>
-        <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h4>Приветствие</h4>
-        </div>
-        <div class="shadow-sm p-3 mb-5 bg-white rounded">
-            <h4>Приветствие</h4>
+            <h4>Вас!</h4>
         </div>
     </div>
 @endsection

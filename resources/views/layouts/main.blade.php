@@ -12,7 +12,7 @@
 
 @include('layouts.header')
 
-<div id="app" class="container">
+<div id="app" class="container mt-5 mb-2">
     @yield('content')
 </div>
 

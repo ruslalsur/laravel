@@ -11,14 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index', ['title'=>'Привет']);
-});
+//Route::get('/', function () {
+//    return view('index', ['title'=>'Глубокое погружение']);
+//});
 
-Route::get('/news', function () {
-    return view('news', ['title'=>'Новости']);
-});
+Route::get('/', [
+    'uses'=>'HomeController@index',
+    'as'=>'home'
+]);
 
-Route::get('/about', function () {
-    return view('about', ['title'=>'обоНАс']);
-});
+Route::get('/cat', [
+    'uses'=>'NewsController@categories',
+    'as'=>'cat'
+]);
+
+Route::get('/currentCat/{id}', [
+    'uses'=>'NewsController@getCurrentCategoryNews',
+    'as'=>'currentCat'
+]);
+
+Route::get('/about', [
+    'uses'=>'AboutController@index',
+    'as'=>'about'
+]);
