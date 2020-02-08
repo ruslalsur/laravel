@@ -1,5 +1,5 @@
 <?php
-
+//$fileNews = require __DIR__ . '/../sampleData/newsData.php';
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +14,7 @@
 //Route::get('/', function () {
 //    return view('index', ['title'=>'Глубокое погружение']);
 //});
+
 
 Route::get('/', [
     'uses'=>'HomeController@index',

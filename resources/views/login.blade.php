@@ -16,7 +16,7 @@
                 <input type="checkbox" class="form-check-input" id="loginCheck">
                 <label class="form-check-label" for="exampleCheck1">Запомнить</label>
             </div>
-            <button type="submit" class="btn btn-primary">Вход</button>
+            <button type="submit" class="btn btn-primary">Войти</button>
         </form>
     </div>
 @endsection

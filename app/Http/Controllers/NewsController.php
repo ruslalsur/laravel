@@ -21,6 +21,13 @@ class NewsController extends Controller
         ],
     ];
 
+//    private $news;
+
+//    private function __construct(array $news)
+//    {
+//        $this->news = $news;
+//    }
+
     private $news = [
         [
             'id' => 1,
@@ -126,7 +133,7 @@ class NewsController extends Controller
         }
 
         return view('news',
-            ['title' => 'Новости', 'category' => $this->getCategoryNameById($id), 'currentCatNews' => $currentCatNews]);
+            ['title' => 'Новости', 'categoryName' => $this->getCategoryNameById($id), 'currentCatNews' => $currentCatNews]);
     }
 
     public function getNewsOne($id)
@@ -135,7 +142,7 @@ class NewsController extends Controller
         $currentCategoryName = $this->getCategoryNameById($currentNewsOne['category_id']);
 
         return view('newsOne',
-            ['title' => 'Новость', 'category' => $currentCategoryName, 'newsOne' => $currentNewsOne]);
+            ['title' => 'Новость', 'categoryName' => $currentCategoryName, 'newsOne' => $currentNewsOne]);
     }
 
     public function addNews()
