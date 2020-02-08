@@ -19,7 +19,7 @@
                     <a class="nav-link" href="{{ route('about') }}">Мы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Не активно</a>
+                    <a class="nav-link" href="{{ route('login') }}">Войти</a>
                 </li>
             </ul>
         </div>

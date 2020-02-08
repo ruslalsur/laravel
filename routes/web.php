@@ -39,3 +39,8 @@ Route::get('/about', [
     'uses'=>'AboutController@index',
     'as'=>'about'
 ]);
+
+Route::get('/login', [
+    'uses'=>'NewsAuth\LoginController@login',
+    'as'=>'login'
+]);
