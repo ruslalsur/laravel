@@ -21,12 +21,12 @@ Route::get('/cat', [
 ]);
 
 Route::get('/currentCat/{id}', [
-    'uses'=>'NewsController@getCurrentCategoryNews',
+    'uses'=>'NewsController@showCurrentCategoryNews',
     'as'=>'currentCat'
 ]);
 
 Route::get('/newsOne/{id}', [
-    'uses'=>'NewsController@getNewsOne',
+    'uses'=>'NewsController@showNewsOne',
     'as'=>'newsOne'
 ]);
 
