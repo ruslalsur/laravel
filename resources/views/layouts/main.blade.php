@@ -10,13 +10,17 @@
 </head>
 <body>
 
-@include('layouts.header')
+<header class="pb-5">
+    @include('layouts.header')
+</header>
 
-<div id="app" class="container mt-5 mb-2">
+<main id="app" class="container mt-5 mb-2">
     @yield('content')
-</div>
+</main>
 
-@include('layouts.footer')
+<footer class="footer navbar navbar-expand-md navbar-dark bg-dark">
+    @include('layouts.footer')
+</footer>
 
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

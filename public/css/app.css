@@ -10900,3 +10900,8 @@ body {
   height: 80px;
 }
 
+a {
+  outline: none !important;
+  box-shadow: none !important;
+}
+

@@ -1,5 +1,4 @@
 <?php
-//$fileNews = require __DIR__ . '/../sampleData/newsData.php';
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,11 +9,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-//Route::get('/', function () {
-//    return view('index', ['title'=>'Глубокое погружение']);
-//});
-
 
 Route::get('/', [
     'uses'=>'HomeController@index',

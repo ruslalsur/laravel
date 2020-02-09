@@ -1,7 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="content py-4">
+    <div class="content">
+        <h1 class="mt-3 mb-4">Идентификация пользователя</h1>
         <form>
             <div class="form-group">
                 <label for="exampleInputEmail1">Адрес электронной почты</label>
