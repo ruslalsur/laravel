@@ -15,7 +15,7 @@
                 <a class="nav-link" href="{{ route('cat') }}">Категории</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('addNews') }}">Добавить новость</a>
+                <a class="nav-link" href="{{ route('news.create') }}">Добавить новость</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('about') }}">Мы</a>

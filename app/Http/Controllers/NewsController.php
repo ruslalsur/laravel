@@ -48,10 +48,4 @@ class NewsController extends Controller
         return view('newsOne',
             ['title' => 'Новость', 'categoryName' => $currentCategoryName, 'newsOne' => $currentNewsOne]);
     }
-
-    public function addNews()
-    {
-        return view('admin/add_news',
-            ['title' => 'Добавить новость']);
-    }
 }
