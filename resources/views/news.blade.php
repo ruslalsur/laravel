@@ -6,7 +6,8 @@
 
         <div class="shadow p-3 mb-3 bg-white rounded">
             @forelse($currentCatNews as $news)
-                <a class="nav-link font-weight-bolder" href="{{ route('newsOne', $news['id']) }}">{{ $news['title'] }}</a>
+                <a class="nav-link font-weight-bolder"
+                            href="{{ route('newsOne', $news['id']) }}"><span class="text-secondary ">{{ $news['date'] }}</span> {{ $news['title'] }}</a>
             @empty
                 <h5>в категории пока нет новостей</h5>
             @endforelse
