@@ -40,9 +40,4 @@ Route::get('/login', [
     'as'=>'login'
 ]);
 
-Route::get('/addNews', [
-    'uses'=>'NewsController@addNews',
-    'as'=>'addNews'
-]);
-
 Route::resource('news', 'Admin\NewsCrudController');
