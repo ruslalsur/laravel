@@ -4,6 +4,7 @@
     <div class="content">
         <h1 class="mt-3 mb-4">Идентификация пользователя</h1>
         <form>
+            {{ csrf_field() }}
             <div class="form-group">
                 <label for="exampleInputEmail1">Адрес электронной почты</label>
                 <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp">

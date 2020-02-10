@@ -2,8 +2,10 @@
 
 @section('content')
     <div class="content">
-         <h1 class="mt-3 mb-4">Добавление новой новости</h1>
+        <h1 class="mt-3 mb-4">Добавление новой новости</h1>
         <form>
+            {{ csrf_field() }}
+
             <div class="form-group">
                 <label for="exampleFormControlInput1">Сюда добавьте категорию для новости</label>
                 <input type="text" class="form-control" id="newsHeader" placeholder="Из какой категории новость?">
