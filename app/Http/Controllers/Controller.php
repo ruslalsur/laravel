@@ -24,6 +24,10 @@ class Controller extends BaseController
             'id' => 3,
             'name' => 'BBC'
         ],
+        [
+            'id' => 4,
+            'name' => 'Ничего новенького'
+        ],
     ];
 
     protected $news = [
