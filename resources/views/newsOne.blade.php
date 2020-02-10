@@ -4,7 +4,7 @@
     <div class="content">
         <h4 class="mt-3 mb-3">Новость из категории
             <a class="btn btn-secondary btn" href="{{ route('currentCat', $newsOne['category_id']) }}">
-                <span class="font-weight-bolder">{{ $categoryName }}</span>
+                <span class="font-weight-bolder lead">{{ $categoryName }}</span>
             </a> за {{ $newsOne['date'] }}
         </h4>
 
