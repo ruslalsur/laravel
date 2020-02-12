@@ -8,27 +8,19 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <title>{{ $title }}</title>
 </head>
-
 <body>
 
-<div id="app" class="container">
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ asset('/') }}">hello</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ asset('/news') }}">news</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ asset('/about') }}">about</a>
-        </li>
-    </ul>
+<header class="pb-5">
+    @include('layouts.header')
+</header>
 
-    <div class="content">
-        @yield('content')
-    </div>
+<main id="app" class="container mt-5 mb-2">
+    @yield('content')
+</main>
 
-</div>
+<footer class="footer navbar navbar-expand-md navbar-dark bg-dark">
+    @include('layouts.footer')
+</footer>
 
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,14 +10,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index', ['title'=>'Hello']);
-});
+//и так тоже можно (оставлено для примера)
+Route::get('/', [
+    'uses'=>'HomeController@index',
+    'as'=>'home'
+]);
 
-Route::get('/news', function () {
-    return view('news', ['title'=>'News']);
-});
-
-Route::get('/about', function () {
-    return view('about', ['title'=>'About']);
-});
+Route::get('/categories','NewsController@showAllCategories')->name('categories');
+Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->name('currentCategory');
+Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
+Route::get('/about', 'AboutController@index')->name('about');
+Route::get('/login', 'NewsAuth\LoginController@login')->name('login');
+Route::resource('news', 'Admin\NewsCrudController');

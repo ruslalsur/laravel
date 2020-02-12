@@ -1,3 +1,4 @@
+//выделение выбранного пункта в меню
 try {
     $(document).ready(function () {
         $('.nav-item a').each(function () {
@@ -9,5 +10,4 @@ try {
             }
         });
     });
-} catch (e) {
-}
+} catch (e) {}
