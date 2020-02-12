@@ -31,12 +31,15 @@ class NewsController extends Controller
         $categories = News::getCategoriesData();
         $news = News::getNewsData();
 
+        if (array_key_exists($category_id, $categories)) {
+            return view('currentCategoryNews',
+                [
+                    'title' => 'Новости', 'category_id' => $category_id,
+                    'categoryName' => $categories[$category_id]['name'], 'news' => $news
+                ]);
+        }
+        return redirect(route('categories'));
 
-        return view('currentCategoryNews',
-            [
-                'title' => 'Новости', 'category_id' => $category_id,
-                'categoryName' => $categories[$category_id]['name'], 'news' => $news
-            ]);
     }
 
 
@@ -51,9 +54,11 @@ class NewsController extends Controller
         $categories = News::getCategoriesData();
         $news = News::getNewsData();
 
-        $currentCategoryName = $categories[$news[$id]['category_id']]['name'];
-
-        return view('newsOne',
-            ['title' => 'Новость', 'categoryName' => $currentCategoryName, 'newsOne' => $news[$id]]);
+        if (array_key_exists($id, $news)) {
+            $currentCategoryName = $categories[$news[$id]['category_id']]['name'];
+            return view('newsOne',
+                ['title' => 'Новость', 'categoryName' => $currentCategoryName, 'newsOne' => $news[$id]]);
+        }
+        return redirect(route('categories'));
     }
 }

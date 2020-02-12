@@ -16,9 +16,6 @@ class News
         '2' => [
             'name' => 'BBC'
         ],
-        '3' => [
-            'name' => 'Ничего новенького'
-        ],
     ];
 
     private static $news = [
