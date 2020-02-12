@@ -38,7 +38,7 @@ class NewsController extends Controller
                     'categoryName' => $categories[$category_id]['name'], 'news' => $news
                 ]);
         }
-        return redirect(route('categories'));
+        return $this->showAllCategories();
 
     }
 
@@ -59,6 +59,7 @@ class NewsController extends Controller
             return view('newsOne',
                 ['title' => 'Новость', 'categoryName' => $currentCategoryName, 'newsOne' => $news[$id]]);
         }
-        return redirect(route('categories'));
+        return $this->showAllCategories();
+
     }
 }
