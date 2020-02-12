@@ -12,7 +12,7 @@
                 <a class="nav-link" href="{{ route('home') }}">Приветствие</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('cat') }}">Категории</a>
+                <a class="nav-link" href="{{ route('categories') }}">Категории</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('news.create') }}">Добавить новость</a>

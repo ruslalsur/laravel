@@ -2,51 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
     /**
-     * По переданному идентификатору ищет имя категории в массиве категорий новостей
-     *
-     * @param int $id
-     * @return string
-     */
-    private function getCategoryNameById($id): string
-    {
-        $currentCategory = $this->categories[array_search($id, array_column($this->categories, 'id'))];
-
-        return $currentCategory['name'];
-    }
-
-
-
-
-    /**
-     * Выбирает одну новость из массива новостей по переданному идентификатору
-     *
-     * @param int $id
-     * @return array
-     */
-    private function getNewsOneById($id): array
-    {
-        return $this->news[array_search($id, array_column($this->news, 'id'))];
-    }
-
-
-
-
-    /**
      * Отображение списка всех категорий
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAllCategories()
+    public function showAllCategories()
     {
-        return view('categories', ['title' => 'Категории', 'categories' => $this->categories]);
+        $categories = News::getCategoriesData();
+
+        return view('categories', ['title' => 'Категории', 'categories' => $categories]);
     }
-
-
 
 
     /**
@@ -57,22 +28,16 @@ class NewsController extends Controller
      */
     public function showCurrentCategoryNews($category_id)
     {
-        $currentCatNews = [];
+        $categories = News::getCategoriesData();
+        $news = News::getNewsData();
 
-        foreach ($this->news as $newsOne) {
-            if ($newsOne['category_id'] == $category_id) {
-                array_push($currentCatNews, $newsOne);
-            }
-        }
 
-        return view('news',
+        return view('currentCategoryNews',
             [
-                'title' => 'Новости', 'categoryName' => $this->getCategoryNameById($category_id),
-                'currentCatNews' => $currentCatNews
+                'title' => 'Новости', 'category_id' => $category_id,
+                'categoryName' => $categories[$category_id]['name'], 'news' => $news
             ]);
     }
-
-
 
 
     /**
@@ -83,10 +48,12 @@ class NewsController extends Controller
      */
     public function showNewsOne($id)
     {
-        $currentNewsOne = $this->getNewsOneById($id);
-        $currentCategoryName = $this->getCategoryNameById($currentNewsOne['category_id']);
+        $categories = News::getCategoriesData();
+        $news = News::getNewsData();
+
+        $currentCategoryName = $categories[$news[$id]['category_id']]['name'];
 
         return view('newsOne',
-            ['title' => 'Новость', 'categoryName' => $currentCategoryName, 'newsOne' => $currentNewsOne]);
+            ['title' => 'Новость', 'categoryName' => $currentCategoryName, 'newsOne' => $news[$id]]);
     }
 }

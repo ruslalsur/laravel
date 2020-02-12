@@ -10,34 +10,15 @@
 |
 */
 
+//и так тоже можно (оставлено для примера)
 Route::get('/', [
     'uses'=>'HomeController@index',
     'as'=>'home'
 ]);
 
-Route::get('/cat', [
-    'uses'=>'NewsController@getAllCategories',
-    'as'=>'cat'
-]);
-
-Route::get('/currentCat/{id}', [
-    'uses'=>'NewsController@showCurrentCategoryNews',
-    'as'=>'currentCat'
-]);
-
-Route::get('/newsOne/{id}', [
-    'uses'=>'NewsController@showNewsOne',
-    'as'=>'newsOne'
-]);
-
-Route::get('/about', [
-    'uses'=>'AboutController@index',
-    'as'=>'about'
-]);
-
-Route::get('/login', [
-    'uses'=>'NewsAuth\LoginController@login',
-    'as'=>'login'
-]);
-
+Route::get('/categories','NewsController@showAllCategories')->name('categories');
+Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->name('currentCategory');
+Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
+Route::get('/about', 'AboutController@index')->name('about');
+Route::get('/login', 'NewsAuth\LoginController@login')->name('login');
 Route::resource('news', 'Admin\NewsCrudController');
