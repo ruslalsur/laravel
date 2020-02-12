@@ -2,17 +2,25 @@
 
 @section('content')
     <div class="content">
-        <h4 class="mb-3">Новости по категории <strong>{{ $categoryName }} </strong></h4>
+        <h4 class="mb-3">Новости по категории <strong>{{ $currentCategoryName }} </strong></h4>
 
         <div class="shadow p-3 mb-3 bg-white rounded">
-            @foreach($news as $key => $newsOne)
-                @if($newsOne['category_id'] == $category_id)
-                    <a class="nav-link font-weight-bolder" href="{{ route('newsOne', $key) }}">
+            @forelse($currentCategoryNews as $newsOne)
+{{--                @dd($currentCategoryNews);--}}
+                @if($newsOne['isPrivate'])
+                    <a class="nav-link text-danger font-weight-bolder" href="{{ route('login') }}">
+                        <span class="text-secondary ">{{ $newsOne['date'] }}</span>
+                        {{ $newsOne['title'] }}
+                    </a>
+                @else
+                    <a class="nav-link font-weight-bolder" href="{{ route('newsOne', $newsOne['id']) }}">
                         <span class="text-secondary ">{{ $newsOne['date'] }}</span>
                         {{ $newsOne['title'] }}
                     </a>
                 @endif
-            @endforeach
+            @empty
+                <h4>Ничего новенького</h4>
+            @endforelse
         </div>
     </div>
 @endsection

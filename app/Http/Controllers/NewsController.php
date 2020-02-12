@@ -28,18 +28,25 @@ class NewsController extends Controller
      */
     public function showCurrentCategoryNews($category_id)
     {
-        $categories = News::getCategoriesData();
-        $news = News::getNewsData();
+        $categoriesData = News::getCategoriesData();
+        $newsData = News::getNewsData();
+        $currentCategoryNews = [];
 
-        if (array_key_exists($category_id, $categories)) {
+        if (array_key_exists($category_id, $categoriesData)) {
+            foreach($newsData as $key => $newsOne) {
+                if ($newsOne['category_id'] == $category_id) {
+                    $newsOne['id'] = $key;
+                    $currentCategoryNews[] = $newsOne;
+                }
+            }
+
             return view('currentCategoryNews',
                 [
                     'title' => 'Новости', 'category_id' => $category_id,
-                    'categoryName' => $categories[$category_id]['name'], 'news' => $news
+                    'currentCategoryName' => $categoriesData[$category_id]['name'], 'currentCategoryNews' => $currentCategoryNews
                 ]);
         }
         return $this->showAllCategories();
-
     }
 
 
