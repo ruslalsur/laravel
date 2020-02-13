@@ -6,12 +6,24 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>{{ $title }}</title>
+    <title>@section('title')Страница @show</title>
 </head>
 <body>
 
 <header class="pb-5">
-    @include('layouts.header')
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{{ asset('/') }}">НОВОСТИ</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            @section('menu')
+                @include('layouts.menu')
+            @show
+    </nav>
+
+
 </header>
 
 <main id="app" class="container mt-5 mb-2">

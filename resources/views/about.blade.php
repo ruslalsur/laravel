@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title')@parentпро нас@endsection
+
 @section('content')
     <div class="content">
         <h1 class="mt-3 mb-3">Мы</h1>

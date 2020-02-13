@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title')@parent подробностей@endsection
+
 @section('content')
     <div class="content">
         <h4 class="mt-3 mb-3">Новость из категории

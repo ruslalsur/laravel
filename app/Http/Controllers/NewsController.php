@@ -16,7 +16,7 @@ class NewsController extends Controller
     {
         $categories = News::getCategoriesData();
 
-        return view('categories', ['title' => 'Категории', 'categories' => $categories]);
+        return view('categories', ['categories' => $categories]);
     }
 
 
@@ -42,7 +42,7 @@ class NewsController extends Controller
 
             return view('currentCategoryNews',
                 [
-                    'title' => 'Новости', 'category_id' => $category_id,
+                    'category_id' => $category_id,
                     'currentCategoryName' => $categoriesData[$category_id]['name'], 'currentCategoryNews' => $currentCategoryNews
                 ]);
         }
@@ -64,7 +64,7 @@ class NewsController extends Controller
         if (array_key_exists($id, $news)) {
             $currentCategoryName = $categories[$news[$id]['category_id']]['name'];
             return view('newsOne',
-                ['title' => 'Новость', 'categoryName' => $currentCategoryName, 'newsOne' => $news[$id]]);
+                ['categoryName' => $currentCategoryName, 'newsOne' => $news[$id]]);
         }
         return $this->showAllCategories();
 

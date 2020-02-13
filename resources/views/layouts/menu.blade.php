@@ -1,11 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="{{ asset('/') }}">НОВОСТИ</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
+@section('menu')
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav  font-weight-bolder mr-auto mt-2 mt-md-0">
             <li class="nav-item">
@@ -13,9 +6,6 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('categories') }}">Категории</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('news.create') }}">Добавить новость</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('about') }}">Мы</a>
@@ -28,7 +18,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('login') }}">Вход</a>
             </li>
+            <li class="nav-item">
+                <a class="btn btn-secondary font-weight-bolder" href="{{ route('crud.index') }}">Администрирование</a>
+            </li>
         </ul>
     </div>
-</nav>
-
+@endsection

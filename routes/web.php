@@ -21,4 +21,4 @@ Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->n
 Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/login', 'NewsAuth\LoginController@login')->name('login');
-Route::resource('news', 'Admin\NewsCrudController');
+Route::resource('crud', 'Admin\NewsCrudController');

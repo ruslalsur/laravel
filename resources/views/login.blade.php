@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title')Идентификация@endsection
+
 @section('content')
     <div class="content">
         <h1 class="mt-3 mb-4">Идентификация пользователя</h1>

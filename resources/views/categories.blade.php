@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title')@parentкатегорий@endsection
+
 @section('content')
     <div class="content">
         <h4 class="mt-3 mb-4">Категории</h4>
