@@ -109,4 +109,8 @@ class News
     public static function getCategoriesData() {
         return self::$categories;
     }
+
+    public static function  getNewsCategoryName($newsID) {
+        return self::$categories[self::$news[$newsID]['category_id']]['name'];
+    }
 }

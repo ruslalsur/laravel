@@ -21,6 +21,11 @@
                 <label for="exampleFormControlTextarea1">А сюда добавьте саму новость</label>
                 <textarea class="form-control" id="newsBody" rows="10" placeholder="Текст новости"></textarea>
             </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-inline" id="privateCheck" placeholder="Приватность">
+                <label class="form-check-label col-form-label-lg" for="privateCheck">Приватность новости</label>
+            </div>
             <button type="submit" class="btn btn-primary">Добавить новость</button>
         </form>
     </div>

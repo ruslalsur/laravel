@@ -62,7 +62,7 @@ class NewsController extends Controller
         $news = News::getNewsData();
 
         if (array_key_exists($id, $news)) {
-            $currentCategoryName = $categories[$news[$id]['category_id']]['name'];
+            $currentCategoryName = News::getNewsCategoryName($id);
             return view('newsOne',
                 ['categoryName' => $currentCategoryName, 'newsOne' => $news[$id]]);
         }

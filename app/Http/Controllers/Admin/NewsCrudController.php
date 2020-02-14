@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,11 +11,12 @@ class NewsCrudController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+//     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('admin.index', ['title'=>'Администрирование']);
+        $news = News::getNewsData();
+        return view('admin.index', ['news'=>$news]);
     }
 
     /**
@@ -54,11 +56,16 @@ class NewsCrudController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+//     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $news = News::getNewsData();
+        $newsCategoryName  = News::getNewsCategoryName($id);
+
+
+        return view('admin.edit_news',
+            ['newsCategoryName'=> $newsCategoryName, 'newsOne' => $news[$id]]);
     }
 
     /**
