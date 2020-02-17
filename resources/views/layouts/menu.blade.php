@@ -13,7 +13,7 @@
                 <a class="nav-link" href="{{ route('about') }}">Мы</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-primary font-weight-bold ml-3"
+                <a class="btn btn-outline-primary font-weight-bold ml-3"
                    data-toggle="tooltip" data-placement="bottom" title="произведение изменений в списке новостей"
                    href="{{ route('admin.list') }}">Администрирование</a>
             </li>
