@@ -14,7 +14,7 @@
         </div>
 
         <div class="shadow-lg p-3 mb-4 bg-white rounded">
-            <h4>В <strong>Laravel</strong></h4>
+            <a class="nav-link p-0" href="https://laravel.su"><h3 class="font-weight-bolder text-danger m-0">в laraveL</h3></a>
         </div>
         <div class="shadow-lg p-3 mb-5 bg-white rounded">
             <h4>Приветствует </h4>

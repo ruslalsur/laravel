@@ -10,7 +10,7 @@
     <div class="content pb-5">
         <h1 class="mt-3 mb-3">Администрирование новостей</h1>
 
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">Выберите новость для внесения изменений</h4>
             <hr>
             <p class="mb-0">Вместе с <strong>созданием</strong> новой новости можно, также, создать новую категорию, если ввести несуществующую</p>

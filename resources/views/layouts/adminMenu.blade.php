@@ -3,15 +3,15 @@
         <div class="btn-group navbar-nav" role="group" aria-label="Basic example">
             <a class="btn btn-primary font-weight-bolder" data-toggle="tooltip"
                data-placement="bottom" title="произведение изменений в списке новостей"
-               href="{{ route('admin.list') }}">Список новостей для администрирования</a>
+               href="{{ route('admin.list') }}">список администратора</a>
 
             <a class="btn btn-danger font-weight-bolder"
-               data-toggle="tooltip" data-placement="bottom" title="отменить все произведенные изменения в списке новостей"
-               href="{{ route('admin.reset') }}">Сброс данных сессии</a>
+               data-toggle="tooltip" data-placement="bottom" title="сброс данных сессии"
+               href="{{ route('admin.reset') }}">сброс</a>
 
             <a class="btn btn-success font-weight-bolder"
                data-toggle="tooltip" data-toggle="tooltip" data-placement="bottom" title="возврат к категориям"
-               href="{{ route('categories') }}">К пользовательскому списку категорий</a>
+               href="{{ route('categories') }}">список пользователя</a>
         </div>
     </div>
 @endsection

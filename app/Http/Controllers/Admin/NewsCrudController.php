@@ -67,7 +67,7 @@ class NewsCrudController extends Controller
     {
         \Session::flush();
 
-        return redirect(route('home'));
+        return redirect(route('admin.list'));
     }
 
 

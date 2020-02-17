@@ -15,7 +15,7 @@
             <li class="nav-item">
                 <a class="btn btn-outline-primary font-weight-bold ml-3"
                    data-toggle="tooltip" data-placement="bottom" title="произведение изменений в списке новостей"
-                   href="{{ route('admin.list') }}">Администрирование</a>
+                   href="{{ route('admin.list') }}">администрирование</a>
             </li>
         </ul>
     </div>

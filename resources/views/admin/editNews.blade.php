@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="content pb-5">
-        <h1 class="mt-5 mb-4">Параметры новости с id = {{ $id }}</h1>
+        <h1 class="mt-5 mb-4">Параметры новости</h1>
         <form action="{{ route('admin.edit', $id) }}" method="post">
             @csrf
             <div class="input-group mb-3">
