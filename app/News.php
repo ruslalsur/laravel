@@ -6,7 +6,7 @@ namespace App;
 
 class News
 {
-    public static array $categoriesData = [
+    private static array $categoriesData = [
         '0' => [
             'name' => 'Обучение'
         ],
@@ -18,7 +18,7 @@ class News
         ],
     ];
 
-    public static array $newsData = [
+    private static array $newsData = [
         '0' => [
             'category_id' => 0,
             'date' => '29.01.2020',
@@ -102,6 +102,12 @@ class News
         ],
     ];
 
+
+
+    /**
+     * запись данных  в глобальный массив, если там их еще нету
+     *
+     */
     public static function init() {
         if (!\Session::exists('categories')) {
             \Session::put('categories', self::$categoriesData);
@@ -112,14 +118,34 @@ class News
         }
     }
 
+
+
+    /**
+     * геттер новостей из глобального массива
+     *
+     * @return array
+     */
     public static function getAllNews() {
         return \Session::get('news');
     }
 
+    /**
+     * геттер категорий из глобального массива
+     *
+     * @return array
+     */
     public static function getAllCategories() {
         return \Session::get('categories');
     }
 
+
+
+    /**
+     * выяснение названия категории у новости по идентификатору новости
+     *
+     * @param $newsID
+     * @return string
+     */
     public static function getNewsCategoryName($newsID)
     {
         return \Session::get('categories')[self::getAllNews()[$newsID]['category_id']]['name'];
