@@ -51,7 +51,7 @@
             </div>
             <button id="submit_add" type="submit" name="submit" value="add" class="btn btn-success"
                     data-toggle="tooltip" data-placement="bottom"
-                    title="создание новых новости и категории (если указана несуществующая)">
+                    title="создание новой новости (будет создана новая категория или новость добавиться в указанную существующую)">
                 Создать
             </button>
 
