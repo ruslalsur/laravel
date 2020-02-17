@@ -16,7 +16,7 @@ class NewsCrudController extends Controller
      */
     public function index()
     {
-        return view('admin.index', ['news' => News::getAllNews()]);
+        return view('admin.adminList', ['news' => News::getAllNews()]);
     }
 
 
@@ -80,7 +80,7 @@ class NewsCrudController extends Controller
      */
     public function showCrudForm($id)
     {
-        return view('admin.edit_news',
+        return view('admin.editNews',
             ['newsCategoryName' => News::getNewsCategoryName($id), 'id' => $id, 'newsOne' => News::getAllNews()[$id]]);
     }
 
