@@ -21,4 +21,9 @@ Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->n
 Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/login', 'NewsAuth\LoginController@login')->name('login');
-Route::resource('crud', 'Admin\NewsCrudController');
+
+
+Route::get('/admin/list', 'Admin\NewsCrudController@index')->name('admin.list');
+Route::get('/admin/show/{id}', 'Admin\NewsCrudController@showCrudForm')->name('admin.show');
+Route::post('/admin/edit/{id}', 'Admin\NewsCrudController@edit')->name('admin.edit');
+Route::get('/admin/reset', 'Admin\NewsCrudController@reset')->name('admin.reset');

@@ -5,89 +5,159 @@ namespace App\Http\Controllers\Admin;
 use App\News;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class NewsCrudController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * вывод списка новостей для выбора с последующим редактированием
      *
-//     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        $news = News::getNewsData();
-        return view('admin.index', ['news'=>$news]);
+        return view('admin.index', ['news' => News::getAllNews()]);
     }
 
+
+
     /**
-     * Show the form for creating a new resource.
+     * Создание новой новости и/или новой категории вместе с ней
      *
-//     * @return \Illuminate\Http\Response
+     * @param int $id идентификатор новости
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     *
      */
-    public function create()
+    public function create($id)
     {
-        return view('admin/add_news',
-            ['title' => 'Добавить новость']);
+        //чтение данных из сессии
+        $categories = \Session::get('categories');
+        $news = \Session::get('news');
+        $categoryId = $news[$id]['category_id'];
+        $newNews = [];
+
+        //добавление новой категории если она была изменена при созданиии новой новости пользователем
+        if ($_POST['categoryName'] != $categories[$categoryId]['name']) {
+            \Session::push('categories', ['name' => $_POST['categoryName']]);
+            $newNews['category_id'] = array_key_last(\Session::get('categories'));
+        } else {
+            $newNews['category_id'] = $categoryId;
+        }
+
+        // создание новой новости
+        $newNews['date'] = date('d.m.Y');
+        $newNews['isPrivate'] = (boolean)($_POST['isPrivate'] ?? false);
+        $newNews['title'] = $_POST['title'];
+        $newNews['description'] = $_POST['description'];
+
+        //сохранение преобразований обратно в сессию
+        \Session::push('news', $newNews);
+        return redirect(route('admin.list'));
     }
 
+
+
     /**
-     * Store a newly created resource in storage.
+     * Сброс данных сессии надоело делать так "php artisan key:generate",
+     * может очень пригодится, когда админ на радостях удалит все новости
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function reset()
     {
-        //
+        \Session::flush();
+
+        return redirect(route('home'));
     }
 
+
+
     /**
-     * Display the specified resource.
+     * Отображение формы для внесения изменений администратором
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id идентификатор новости
+     * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function showCrudForm($id)
     {
-        //
+        return view('admin.edit_news',
+            ['newsCategoryName' => News::getNewsCategoryName($id), 'id' => $id, 'newsOne' => News::getAllNews()[$id]]);
     }
 
+
+
     /**
-     * Show the form for editing the specified resource.
+     * обработка данных запроса администоратора
      *
-     * @param  int  $id
-//     * @return \Illuminate\Http\Response
+     * @param int $id идентификатор новости
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function edit($id)
     {
-        $news = News::getNewsData();
-        $newsCategoryName  = News::getNewsCategoryName($id);
+        switch ($_POST['submit']) {
+            case 'add':
+                $this->create($id);
+                break;
+            case 'edit':
+                $this->update($id);
+                break;
+            case 'delete':
+                $this->destroy($id);
+                break;
+            default:
+                die($_POST['submit']);
+        }
 
-
-        return view('admin.edit_news',
-            ['newsCategoryName'=> $newsCategoryName, 'newsOne' => $news[$id]]);
+        return redirect(route('admin.list'));
     }
 
+
+
     /**
-     * Update the specified resource in storage.
+     * изменение новости
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id идентификатор новости
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        //чтение данных из сессии
+        $categories = \Session::get('categories');
+        $news = \Session::get('news');
+        $postCategoryName = $_POST['categoryName'];
+
+        //изменение уже существующей новости, с возможностью изменения категории, создать категорию можно при создании новости
+        foreach ($categories as $key => $category) {
+            if ($postCategoryName == $category['name']) {
+                $news[$id]['category_id'] = $key;
+                $news[$id]['date'] = date('d.m.Y');
+                $news[$id]['isPrivate'] = (boolean)($_POST['isPrivate'] ?? false);
+                $news[$id]['title'] = $_POST['title'];
+                $news[$id]['description'] = $_POST['description'];
+
+                //сохранение преобразований обратно в сессию
+                \Session::put('news', $news);
+            }
+        }
+
+        // возврат к списку новостей с произведенными изменениями или без них
+        return redirect(route('admin.list'));
     }
 
+
+
     /**
-     * Remove the specified resource from storage.
+     * удаление, в данный момент редактируемой, новости
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id идентификатор новости
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
-        //
+        $news = \Session::get('news');
+        unset($news[$id]);
+        \Session::put('news', $news);
+
+        return redirect(route('admin.list'));
     }
 }

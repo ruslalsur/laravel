@@ -7,27 +7,28 @@
 @endsection
 
 @section('content')
-    <div class="content">
-        <h1 class="mt-3 mb-4">Администрирование новости</h1>
-        <form>
-            {{ csrf_field() }}
-
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Здесь можно изменить категорию новости</label>
+    <div class="content pb-5">
+        <h1 class="mt-5 mb-4">Администрирование новости</h1>
+        <form action="{{ route('admin.edit', $id) }}" method="post">
+            @csrf
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="newsCategory">Категория</label>
+                </div>
                 <input type="text" name="categoryName" class="form-control" value="{{ $newsCategoryName }}"
-                       id="newsHeader"
+                       id="newsCategory"
                        placeholder="Из какой категории новость?">
             </div>
 
-
-            <div class="form-group">
-                <label for="exampleFormControlInput1">Здесь можно изменить заголовок новости</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="newsHeader">Заголовок</label>
+                </div>
                 <input type="text" name="title" class="form-control" value="{{ $newsOne['title'] }}" id="newsHeader"
                        placeholder="Заголовок">
             </div>
 
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Здесь можно изменить саму новость</label>
                 <textarea class="form-control" name="description" id="newsBody" rows="10"
                           placeholder="Текст новости">{{ $newsOne['description'] }}</textarea>
             </div>
@@ -35,18 +36,36 @@
             <div class="form-group">
                 <div class="form-check-inline">
                     @if($newsOne['isPrivate'])
-                        <input type="checkbox" name="isPrivate" class="form-check-input" checked value="true"
-                               id="privateCheck" placeholder="Приватность">
+                        <input type="checkbox" name="isPrivate" class="form-check-input" checked
+                               data-toggle="tooltip" data-placement="bottom"
+                               title="подробности будут доступны для просмотра только зарегистрированным пользователям"
+                               id="privateCheck">
                     @else
-                        <input type="checkbox" name="isPrivate" class="form-check-label" value="false"
-                               id="privateCheck" placeholder="Приватность">
+                        <input type="checkbox" name="isPrivate" class="form-check-label"
+                               data-toggle="tooltip" data-placement="bottom"
+                               title="подробности будут доступны для просмотра только зарегистрированным пользователям"
+                               id="privateCheck">
                     @endif
-                    <label class="form-check-label col-form-label-lg" for="privateCheck">&nbsp;приватная</label>
+                    <label class="form-check-label col-form-label-lg" for="privateCheck">&nbsp;новость приватная</label>
                 </div>
             </div>
-            <button type="submit" value="add" class="btn btn-success">Добавить</button>
-            <button type="submit" value="edit" class="btn btn-primary">Изменить</button>
-            <button type="submit" value="delete" class="btn btn-danger">Удалить</button>
+            <button id="submit_add" type="submit" name="submit" value="add" class="btn btn-success"
+                    data-toggle="tooltip" data-placement="bottom"
+                    title="создание новых новости и категории (если указана несуществующая)">
+                Создать
+            </button>
+
+            <button id="submit_edit" type="submit" name="submit" value="edit" class="btn btn-primary"
+                    data-toggle="tooltip" data-placement="bottom"
+                    title="изменение текущей новости и/или перенос ее в другую категорию (категория должна существовать)">
+                Изменить
+            </button>
+
+            <button id="submit_delete" type="submit" name="submit" value="delete" class="btn btn-danger"
+                    data-toggle="tooltip" data-placement="bottom"
+                    title="удаление текущей новости совсем (категория при удалении не затрагивается)">
+                Удалить
+            </button>
         </form>
     </div>
 @endsection

@@ -1,21 +1,18 @@
 @section('menu')
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav  font-weight-bolder mr-auto mt-2 mt-md-0">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('crud.create') }}">Добавить новость</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('crud.destroy', ['id' => 500]) }}">Убавить новость</a>
-            </li>
-        </ul>
-    </div>
+    <div class="collapse navbar-collapse mr-auto py-3" id="navbarNavDropdown">
+        <div class="btn-group navbar-nav" role="group" aria-label="Basic example">
+            <a class="btn btn-outline-primary font-weight-bolder" data-toggle="tooltip"
+               data-placement="bottom" title="произведение изменений в списке новостей"
+               href="{{ route('admin.list') }}">Административный список</a>
 
-    <div class="collapse navbar-collapse flex justify-content-md-end" id="navbarNavDropdown">
-        <ul class="navbar-nav  font-weight-bolder my-2">
-            <li class="nav-item">
-                <a class="btn btn-secondary font-weight-bolder" href="{{ route('home') }}">На главную</a>
-            </li>
-        </ul>
+            <a class="btn btn-danger font-weight-bolder"
+               data-toggle="tooltip" data-placement="bottom" title="отменить все произведенные изменения в списке новостей"
+               href="{{ route('admin.reset') }}">Сброс данных сессии</a>
+
+            <a class="btn btn-outline-success font-weight-bolder"
+               data-toggle="tooltip" data-toggle="tooltip" data-placement="bottom" title="возврат к категориям"
+               href="{{ route('categories') }}">К списку категорий</a>
+        </div>
     </div>
 @endsection
 

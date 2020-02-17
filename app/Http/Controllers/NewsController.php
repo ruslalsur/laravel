@@ -14,9 +14,7 @@ class NewsController extends Controller
      */
     public function showAllCategories()
     {
-        $categories = News::getCategoriesData();
-
-        return view('categories', ['categories' => $categories]);
+        return view('categories', ['categories' => News::getAllCategories()]);
     }
 
 
@@ -28,12 +26,9 @@ class NewsController extends Controller
      */
     public function showCurrentCategoryNews($category_id)
     {
-        $categoriesData = News::getCategoriesData();
-        $newsData = News::getNewsData();
         $currentCategoryNews = [];
-
-        if (array_key_exists($category_id, $categoriesData)) {
-            foreach($newsData as $key => $newsOne) {
+        if (array_key_exists($category_id, News::getAllCategories())) {
+            foreach (News::getAllNews() as $key => $newsOne) {
                 if ($newsOne['category_id'] == $category_id) {
                     $newsOne['id'] = $key;
                     $currentCategoryNews[] = $newsOne;
@@ -43,7 +38,7 @@ class NewsController extends Controller
             return view('currentCategoryNews',
                 [
                     'category_id' => $category_id,
-                    'currentCategoryName' => $categoriesData[$category_id]['name'], 'currentCategoryNews' => $currentCategoryNews
+                    'currentCategoryName' => News::getAllCategories()[$category_id]['name'], 'currentCategoryNews' => $currentCategoryNews
                 ]);
         }
         return $this->showAllCategories();
@@ -58,13 +53,11 @@ class NewsController extends Controller
      */
     public function showNewsOne($id)
     {
-        $categories = News::getCategoriesData();
-        $news = News::getNewsData();
-
-        if (array_key_exists($id, $news)) {
+        if (array_key_exists($id, News::getAllNews())) {
             $currentCategoryName = News::getNewsCategoryName($id);
+
             return view('newsOne',
-                ['categoryName' => $currentCategoryName, 'newsOne' => $news[$id]]);
+                ['categoryName' => $currentCategoryName, 'newsOne' => News::getAllNews()[$id]]);
         }
         return $this->showAllCategories();
 
