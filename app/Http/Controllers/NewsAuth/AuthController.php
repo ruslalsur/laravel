@@ -21,7 +21,7 @@ class AuthController extends Controller
             if ($_POST['regPass1'] != $_POST['regPass2'] |
                 array_search($_POST['regEmail'], array_column($users, 'email')) != false |
                 empty($_POST['regPass1']) | empty($_POST['regPass2'])) {
-                return redirect(route('reg'));
+                return redirect(route('auth.reg'));
             }
 
             //создание нового пользователя
@@ -33,7 +33,7 @@ class AuthController extends Controller
 
             \Session::put('users', $users);
 
-            return redirect(route('login'));
+            return redirect(route('auth.login'));
         }
 
         // отображение формы для ввода регистрационных данных

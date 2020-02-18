@@ -5,7 +5,7 @@
 @section('content')
     <div class="content">
         <h1 class="py-4">Регистрация пользователя</h1>
-        <form action="{{ route('reg') }}" method="post">
+        <form action="{{ route('auth.reg') }}" method="post">
             @csrf
             <div class="input-group mb-3">
                 <div class="input-group-prepend">

@@ -13,7 +13,7 @@
                         <span class="text-secondary">{{ $newsOne['date'] }}</span> {{ $newsOne['title'] }}</a>
                 @else
                     @if($newsOne['isPrivate'])
-                        <a class="nav-link font-weight-bolder" href="{{ route('login') }}">
+                        <a class="nav-link font-weight-bolder" href="{{ route('auth.login') }}">
                             <span class="text-secondary ">{{ $newsOne['date'] }}</span>
                             {{ $newsOne['title'] }}<span class="badge badge-danger">приватная</span></a>
                     @else

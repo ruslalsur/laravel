@@ -21,9 +21,18 @@ Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->n
 Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
 Route::get('/about', 'AboutController@index')->name('about');
 
-Route::match(['GET', 'POST'], '/reg', 'NewsAuth\AuthController@reg')->name('reg');
-Route::match(['GET', 'POST'], '/login', 'NewsAuth\AuthController@login')->name('login');
-Route::get('/logout', 'NewsAuth\AuthController@logout')->name('logout');
+Route::group(
+    [
+        'prefix' => 'auth',
+        'namespace' => 'NewsAuth',
+        'as' => 'auth.'
+    ],
+    function () {
+        Route::match(['GET', 'POST'], '/reg', 'AuthController@reg')->name('reg');
+        Route::match(['GET', 'POST'], '/login', 'AuthController@login')->name('login');
+        Route::get('/logout', 'AuthController@logout')->name('logout');
+    }
+);
 
 Route::group(
     [

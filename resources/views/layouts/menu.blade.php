@@ -33,15 +33,15 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logout') }}">Выход</a>
+                    <a class="nav-link" href="{{ route('auth.logout') }}">Выход</a>
                 </li>
             @else
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('reg') }}">Регистрация</a>
+                    <a class="nav-link" href="{{ route('auth.reg') }}">Регистрация</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Вход</a>
+                    <a class="nav-link" href="{{ route('auth.login') }}">Вход</a>
                 </li>
             @endisset
         </ul>

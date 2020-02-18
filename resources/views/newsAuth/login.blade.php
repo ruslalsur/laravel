@@ -5,7 +5,7 @@
 @section('content')
     <div class="content">
         <h1 class="py-4">Авторизация пользователя</h1>
-        <form action="{{ route('login') }}" method="post">
+        <form action="{{ route('auth.login') }}" method="post">
             @csrf
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
