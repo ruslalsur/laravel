@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\News;
+use App\Users;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -16,7 +17,7 @@ class NewsCrudController extends Controller
      */
     public function index()
     {
-        return view('admin.adminList', ['news' => News::getAllNews()]);
+        return view('admin.adminList', ['authorizedUserInfo' =>Users::getAuthorizedUserInfo(), 'news' => News::getAllNews()]);
     }
 
 
@@ -81,7 +82,7 @@ class NewsCrudController extends Controller
     public function showCrudForm($id)
     {
         return view('admin.editNews',
-            ['newsCategoryName' => News::getNewsCategoryName($id), 'id' => $id, 'newsOne' => News::getAllNews()[$id]]);
+            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'newsCategoryName' => News::getNewsCategoryName($id), 'id' => $id, 'newsOne' => News::getAllNews()[$id]]);
     }
 
 

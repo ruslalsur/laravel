@@ -14,5 +14,14 @@
                href="{{ route('categories') }}">список пользователя</a>
         </div>
     </div>
+
+    <div class="collapse navbar-collapse flex justify-content-md-end" id="navbarNavDropdown">
+        <ul class="navbar-nav  font-weight-bolder my-2">
+
+            <li class="nav-item">
+                <h5 class="nav-link pb-0 mb-0 font-weight-bolder text-success pr-4">{{ $authorizedUserInfo['email'] }}</h5>
+            </li>
+        </ul>
+    </div>
 @endsection
 

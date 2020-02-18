@@ -12,21 +12,24 @@
 
 //и так тоже можно (оставлено для примера)
 Route::get('/', [
-    'uses'=>'HomeController@index',
-    'as'=>'home'
+    'uses' => 'HomeController@index',
+    'as' => 'home'
 ]);
 
-Route::get('/categories','NewsController@showAllCategories')->name('categories');
+Route::get('/categories', 'NewsController@showAllCategories')->name('categories');
 Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->name('currentCategory');
 Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
 Route::get('/about', 'AboutController@index')->name('about');
-Route::get('/login', 'NewsAuth\LoginController@login')->name('login');
+
+Route::match(['GET', 'POST'], '/reg', 'NewsAuth\AuthController@reg')->name('reg');
+Route::match(['GET', 'POST'], '/login', 'NewsAuth\AuthController@login')->name('login');
+Route::get('/logout', 'NewsAuth\AuthController@logout')->name('logout');
 
 Route::group(
     [
-        'prefix'=>'admin',
-        'namespace'=>'Admin',
-        'as'=>'admin.'
+        'prefix' => 'admin',
+        'namespace' => 'Admin',
+        'as' => 'admin.'
     ],
     function () {
         Route::get('/list', 'NewsCrudController@index')->name('list');

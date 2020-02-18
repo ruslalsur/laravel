@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="content pb-5">
-        <h1 class="mt-5 mb-4">Параметры новости</h1>
+        <h1 class="py-4">Параметры новости</h1>
         <form action="{{ route('admin.edit', $id) }}" method="post">
             @csrf
             <div class="input-group mb-3">
@@ -24,7 +24,8 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="newsHeader">Заголовок</label>
                 </div>
-                <input type="text" name="title" class="form-control" value="{{ $newsOne['title'] }}" id="newsHeader"
+                <input type="text" name="title" class="form-control" value="{{ $newsOne['title'] }}"
+                       id="newsHeader"
                        placeholder="Заголовок">
             </div>
 
@@ -46,7 +47,8 @@
                                title="подробности будут доступны для просмотра только зарегистрированным пользователям"
                                id="privateCheck">
                     @endif
-                    <label class="form-check-label col-form-label-lg" for="privateCheck">&nbsp;новость приватная</label>
+                    <label class="form-check-label col-form-label-lg" for="privateCheck">&nbsp;новость
+                        приватная</label>
                 </div>
             </div>
             <button id="submit_add" type="submit" name="submit" value="add" class="btn btn-success"

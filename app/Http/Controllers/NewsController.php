@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\News;
+use App\User;
+use App\Users;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -37,6 +39,7 @@ class NewsController extends Controller
 
             return view('currentCategoryNews',
                 [
+                    'authorizedUserInfo' =>Users::getAuthorizedUserInfo(),
                     'category_id' => $category_id,
                     'currentCategoryName' => News::getAllCategories()[$category_id]['name'], 'currentCategoryNews' => $currentCategoryNews
                 ]);

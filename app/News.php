@@ -103,13 +103,17 @@ class News
     ];
 
 
-
     /**
      * запись данных  в глобальный массив, если там их еще нету,
-     * вызывается в базовом контролере
+     * вызывается в конструкторе базового контролера
      *
      */
-    public static function init() {
+    public static function init()
+    {
+        if (!\Session::isStarted()) {
+            \Session::start();
+        }
+
         if (!\Session::exists('categories')) {
             \Session::put('categories', self::$categoriesData);
         }
@@ -117,8 +121,8 @@ class News
         if (!\Session::exists('news')) {
             \Session::put('news', self::$newsData);
         }
-    }
 
+    }
 
 
     /**
@@ -126,7 +130,8 @@ class News
      *
      * @return array
      */
-    public static function getAllNews() {
+    public static function getAllNews()
+    {
         return \Session::get('news');
     }
 
@@ -135,10 +140,10 @@ class News
      *
      * @return array
      */
-    public static function getAllCategories() {
+    public static function getAllCategories()
+    {
         return \Session::get('categories');
     }
-
 
 
     /**
