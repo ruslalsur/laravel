@@ -29,7 +29,10 @@
                        placeholder="Заголовок">
             </div>
 
-            <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Новость</span>
+                </div>
                 <textarea class="form-control" name="description" id="newsBody" rows="10"
                           placeholder="Текст новости">{{ $newsOne['description'] }}</textarea>
             </div>

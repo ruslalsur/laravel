@@ -10,7 +10,7 @@
             @forelse($currentCategoryNews as $newsOne)
                 @isset($authorizedUserInfo)
                     <a class="nav-link font-weight-bolder" href="{{ route('newsOne', $newsOne['id']) }}">
-                        <span class="text-secondary ">{{ $newsOne['date'] }}</span>{{ $newsOne['title'] }}</a>
+                        <span class="text-secondary">{{ $newsOne['date'] }}</span> {{ $newsOne['title'] }}</a>
                 @else
                     @if($newsOne['isPrivate'])
                         <a class="nav-link font-weight-bolder" href="{{ route('login') }}">
