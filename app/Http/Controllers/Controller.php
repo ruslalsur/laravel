@@ -17,6 +17,5 @@ class Controller extends BaseController
     {
         News::init();
         Users::init();
-
     }
 }

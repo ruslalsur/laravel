@@ -44,7 +44,7 @@ class AuthController extends Controller
     /**
      * Авторизация пользователя
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function login()
     {
@@ -54,7 +54,7 @@ class AuthController extends Controller
             $authorizedUserId = array_search($loginingUserLogin, array_column($users, 'email'));
 
             // сохранение идентификатора пользователя прошедшего авторизацию
-            if ($authorizedUserId + 1) {
+            if (isset($authorizedUserId)) {
                 if (password_verify($_POST['logPassword'], $users[$authorizedUserId]['password'])) {
                     \Session::put('authorizedUserId', $authorizedUserId);
 
@@ -75,6 +75,6 @@ class AuthController extends Controller
     {
         \Session::forget('authorizedUserId');
 
-        return redirect(route('categories'));
+        return redirect(route('home'));
     }
 }
