@@ -4,9 +4,11 @@
 namespace App;
 
 
+use Illuminate\Support\Facades\Session;
+
 class News
 {
-    private static array $categoriesData = [
+    private static $categoriesData = [
         '0' => [
             'name' => 'Обучение'
         ],
@@ -18,7 +20,7 @@ class News
         ],
     ];
 
-    private static array $newsData = [
+    private static $newsData = [
         '0' => [
             'category_id' => 0,
             'date' => '29.01.2020',
@@ -110,16 +112,12 @@ class News
      */
     public static function init()
     {
-        if (!\Session::isStarted()) {
-            \Session::start();
+        if (!session()->exists('categories')) {
+            session()->put('categories', self::$categoriesData);
         }
 
-        if (!\Session::exists('categories')) {
-            \Session::put('categories', self::$categoriesData);
-        }
-
-        if (!\Session::exists('news')) {
-            \Session::put('news', self::$newsData);
+        if (!session()->exists('news')) {
+            session()->put('news', self::$newsData);
         }
 
     }
@@ -132,7 +130,7 @@ class News
      */
     public static function getAllNews()
     {
-        return \Session::get('news');
+        return session()->get('news');
     }
 
     /**
@@ -142,7 +140,7 @@ class News
      */
     public static function getAllCategories()
     {
-        return \Session::get('categories');
+        return session()->get('categories');
     }
 
 
@@ -154,6 +152,6 @@ class News
      */
     public static function getNewsCategoryName($newsID)
     {
-        return \Session::get('categories')[self::getAllNews()[$newsID]['category_id']]['name'];
+        return session()->get('categories')[self::getAllNews()[$newsID]['category_id']]['name'];
     }
 }

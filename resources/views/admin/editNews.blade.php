@@ -3,7 +3,7 @@
 @section('title')@parentадминистрирования@endsection
 
 @section('menu')
-    @include('layouts.adminMenu')
+    @include('layouts.menus.adminMenu')
 @endsection
 
 @section('content')
@@ -13,11 +13,25 @@
             @csrf
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="newsCategory">Категория</label>
+                    <label class="input-group-text" for="currentCategory">Категория</label>
                 </div>
-                <input type="text" name="categoryName" class="form-control" value="{{ $newsCategoryName }}"
-                       id="newsCategory"
-                       placeholder="Из какой категории новость?">
+                <select name="categoryId" class="custom-select" id="currentCategory">
+                    @foreach($categories as $key=>$category)
+                        <option
+                            @if($category['name'] == $currentCategoryName) selected
+                            @endif value="{{ $key }}">
+                            {{ $category['name'] }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="input-group-append">
+                    <button class="font-weight-bolder btn btn-secondary" type="submit" id="submit_newCategory"
+                            name="submit" value="newCategory"
+                            data-toggle="tooltip" data-placement="bottom" title="создание новой категории">
+                        Редактор категорий
+                    </button>
+
+                </div>
             </div>
 
             <div class="input-group mb-3">
@@ -54,19 +68,20 @@
                         приватная</label>
                 </div>
             </div>
-            <button id="submit_add" type="submit" name="submit" value="add" class="btn btn-success"
+            <button id="submit_add" type="submit" name="submit" value="add" class="font-weight-bolder btn btn-primary"
                     data-toggle="tooltip" data-placement="bottom"
                     title="создание новой новости (будет создана новая категория или новость добавиться в указанную существующую)">
                 Создать
             </button>
 
-            <button id="submit_edit" type="submit" name="submit" value="edit" class="btn btn-primary"
+            <button id="submit_edit" type="submit" name="submit" value="edit" class="font-weight-bolder btn btn-success"
                     data-toggle="tooltip" data-placement="bottom"
                     title="изменение текущей новости и/или перенос ее в другую категорию (категория должна существовать)">
                 Изменить
             </button>
 
-            <button id="submit_delete" type="submit" name="submit" value="delete" class="btn btn-danger"
+            <button id="submit_delete" type="submit" name="submit" value="delete"
+                    class="font-weight-bolder btn btn-danger"
                     data-toggle="tooltip" data-placement="bottom"
                     title="удаление текущей новости совсем (категория при удалении не затрагивается)">
                 Удалить

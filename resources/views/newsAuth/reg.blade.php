@@ -2,6 +2,10 @@
 
 @section('title')Регистрация@endsection
 
+@section('menu')
+    @include('layouts.menus.menu')
+@endsection
+
 @section('content')
     <div class="content">
         <h1 class="py-4">Регистрация пользователя</h1>

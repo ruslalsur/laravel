@@ -47,3 +47,5 @@ Route::group(
         Route::get('/reset', 'NewsCrudController@reset')->name('reset');
     }
 );
+
+Route::resource('crud', 'CrudController');

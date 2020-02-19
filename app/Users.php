@@ -6,7 +6,7 @@ namespace App;
 
 class Users
 {
-    private static array $usersData = [
+    private static $usersData = [
         '0' => [
             'email' => 'admin@admin.com',
             'password' => 'admin',
@@ -28,35 +28,32 @@ class Users
      */
     public static function init()
     {
-        // вы говорили, что там где то уже сессия стартует, но для наглядности пока не стал убирать
-        if (!\Session::isStarted()) {
-            \Session::start();
-        }
-
-        if (!\Session::exists('users')) {
+        if (!session()->exists('users')) {
             self::$usersData[0]['password'] =  password_hash('admin', PASSWORD_DEFAULT);
             self::$usersData[1]['password'] =  password_hash('user', PASSWORD_DEFAULT);
 
-            \Session::put('users', self::$usersData);
+            session()->put('users', self::$usersData);
         }
     }
 
 
     /**
-     * возвращает информацию о пользователе прошедщем авторизацию
+     * возвращает всю информацию о пользователе прошедшем авторизацию
      *
      * @return array | null информация об авторизованном пользователе либо null
      */
     public static function getAuthorizedUserInfo()
     {
-        $authorizedUserId = \Session::get('authorizedUserId', null);
-        $users = \Session::get('users', null);
+        $authorizedUserId = session()->get('authorizedUserId', null);
+        $users = session()->get('users', null);
 
         if (isset($authorizedUserId) & isset($users)) {
             $result = $users[$authorizedUserId];
             $result['id'] = $authorizedUserId;
+
             return $result;
         }
+
         return null;
     }
 }

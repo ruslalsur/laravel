@@ -2,6 +2,10 @@
 
 @section('title')@parentпро нас@endsection
 
+@section('menu')
+    @include('layouts.menus.menu')
+@endsection
+
 @section('content')
     <div class="content">
         <h1 class="mt-3 mb-3">Мы</h1>

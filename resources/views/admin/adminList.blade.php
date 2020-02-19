@@ -3,7 +3,7 @@
 @section('title')@parentадминистрирования@endsection
 
 @section('menu')
-    @include('layouts.adminMenu')
+    @include('layouts.menus.adminMenu')
 @endsection
 
 @section('content')

@@ -6,7 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     <title>@section('title')Страница @show</title>
+
 </head>
 <body>
 
@@ -18,16 +20,17 @@
                 aria-controls="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-            @section('menu')
-                @include('layouts.menu')
-            @show
-    </nav>
 
+            @yield('menu')
+
+    </nav>
 
 </header>
 
 <main id="app" class="container mt-5 mb-2">
+
     @yield('content')
+
 </main>
 
 <footer class="footer navbar navbar-expand-md navbar-dark bg-dark">

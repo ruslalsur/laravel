@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function reg()
     {
         if (!empty($_POST)) {
-            $users = \Session::get('users');
+            $users = session()->get('users');
 
             // ряд проверок присланных пользователем данных
             if ($_POST['regPass1'] != $_POST['regPass2'] |
@@ -31,7 +31,7 @@ class AuthController extends Controller
                 'role' => 'user'
             ];
 
-            \Session::put('users', $users);
+            session()->put('users', $users);
 
             return redirect(route('auth.login'));
         }
@@ -49,16 +49,16 @@ class AuthController extends Controller
     public function login()
     {
         if (!empty($_POST)) {
-            $users = \Session::get('users');
+            $users = session()->get('users');
             $loginingUserLogin = $_POST['logEmail'];
             $authorizedUserId = array_search($loginingUserLogin, array_column($users, 'email'));
 
             // сохранение идентификатора пользователя прошедшего авторизацию
             if (isset($authorizedUserId)) {
                 if (password_verify($_POST['logPassword'], $users[$authorizedUserId]['password'])) {
-                    \Session::put('authorizedUserId', $authorizedUserId);
+                    session()->put('authorizedUserId', $authorizedUserId);
 
-                    return redirect(route('categories'));
+                    return redirect(route('admin.list'));
                 }
             }
         }
@@ -73,7 +73,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        \Session::forget('authorizedUserId');
+        session()->forget('authorizedUserId');
 
         return redirect(route('home'));
     }

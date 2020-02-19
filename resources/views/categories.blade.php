@@ -2,6 +2,10 @@
 
 @section('title')@parentкатегорий@endsection
 
+@section('menu')
+    @include('layouts.menus.menu')
+@endsection
+
 @section('content')
     <div class="content">
         <h4 class="mt-3 mb-4">Категории</h4>

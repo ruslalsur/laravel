@@ -2,6 +2,10 @@
 
 @section('title'){{ $currentCategoryName }}@endsection
 
+@section('menu')
+    @include('layouts.menus.menu')
+@endsection
+
 @section('content')
     <div class="content">
         <h4 class="mb-3">Новости по категории <strong>{{ $currentCategoryName }} </strong></h4>
@@ -15,7 +19,7 @@
                     @if($newsOne['isPrivate'])
                         <a class="nav-link font-weight-bolder" href="{{ route('auth.login') }}">
                             <span class="text-secondary ">{{ $newsOne['date'] }}</span>
-                            {{ $newsOne['title'] }}<span class="badge badge-danger">приватная</span></a>
+                            {{ $newsOne['title'] }} <span class="badge badge-danger">приватная</span></a>
                     @else
                         <a class="nav-link font-weight-bolder" href="{{ route('newsOne', $newsOne['id']) }}">
                             <span class="text-secondary ">{{ $newsOne['date'] }}</span>

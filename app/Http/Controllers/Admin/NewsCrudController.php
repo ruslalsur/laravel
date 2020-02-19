@@ -7,6 +7,7 @@ use App\Users;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 
 class NewsCrudController extends Controller
 {
@@ -17,9 +18,8 @@ class NewsCrudController extends Controller
      */
     public function index()
     {
-        return view('admin.adminList', ['authorizedUserInfo' =>Users::getAuthorizedUserInfo(), 'news' => News::getAllNews()]);
+        return view('admin.adminList', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'news' => News::getAllNews()]);
     }
-
 
 
     /**
@@ -32,30 +32,21 @@ class NewsCrudController extends Controller
     public function create($id)
     {
         //чтение данных из сессии
-        $categories = \Session::get('categories');
-        $news = \Session::get('news');
-        $categoryId = $news[$id]['category_id'];
+        $categories = News::getAllCategories();
+        $news = News::getAllNews();
         $newNews = [];
 
-        //добавление новой категории если она была изменена при созданиии новой новости пользователем
-        if ($_POST['categoryName'] != $categories[$categoryId]['name']) {
-            \Session::push('categories', ['name' => $_POST['categoryName']]);
-            $newNews['category_id'] = array_key_last(\Session::get('categories'));
-        } else {
-            $newNews['category_id'] = $categoryId;
-        }
-
         // создание новой новости
+        $newNews['category_id'] = $_POST['categoryId'];
         $newNews['date'] = date('d.m.Y');
         $newNews['isPrivate'] = (boolean)($_POST['isPrivate'] ?? false);
         $newNews['title'] = $_POST['title'];
         $newNews['description'] = $_POST['description'];
 
         //сохранение преобразований обратно в сессию
-        \Session::push('news', $newNews);
+        session()->push('news', $newNews);
         return redirect(route('admin.list'));
     }
-
 
 
     /**
@@ -66,11 +57,10 @@ class NewsCrudController extends Controller
      */
     public function reset()
     {
-        \Session::flush();
+        session()->flush();
 
         return redirect(route('admin.list'));
     }
-
 
 
     /**
@@ -82,36 +72,51 @@ class NewsCrudController extends Controller
     public function showCrudForm($id)
     {
         return view('admin.editNews',
-            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'newsCategoryName' => News::getNewsCategoryName($id), 'id' => $id, 'newsOne' => News::getAllNews()[$id]]);
+            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(),
+                'currentCategoryName' => News::getNewsCategoryName($id), 'id' => $id, 'newsOne' => News::getAllNews()[$id]]);
     }
-
 
 
     /**
      * обработка данных запроса администоратора
      *
      * @param int $id идентификатор новости
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        switch ($_POST['submit']) {
+        switch ($request['submit']) {
+            case 'newCategory':
+                return view('admin.categoryCreator', ['categories' => News::getAllCategories()]);
+                break;
+
+            case 'addCategory':
+                $categoryName = $request['newCategoryName'];
+                return $this->categoryCreator($categoryName);
+                break;
+
+            case 'delCategory':
+                $categoryName = $request['newCategoryName'];
+                return $this->categoryEraser($categoryName);
+                break;
+
             case 'add':
-                $this->create($id);
+                return $this->create($id);
                 break;
+
             case 'edit':
-                $this->update($id);
+                return $this->update($id);
                 break;
+
             case 'delete':
-                $this->destroy($id);
+                return $this->destroy($id);
                 break;
+
             default:
-                die($_POST['submit']);
+                return redirect(route('admin.list'));
         }
-
-        return redirect(route('admin.list'));
     }
-
 
 
     /**
@@ -123,9 +128,9 @@ class NewsCrudController extends Controller
     public function update($id)
     {
         //чтение данных из сессии
-        $categories = \Session::get('categories');
-        $news = \Session::get('news');
-        $postCategoryName = $_POST['categoryName'];
+        $categories = session()->get('categories');
+        $news = session()->get('news');
+        $postCategoryName = $categories[$_POST['categoryId']]['name'];
 
         //изменение уже существующей новости, с возможностью изменения категории, создать категорию можно при создании новости
         foreach ($categories as $key => $category) {
@@ -137,14 +142,13 @@ class NewsCrudController extends Controller
                 $news[$id]['description'] = $_POST['description'];
 
                 //сохранение преобразований обратно в сессию
-                \Session::put('news', $news);
+                session()->put('news', $news);
             }
         }
 
         // возврат к списку новостей с произведенными изменениями или без них
         return redirect(route('admin.list'));
     }
-
 
 
     /**
@@ -155,10 +159,71 @@ class NewsCrudController extends Controller
      */
     public function destroy($id)
     {
-        $news = \Session::get('news');
+        $news = session()->get('news');
         unset($news[$id]);
-        \Session::put('news', $news);
+        session()->put('news', $news);
 
         return redirect(route('admin.list'));
+    }
+
+
+    /**
+     * добавление категорий
+     *
+     *
+     * @param $categoryName
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    private function categoryCreator($categoryName)
+    {
+        $categories = News::getAllCategories();
+
+        if (!array_search($categoryName, array_column($categories, 'name'))) {
+            $categories[] = ['name' => $categoryName];
+
+            session()->put('categories', $categories);
+        }
+
+        return view('admin.categoryCreator', ['currentCategoryName' => $categoryName, 'categories' => $categories]);
+    }
+
+
+
+    /**
+     *  удаление категорий
+     *
+     * @param $categoryName
+     * @return \Illuminate\View\View
+     */
+    private function categoryEraser($categoryName)
+    {
+        $categories = News::getAllCategories();
+        $news = News::getAllNews();
+        $newsCut = $news;
+        $categoryIdToDelete = null;
+
+
+        foreach ($categories as $key => $category) {
+            if ($categoryName == $category['name']) {
+                $categoryIdToDelete = $key;
+                break;
+
+            }
+        }
+
+        if (isset($categoryIdToDelete)) {
+
+            foreach ($news as $key => $newsOne) {
+                if ($categoryIdToDelete == $newsOne['category_id']) {
+                    unset($newsCut[$key]);
+                }
+            }
+        }
+
+        unset($categories[$categoryIdToDelete]);
+        session()->put('categories', $categories);
+        session()->put('news', $newsCut);
+
+        return view('admin.categoryCreator', ['currentCategoryName' => $categoryName, 'categories' => $categories]);
     }
 }

@@ -16,7 +16,7 @@ class NewsController extends Controller
      */
     public function showAllCategories()
     {
-        return view('categories', ['categories' => News::getAllCategories()]);
+        return view('categories', ['authorizedUserInfo' =>Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories()]);
     }
 
 
@@ -60,7 +60,7 @@ class NewsController extends Controller
             $currentCategoryName = News::getNewsCategoryName($id);
 
             return view('newsOne',
-                ['categoryName' => $currentCategoryName, 'newsOne' => News::getAllNews()[$id]]);
+                ['authorizedUserInfo' =>Users::getAuthorizedUserInfo(), 'categoryName' => $currentCategoryName, 'newsOne' => News::getAllNews()[$id]]);
         }
         return $this->showAllCategories();
 

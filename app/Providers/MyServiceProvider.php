@@ -5,6 +5,7 @@ namespace App\Providers;
 
 use App\Users;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class MyServiceProvider extends ServiceProvider
 {
@@ -25,20 +26,18 @@ class MyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->forwardDataToLayout();
+//        $this->forwardDataToLayout();
     }
 
     /**
-     * Пробрасывание данных в главный шаблон,
-     * чтобы они были доступны во всех шаблонах которые его наследуют (не работает как задумывалось везде
-     * пришлось пробрасывать)
+     * Почему не пробрасывается непонятно!
      *
      *@return void
      */
-    private function forwardDataToLayout()
-    {
-        \View::composer('layouts.main', function ($view) {
-           $view->with('authorizedUserInfo', Users::getAuthorizedUserInfo());
-        });
-    }
+//    private function forwardDataToLayout()
+//    {
+//        View::composer('layouts.main', function ($view) {
+//           $view->with(['authorizedUserInfo' => Users::getAuthorizedUserInfo()]);
+//        });
+//    }
 }

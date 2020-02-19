@@ -2,6 +2,10 @@
 
 @section('title')Идентификация@endsection
 
+@section('menu')
+    @include('layouts.menus.menu')
+@endsection
+
 @section('content')
     <div class="content">
         <h1 class="py-4">Авторизация пользователя</h1>
