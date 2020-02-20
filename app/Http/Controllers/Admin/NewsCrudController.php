@@ -83,23 +83,22 @@ class NewsCrudController extends Controller
      * обработка данных запроса администоратора
      *
      * @param int $id идентификатор новости
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        switch ($request['submit']) {
+        switch ($this->request['submit']) {
             case 'newCategory':
                 return view('admin.categoryCreator', ['categories' => News::getAllCategories(), 'newsId' => $id]);
                 break;
 
             case 'addCategory':
-                $categoryName = $request['newCategoryName'];
+                $categoryName = $this->request['newCategoryName'];
                 return $this->categoryCreator($categoryName, $id);
                 break;
 
             case 'delCategory':
-                $categoryName = $request['newCategoryName'];
+                $categoryName = $this->request['newCategoryName'];
                 return $this->categoryEraser($categoryName, $id);
                 break;
 
