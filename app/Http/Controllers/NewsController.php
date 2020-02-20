@@ -27,25 +27,16 @@ class NewsController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showCurrentCategoryNews($category_id)
-    {
-        $currentCategoryNews = [];
-        if (array_key_exists($category_id, News::getAllCategories())) {
-            foreach (News::getAllNews() as $key => $newsOne) {
-                if ($newsOne['category_id'] == $category_id) {
-                    $newsOne['id'] = $key;
-                    $currentCategoryNews[] = $newsOne;
-                }
-            }
-
+    {/**/
             return view('currentCategoryNews',
                 [
                     'authorizedUserInfo' =>Users::getAuthorizedUserInfo(),
                     'category_id' => $category_id,
-                    'currentCategoryName' => News::getAllCategories()[$category_id]['name'], 'currentCategoryNews' => $currentCategoryNews
+                    'currentCategoryName' => News::getAllCategories()[$category_id]['name'], 'currentCategoryNews' => News::getCurrentCategoryNews($category_id)
                 ]);
-        }
-        return $this->showAllCategories();
     }
+
+
 
 
     /**

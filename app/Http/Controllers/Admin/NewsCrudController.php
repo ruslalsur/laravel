@@ -18,7 +18,7 @@ class NewsCrudController extends Controller
      */
     public function index()
     {
-        return view('admin.adminList', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'news' => News::getAllNews()]);
+        return view('admin.adminList', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(), 'news' => News::getAllNews()]);
     }
 
 
@@ -37,6 +37,7 @@ class NewsCrudController extends Controller
         $newNews = [];
 
         // создание новой новости
+        $newNews['id'] = count($news);
         $newNews['category_id'] = $_POST['categoryId'];
         $newNews['date'] = date('d.m.Y');
         $newNews['isPrivate'] = (boolean)($_POST['isPrivate'] ?? false);
@@ -71,9 +72,10 @@ class NewsCrudController extends Controller
      */
     public function showCrudForm($id)
     {
+        $categoryId = News::getAllNews()[$id]['category_id'];
         return view('admin.editNews',
             ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(),
-                'currentCategoryName' => News::getNewsCategoryName($id), 'id' => $id, 'newsOne' => News::getAllNews()[$id]]);
+                'currentCategoryName' => News::getNewsCategoryName($categoryId), 'newsId' => $id, 'newsOne' => News::getAllNews()[$id]]);
     }
 
 
@@ -88,17 +90,17 @@ class NewsCrudController extends Controller
     {
         switch ($request['submit']) {
             case 'newCategory':
-                return view('admin.categoryCreator', ['categories' => News::getAllCategories()]);
+                return view('admin.categoryCreator', ['categories' => News::getAllCategories(), 'newsId' => $id]);
                 break;
 
             case 'addCategory':
                 $categoryName = $request['newCategoryName'];
-                return $this->categoryCreator($categoryName);
+                return $this->categoryCreator($categoryName, $id);
                 break;
 
             case 'delCategory':
                 $categoryName = $request['newCategoryName'];
-                return $this->categoryEraser($categoryName);
+                return $this->categoryEraser($categoryName, $id);
                 break;
 
             case 'add':
@@ -152,7 +154,7 @@ class NewsCrudController extends Controller
 
 
     /**
-     * удаление, в данный момент редактируемой, новости
+     * удаление новости
      *
      * @param int $id идентификатор новости
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -174,19 +176,23 @@ class NewsCrudController extends Controller
      * @param $categoryName
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function categoryCreator($categoryName)
+    private function categoryCreator($categoryName, $newsId)
     {
         $categories = News::getAllCategories();
 
-        if (!array_search($categoryName, array_column($categories, 'name'))) {
-            $categories[] = ['name' => $categoryName];
+        if (!empty($categoryName)) {
+            if (!array_search($categoryName, array_column($categories, 'name'))) {
+                $newId = count($categories);
+                $categories[] = ['id' => $newId, 'name' => $categoryName];
 
-            session()->put('categories', $categories);
+                session()->put('categories', $categories);
+            }
         }
 
-        return view('admin.categoryCreator', ['currentCategoryName' => $categoryName, 'categories' => $categories]);
-    }
+        return redirect(route('admin.show', $newsId));
 
+//        return view('admin.categoryCreator', ['currentCategoryName' => $categoryName, 'categories' => $categories]);
+    }
 
 
     /**
@@ -195,24 +201,21 @@ class NewsCrudController extends Controller
      * @param $categoryName
      * @return \Illuminate\View\View
      */
-    private function categoryEraser($categoryName)
+    private function categoryEraser($categoryName, $newsId)
     {
         $categories = News::getAllCategories();
         $news = News::getAllNews();
         $newsCut = $news;
         $categoryIdToDelete = null;
 
-
         foreach ($categories as $key => $category) {
             if ($categoryName == $category['name']) {
                 $categoryIdToDelete = $key;
                 break;
-
             }
         }
 
         if (isset($categoryIdToDelete)) {
-
             foreach ($news as $key => $newsOne) {
                 if ($categoryIdToDelete == $newsOne['category_id']) {
                     unset($newsCut[$key]);
@@ -224,6 +227,6 @@ class NewsCrudController extends Controller
         session()->put('categories', $categories);
         session()->put('news', $newsCut);
 
-        return view('admin.categoryCreator', ['currentCategoryName' => $categoryName, 'categories' => $categories]);
+        return redirect(route('admin.show', $newsId));
     }
 }

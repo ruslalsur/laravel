@@ -44,7 +44,7 @@ class AuthController extends Controller
     /**
      * Авторизация пользователя
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function login()
     {

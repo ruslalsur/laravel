@@ -9,42 +9,35 @@
 @section('content')
     <div class="content pb-5">
         <h1 class="py-4">Редактор категорий</h1>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading">Внимание!</h4>
-            <p class="mb-0">Вместе с <strong>удалением</strong> существующей категории будут удалены все содержащиеся в ней новости</p>
-            <p class="mb-0"><strong>Присвойте новостям </strong> другую категорию, при возникновении такой необходимости,
-                пред удалением категории</p>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
 
-        <table class="table">
+        <table class="table table-borderless">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Идентификатор категории</th>
-                <th scope="col">Название категории</th>
+                <th scope="col">Название</th>
+                <th class="text-center" scope="col">Идентификатор</th>
+                <th class="text-center"  scope="col">Содержит новостей</th>
             </tr>
             </thead>
             <tbody>
             @foreach($categories as $key => $category)
                 <tr>
-                    <th scope="row">{{ $key }}</th>
-                    <td>{{ $category['name'] }}</td>
+                    <td><h6 class="font-weight-bolder">{{ $category['name'] }}</h6></td>
+                    <td class="text-center">{{ $key }}</td>
+                    <td class="text-center">{{ count(\App\News::getCurrentCategoryNews($key)) }}</td>
                 </tr>
             @endforeach
             </tbody>
         </table>
 
-        <form action="{{ route('admin.edit', 1) }}" method="post">
+        <form class="pb-3" action="{{ route('admin.edit', $newsId) }}" method="post">
             @csrf
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <button class="font-weight-bolder btn btn-primary" type="submit" id="submit_newCategory"
-                            name="submit" value="addCategory"
-                            data-toggle="tooltip" data-placement="bottom" title="создание новой категории">
-                        Добавить
+                    <button class="font-weight-bolder btn btn-danger" type="submit" id="submit_delCategory"
+                            name="submit" value="delCategory"
+                            data-toggle="tooltip" data-placement="bottom" title="удаление старой категории">
+                        Удалить
                     </button>
                 </div>
 
@@ -53,14 +46,27 @@
                        placeholder="Введите название категории">
 
                 <div class="input-group-append">
-                    <button class="font-weight-bolder btn btn-danger" type="submit" id="submit_delCategory"
-                            name="submit" value="delCategory"
-                            data-toggle="tooltip" data-placement="bottom" title="удаление старой категории">
-                        Удалить
+                    <button class="font-weight-bolder btn btn-primary" type="submit" id="submit_newCategory"
+                            name="submit" value="addCategory"
+                            data-toggle="tooltip" data-placement="bottom" title="создание новой категории">
+                        Добавить
                     </button>
                 </div>
 
             </div>
         </form>
+
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Внимание!</h4>
+            <hr>
+            <p class="mb-0">При <span class="text-danger"><strong>удалении</strong></span> существующей категории будут удалены все содержащиеся в
+                ней новости</p>
+            <p class="mb-0 mt-2"><strong>Присвойте новостям </strong> другую категорию, при возникновении такой
+                необходимости,
+                пред удалением категории</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
 @endsection

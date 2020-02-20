@@ -8,8 +8,8 @@
 
 @section('content')
     <div class="content pb-5">
-        <h1 class="py-4">Параметры новости</h1>
-        <form action="{{ route('admin.edit', $id) }}" method="post">
+        <h1 class="py-4">Редактор новостей</h1>
+        <form action="{{ route('admin.edit', $newsId) }}" method="post">
             @csrf
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -18,8 +18,8 @@
                 <select name="categoryId" class="custom-select" id="currentCategory">
                     @foreach($categories as $key=>$category)
                         <option
-                            @if($category['name'] == $currentCategoryName) selected
-                            @endif value="{{ $key }}">
+                            @if($category['name'] == $currentCategoryName) selected @endif
+                        value="{{ $key }}">
                             {{ $category['name'] }}
                         </option>
                     @endforeach
