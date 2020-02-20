@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\News;
 use App\Users;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Session;
 
 class NewsCrudController extends Controller
 {
@@ -26,7 +23,7 @@ class NewsCrudController extends Controller
      * Создание новой новости и/или новой категории вместе с ней
      *
      * @param int $id идентификатор новости
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Routing\Redirector
      *
      */
     public function create($id)
@@ -54,7 +51,7 @@ class NewsCrudController extends Controller
      * Сброс данных сессии надоело делать так "php artisan key:generate",
      * может очень пригодится, когда админ на радостях удалит все новости
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Routing\Redirector
      */
     public function reset()
     {
@@ -83,7 +80,7 @@ class NewsCrudController extends Controller
      * обработка данных запроса администоратора
      *
      * @param int $id идентификатор новости
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\View\Factory | \Illuminate\Routing\Redirector
      */
     public function edit($id)
     {
@@ -124,7 +121,7 @@ class NewsCrudController extends Controller
      * изменение новости
      *
      * @param int $id идентификатор новости
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Routing\Redirector
      */
     public function update($id)
     {
@@ -156,7 +153,7 @@ class NewsCrudController extends Controller
      * удаление новости
      *
      * @param int $id идентификатор новости
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Routing\Redirector
      */
     public function destroy($id)
     {
@@ -173,7 +170,7 @@ class NewsCrudController extends Controller
      *
      *
      * @param $categoryName
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Routing\Redirector
      */
     private function categoryCreator($categoryName, $newsId)
     {
@@ -189,8 +186,6 @@ class NewsCrudController extends Controller
         }
 
         return redirect(route('admin.show', $newsId));
-
-//        return view('admin.categoryCreator', ['currentCategoryName' => $categoryName, 'categories' => $categories]);
     }
 
 
@@ -198,7 +193,7 @@ class NewsCrudController extends Controller
      *  удаление категорий
      *
      * @param $categoryName
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Routing\Redirector
      */
     private function categoryEraser($categoryName, $newsId)
     {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\NewsAuth;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
@@ -10,7 +9,7 @@ class AuthController extends Controller
     /**
      * регистрация нового пользователя
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @return \Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function reg()
     {
@@ -44,7 +43,7 @@ class AuthController extends Controller
     /**
      * Авторизация пользователя
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\View\View | \Illuminate\Routing\Redirector
      */
     public function login()
     {
@@ -69,7 +68,7 @@ class AuthController extends Controller
     /**
      * разлогинивание ранее авторизованного пользователя
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Routing\Redirector
      */
     public function logout()
     {

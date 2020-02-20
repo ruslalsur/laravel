@@ -4,8 +4,6 @@
 namespace App;
 
 
-use Illuminate\Support\Facades\Session;
-
 class News
 {
     private static $categoriesData = [
