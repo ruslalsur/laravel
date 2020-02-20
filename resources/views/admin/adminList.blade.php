@@ -33,7 +33,7 @@
                         </a>
                     @empty
                         <a class="nav-link text-danger font-weight-bolder" href="{{ route('admin.show', $newsOne['id']) }}">
-                            пустая категория
+                            пустая категория <span class="text-black-50">(нажать для перехода в редактор)</span>
                         </a>
                     @endforelse
                 @endforeach

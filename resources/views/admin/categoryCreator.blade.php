@@ -61,9 +61,8 @@
             <hr>
             <p class="mb-0">При <span class="text-danger"><strong>удалении</strong></span> существующей категории будут удалены все содержащиеся в
                 ней новости</p>
-            <p class="mb-0 mt-2"><strong>Присвойте новостям </strong> другую категорию, при возникновении такой
-                необходимости,
-                пред удалением категории</p>
+            <p class="mb-0 mt-2">Можно присвоить новостям <strong>другую категорию в редакторе новостей</strong>, при возникновении
+                необходимости сохранения каких либо из них, пред удалением категории</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

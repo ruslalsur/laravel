@@ -176,7 +176,7 @@ class News
     /**
      * выяснение названия категории у новости по идентификатору новости
      *
-     * @param $category_id
+     * @param $categoryId
      * @return string
      */
     public static function getNewsCategoryName($categoryId)

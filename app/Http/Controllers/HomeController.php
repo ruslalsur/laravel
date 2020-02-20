@@ -13,6 +13,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index', ['authorizedUserInfo' =>Users::getAuthorizedUserInfo()]);
+        return view('index', ['authorizedUserInfo' => Users::getAuthorizedUserInfo()]);
     }
 }

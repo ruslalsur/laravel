@@ -15,7 +15,7 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="regEmail">@email</label>
                 </div>
-                <input name="regEmail" type="email" class="form-control" id="regEmail" placeholder="адрес электронной почты"
+                <input name="regEmail" type="email" value="{{ old('regEmail') }}" class="form-control" id="regEmail" placeholder="адрес электронной почты"
                        aria-describedby="emailHelp">
             </div>
 
@@ -23,9 +23,9 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="loginPassword">пароль</label>
                 </div>
-                <input name="regPass1" type="password" class="form-control" id="loginPassword" placeholder="введите пароль">
+                <input name="regPass1" value="{{ old('regPass1') }}" type="password" class="form-control" id="loginPassword" placeholder="введите пароль">
 
-                <input name="regPass2" type="password" class="form-control" id="loginPassword2" placeholder="повторите пароль">
+                <input name="regPass2" value="{{ old('regPass2') }}" type="password" class="form-control" id="loginPassword2" placeholder="повторите пароль">
             </div>
 
             <button type="submit" class="btn btn-danger font-weight-bolder">Зарегистрировать</button>

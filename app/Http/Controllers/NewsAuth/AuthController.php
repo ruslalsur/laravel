@@ -3,36 +3,42 @@
 namespace App\Http\Controllers\NewsAuth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
+use App\Users;
 
 class AuthController extends Controller
 {
     /**
      * регистрация нового пользователя
      *
-     * @return \Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @return RedirectResponse|Redirector|View
      */
     public function reg()
     {
-        if (!empty($_POST)) {
+        if ($this->request->isMethod('post')) {
             $users = session()->get('users');
 
             // ряд проверок присланных пользователем данных
-            if ($_POST['regPass1'] != $_POST['regPass2'] |
-                array_search($_POST['regEmail'], array_column($users, 'email')) != false |
-                empty($_POST['regPass1']) | empty($_POST['regPass2'])) {
-                return redirect(route('auth.reg'));
+            if ($this->request['regPass1'] != $this->request['regPass2'] |
+                array_search($this->request['regEmail'], array_column($users, 'email')) != false |
+                empty($this->request['regPass1']) | empty($this->request['regPass2'])) {
+                $this->request->flash();
+
+                return redirect()->route('auth.reg');
             }
 
             //создание нового пользователя
             $users[] = [
-                'email' => $_POST['regEmail'],
-                'password' => password_hash($_POST['regPass1'], PASSWORD_DEFAULT),
+                'email' => $this->request['regEmail'],
+                'password' => password_hash($this->request['regPass1'], PASSWORD_DEFAULT),
                 'role' => 'user'
             ];
 
             session()->put('users', $users);
 
-            return redirect(route('auth.login'));
+            return redirect()->route('auth.login');
         }
 
         // отображение формы для ввода регистрационных данных
@@ -43,24 +49,38 @@ class AuthController extends Controller
     /**
      * Авторизация пользователя
      *
-     * @return \Illuminate\View\View | \Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector|View
      */
     public function login()
     {
-        if (!empty($_POST)) {
-            $users = session()->get('users');
-            $loginingUserLogin = $_POST['logEmail'];
-            $authorizedUserId = array_search($loginingUserLogin, array_column($users, 'email'));
+        if ($this->request->isMethod('post')) {
+            $this->request->flash();
+            $users = Users::getRegisteredUsers();
+            $authorizedUserId = null;
 
-            // сохранение идентификатора пользователя прошедшего авторизацию
-            if (isset($authorizedUserId)) {
-                if (password_verify($_POST['logPassword'], $users[$authorizedUserId]['password'])) {
-                    session()->put('authorizedUserId', $authorizedUserId);
-
-                    return redirect(route('admin.list'));
+            //идентификация пользователя
+            foreach($users as $user) {
+                if ($user['email'] == $this->request['logEmail']) {
+                    $authorizedUserId = $user['id'];
                 }
             }
+
+            // сохранение идентификатора пользователя прошедшего идентификацию
+            if (isset($authorizedUserId)) {
+                if (password_verify($this->request['logPassword'], $users[$authorizedUserId]['password'])) {
+                    session()->put('authorizedUserId', $authorizedUserId);
+
+                    //авторизация в зависимости от его привелегий
+                    if (Users::isAdmin($authorizedUserId)) {
+                        return redirect()->route('admin.list');
+                    }
+
+                    return redirect()->route('home');
+                }
+            }
+
         }
+
         return view('newsAuth/login');
     }
 
@@ -68,12 +88,12 @@ class AuthController extends Controller
     /**
      * разлогинивание ранее авторизованного пользователя
      *
-     * @return \Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function logout()
     {
         session()->forget('authorizedUserId');
 
-        return redirect(route('home'));
+        return redirect()->route('home');
     }
 }

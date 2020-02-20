@@ -15,7 +15,7 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="regEmail">@email</label>
                 </div>
-                <input name="logEmail" type="email" class="form-control" id="regEmail" placeholder="адрес электронной почты"
+                <input name="logEmail" value="{{ old('logEmail') }}" type="email" class="form-control" id="regEmail" placeholder="адрес электронной почты"
                        aria-describedby="emailHelp">
             </div>
 
@@ -23,11 +23,11 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="loginPassword">пароль</label>
                 </div>
-                <input name="logPassword" type="password" class="form-control" id="loginPassword" placeholder="введите пароль">
+                <input name="logPassword" value="{{ old('logPassword') }}" type="password" class="form-control" id="loginPassword" placeholder="введите пароль">
             </div>
 
             <div class="mb-3 form-group form-check">
-                <input name="logRememberMe" type="checkbox" class="form-check-input" id="loginCheck">
+                <input name="logRememberMe" value="{{ old('logPassword2') }}" type="checkbox" class="form-check-input" id="loginCheck">
                 <label class="form-check-label" for="exampleCheck1">Запомнить</label>
             </div>
 

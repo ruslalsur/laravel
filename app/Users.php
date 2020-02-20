@@ -8,12 +8,14 @@ class Users
 {
     private static $usersData = [
         '0' => [
+            'id' => 0,
             'email' => 'admin@admin.com',
             'password' => 'admin',
             'role' => 'admin'
         ],
 
         '1' => [
+            'id' => 1,
             'email' => 'user@user.com',
             'password' => 'user',
             'role' => 'user'
@@ -49,11 +51,36 @@ class Users
 
         if (isset($authorizedUserId) & isset($users)) {
             $result = $users[$authorizedUserId];
-            $result['id'] = $authorizedUserId;
 
             return $result;
         }
 
         return null;
+    }
+
+
+    /**
+     * Возвращает массив зарегистрированных пользователей
+     *
+     * @return mixed
+     */
+    public static function getRegisteredUsers() {
+        $users = session()->get('users', null);
+        return $users;
+    }
+
+
+
+    /**
+     * Выясняет имеет ли пользователь повыщенные права
+     *
+     * @param $userId
+     * @return bool
+     */
+    public static function isAdmin($userId) {
+        if (self::getRegisteredUsers()[$userId]['role'] == 'admin') {
+            return true;
+        }
+        return false;
     }
 }
