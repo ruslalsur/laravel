@@ -19,6 +19,7 @@ class NewsCrudController extends Controller
      */
     public function index()
     {
+        News::saveData();
         return view('admin.adminList', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(), 'news' => News::getAllNews()]);
     }
 
@@ -168,41 +169,43 @@ class NewsCrudController extends Controller
     }
 
 
+
     /**
      * добавление категорий
      *
      *
      * @param $categoryName
-     * @return RedirectResponse|Redirector
+     * @param $newsId
+     * @return Factory|RedirectResponse|Redirector|View
      */
     private function categoryCreator($categoryName, $newsId)
     {
         $categories = News::getAllCategories();
 
-        if (!empty($categoryName)) {
-            if (!array_search($categoryName, array_column($categories, 'name'))) {
-                $newId = count($categories);
-                $categories[] = ['id' => $newId, 'name' => $categoryName];
+        if (empty($categoryName)) {
+            return view('admin.categoryCreator', ['categories' => $categories, 'newsId' => $newsId]);
+        } elseif (!array_search($categoryName, array_column($categories, 'name'))) {
+            $newId = count($categories);
+            $categories[] = ['id' => $newId, 'name' => $categoryName];
+            session()->put('categories', $categories);
 
-                session()->put('categories', $categories);
-            }
+            return redirect()->route('admin.show', $newsId);
         }
-
-        return redirect()->route('admin.show', $newsId);
     }
+
 
 
     /**
      *  удаление категорий
      *
      * @param $categoryName
+     * @param $newsId
      * @return RedirectResponse|Redirector
      */
     private function categoryEraser($categoryName, $newsId)
     {
         $categories = News::getAllCategories();
         $news = News::getAllNews();
-        $newsCut = $news;
         $categoryIdToDelete = null;
 
         foreach ($categories as $key => $category) {
@@ -212,17 +215,14 @@ class NewsCrudController extends Controller
             }
         }
 
-        if (isset($categoryIdToDelete)) {
-            foreach ($news as $key => $newsOne) {
-                if ($categoryIdToDelete == $newsOne['category_id']) {
-                    unset($newsCut[$key]);
-                }
+        foreach ($news as $key => $newsOne) {
+            if ($categoryIdToDelete == $newsOne['category_id']) {
+                return redirect()->route('admin.show', $newsId);
             }
         }
 
         unset($categories[$categoryIdToDelete]);
         session()->put('categories', $categories);
-        session()->put('news', $newsCut);
 
         return redirect()->route('admin.show', $newsId);
     }
