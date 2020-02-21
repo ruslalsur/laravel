@@ -169,7 +169,6 @@ class NewsCrudController extends Controller
     }
 
 
-
     /**
      * добавление категорий
      *
@@ -184,15 +183,18 @@ class NewsCrudController extends Controller
 
         if (empty($categoryName)) {
             return view('admin.categoryCreator', ['categories' => $categories, 'newsId' => $newsId]);
-        } elseif (!array_search($categoryName, array_column($categories, 'name'))) {
-            $newId = count($categories);
-            $categories[] = ['id' => $newId, 'name' => $categoryName];
-            session()->put('categories', $categories);
+        }
 
+        if (array_search($categoryName, array_column($categories, 'name'))) {
             return redirect()->route('admin.show', $newsId);
         }
-    }
 
+        $newId = count($categories);
+        $categories[] = ['id' => $newId, 'name' => $categoryName];
+        session()->put('categories', $categories);
+
+        return redirect()->route('admin.show', $newsId);
+    }
 
 
     /**
@@ -215,6 +217,7 @@ class NewsCrudController extends Controller
             }
         }
 
+        //еслии категория не пуста, не производить удаление категории
         foreach ($news as $key => $newsOne) {
             if ($categoryIdToDelete == $newsOne['category_id']) {
                 return redirect()->route('admin.show', $newsId);
