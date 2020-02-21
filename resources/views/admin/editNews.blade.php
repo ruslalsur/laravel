@@ -25,7 +25,7 @@
                     @endforeach
                 </select>
                 <div class="input-group-append">
-                    <button class="font-weight-bolder btn btn-secondary" type="submit" id="submit_newCategory"
+                    <button class="btn btn-outline-secondary" type="submit" id="submit_newCategory"
                             name="submit" value="newCategory"
                             data-toggle="tooltip" data-placement="bottom" title="создание новой категории">
                         Редактор категорий
@@ -44,9 +44,7 @@
             </div>
 
             <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Новость</span>
-                </div>
+
                 <textarea class="form-control" name="description" id="newsBody" rows="10"
                           placeholder="Текст новости">{{ $newsOne['description'] }}</textarea>
             </div>

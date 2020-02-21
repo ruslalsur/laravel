@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\News;
 use App\Users;
+use Illuminate\Http\JsonResponse;
 
 class NewsController extends Controller
 {
@@ -48,10 +49,28 @@ class NewsController extends Controller
         if (array_key_exists($id, $news)) {
             $currentCategoryName = News::getNewsCategoryName($news[$id]['category_id']);
 
-            return view('newsOne',
-                ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categoryName' => $currentCategoryName, 'newsOne' => News::getAllNews()[$id]]);
+            return view('newsOne', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+                'categoryName' => $currentCategoryName, 'newsOne' => News::getAllNews()[$id]]);
         }
 
         return $this->showAllCategories();
+    }
+
+
+    /**
+     * отдача новости в формате json по запросу пользователя
+     *
+     * @param $newsId
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function download($newsId)
+    {
+        $userQueryNews = News::getAllNews()[$newsId];
+        $filename = 'news_' . $userQueryNews['id'] . '_from_' . $userQueryNews['date'];
+
+        return response()
+            ->json($userQueryNews)
+            ->header('Content-Disposition', 'attachment; filename = "' . $filename . '.json"')
+            ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }
