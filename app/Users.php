@@ -50,9 +50,8 @@ class Users
         $users = session()->get('users', null);
 
         if (isset($authorizedUserId) & isset($users)) {
-            $result = $users[$authorizedUserId];
 
-            return $result;
+            return $users[$authorizedUserId];
         }
 
         return null;
