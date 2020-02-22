@@ -71,6 +71,6 @@ class NewsController extends Controller
         return response()
             ->json($userQueryNews)
             ->header('Content-Disposition', 'attachment; filename = "' . $filename . '.json"')
-            ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+            ->setEncodingOptions(JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }
 }

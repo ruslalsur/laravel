@@ -100,12 +100,12 @@ class News
     public static function saveData()
     {
         if (session()->exists('categories')) {
-            $content = json_encode(self::getAllCategories(), JSON_UNESCAPED_UNICODE);
+            $content = json_encode(self::getAllCategories(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
             File::put(self::PATH . 'categories.json', $content);
         }
 
         if (session()->exists('news')) {
-            $content = json_encode(self::getAllNews(), JSON_UNESCAPED_UNICODE);
+            $content = json_encode(self::getAllNews(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
             File::put(self::PATH . 'news.json', $content);
         }
     }
