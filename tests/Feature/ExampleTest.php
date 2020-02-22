@@ -41,4 +41,24 @@ class ExampleTest extends TestCase
         $response = $this->get(route('categories'));
         $response->assertCookie('XSRF-TOKEN');
     }
+
+    public function testJsonDataFragment()
+    {
+        $response = $this->get(route('download', 0));
+        $response->assertJsonFragment(["isPrivate" => true, 'date' => '29.01.2020'])
+        ->assertJsonMissing(['category_id' => 2]);
+
+        $response = $this->get(route('download', 1));
+        $response->assertJsonFragment(["isPrivate" => false])
+            ->assertJsonMissing(['category_id' => 2]);
+    }
+
+    public function testHeaderData()
+    {
+        $response = $this->get(route('download', 0));
+        $response->assertHeader('Content-Type', $value = 'application/json');
+    }
+
+
+
 }

@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Http\Controllers\NewsController;
+use App\News;
+use App\Users;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

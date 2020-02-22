@@ -64,8 +64,7 @@ class Users
      * @return mixed
      */
     public static function getRegisteredUsers() {
-        $users = session()->get('users', null);
-        return $users;
+        return session()->get('users', null);
     }
 
 
