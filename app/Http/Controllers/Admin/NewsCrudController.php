@@ -17,11 +17,11 @@ class NewsCrudController extends Controller
      *
      * @return View
      */
-    public function index()
-    {
-        News::saveData();
-        return view('admin.adminList', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(), 'news' => News::getAllNews()]);
-    }
+//    public function index()
+//    {
+//        News::saveData();
+//        return view('admin.adminList', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(), 'news' => News::getAllNews()]);
+//    }
 
 
     /**
@@ -47,7 +47,7 @@ class NewsCrudController extends Controller
 
         //сохранение преобразований обратно в сессию
         session()->push('news', $newNews);
-        return redirect()->route('admin.list');
+        return redirect()->route('currentCategory', $newNews['category_id']);
     }
 
 
@@ -116,7 +116,7 @@ class NewsCrudController extends Controller
                 break;
 
             default:
-                return redirect()->route('admin.list');
+                return redirect()->route('categories');
         }
     }
 
@@ -149,7 +149,7 @@ class NewsCrudController extends Controller
         }
 
         // возврат к списку новостей с произведенными изменениями или без них
-        return redirect()->route('admin.list');
+        return redirect()->route('newsOne', $id);
     }
 
 
@@ -162,10 +162,11 @@ class NewsCrudController extends Controller
     public function destroy($id)
     {
         $news = session()->get('news');
+        $delNewsCategory = $news[$id]['category_id'];
         unset($news[$id]);
         session()->put('news', $news);
 
-        return redirect()->route('admin.list');
+        return redirect()->route('currentCategory', $delNewsCategory);
     }
 
 

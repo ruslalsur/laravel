@@ -85,5 +85,17 @@
                 Удалить
             </button>
         </form>
+        <div class="mt-4 alert alert-success alert-dismissible fade show" role="alert">
+            <h4 class="alert-heading">Выберите новость для внесения изменений</h4>
+            <hr>
+            <p class="mb-0">Вместе с <strong>созданием</strong> новой новости можно, также, создать новую категорию,
+                если ввести несуществующую</p>
+            <p class="py-0 mb-0">При <strong>изменении существующей</strong> новости категорию можно изменить только на
+                одну из уже имеющихся</p>
+            <p class="py-0 mb-0"><strong>Удаление</strong> новости не приводит к удалению ее категории</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
 @endsection

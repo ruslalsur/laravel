@@ -21,7 +21,39 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-            @yield('menu')
+        @yield('menu')
+
+
+        <div class="collapse navbar-collapse flex justify-content-md-end" id="navbarNavDropdown">
+            <ul class="navbar-nav  font-weight-bolder my-2">
+
+                @isset($authorizedUserInfo)
+                    <li class="nav-item">
+                        <h5 class="nav-link pb-0 mb-0 font-weight-bolder text-success pr-4">
+
+                            @if($authorizedUserInfo['role'] == 'admin')
+                                <a class="text-decoration-none text-success"
+                                   href="{{ route('admin.show', 0) }}">{{ $authorizedUserInfo['email'] }}</a>
+                            @else
+                                {{ $authorizedUserInfo['email'] }}
+                            @endif
+
+                        </h5>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('auth.logout') }}">Выход</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('auth.reg') }}">Регистрация</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('auth.login') }}">Вход</a>
+                    </li>
+                @endisset
+            </ul>
+        </div>
 
     </nav>
 

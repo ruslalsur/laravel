@@ -31,6 +31,7 @@ class AuthController extends Controller
 
             //создание нового пользователя
             $users[] = [
+                'id' => count($users),
                 'email' => $this->request['regEmail'],
                 'password' => password_hash($this->request['regPass1'], PASSWORD_DEFAULT),
                 'role' => 'user'
@@ -58,27 +59,28 @@ class AuthController extends Controller
             $users = Users::getRegisteredUsers();
             $authorizedUserId = null;
 
-            //идентификация пользователя
-            foreach($users as $user) {
+            //сравнение введенного логина
+            foreach ($users as $user) {
                 if ($user['email'] == $this->request['logEmail']) {
                     $authorizedUserId = $user['id'];
                 }
             }
 
-            // сохранение идентификатора пользователя прошедшего идентификацию
+            //сравнение введеного пароля
             if (isset($authorizedUserId)) {
                 if (password_verify($this->request['logPassword'], $users[$authorizedUserId]['password'])) {
                     session()->put('authorizedUserId', $authorizedUserId);
 
-                    //авторизация в зависимости от его привелегий
-                    if (Users::isAdmin($authorizedUserId)) {
-                        return redirect()->route('admin.list');
-                    }
-
-                    return redirect()->route('home');
+                    //полное совпадение
+                    return redirect()->route('categories');
                 }
+
+                //пароль не совпал
+                return redirect()->route('auth.login');
             }
 
+            //логин не совпал
+            return redirect()->route('auth.reg');
         }
 
         return view('newsAuth/login');
@@ -94,6 +96,6 @@ class AuthController extends Controller
     {
         session()->forget('authorizedUserId');
 
-        return redirect()->route('home');
+        return redirect()->route('categories');
     }
 }
