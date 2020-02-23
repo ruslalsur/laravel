@@ -25,7 +25,7 @@
                     @endforeach
                 </select>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit" id="submit_newCategory"
+                    <button class="btn btn-secondary" type="submit" id="submit_newCategory"
                             name="submit" value="newCategory"
                             data-toggle="tooltip" data-placement="bottom" title="создание новой категории">
                         Редактор категорий

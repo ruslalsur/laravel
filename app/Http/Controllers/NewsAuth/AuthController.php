@@ -72,7 +72,7 @@ class AuthController extends Controller
                     session()->put('authorizedUserId', $authorizedUserId);
 
                     //полное совпадение
-                    return redirect()->route('categories');
+                    return redirect()->route('news.categories');
                 }
 
                 //пароль не совпал
@@ -96,6 +96,6 @@ class AuthController extends Controller
     {
         session()->forget('authorizedUserId');
 
-        return redirect()->route('categories');
+        return redirect()->route('news.categories');
     }
 }

@@ -3,10 +3,10 @@
         <li class="nav-item">
             <a class="nav-link"
                data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
-               href="{{ route('categories') }}">Категории</a>
+               href="{{ route('news.categories') }}">Список новостей</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('about') }}">Мы</a>
+            <a class="nav-link" href="{{ route('news.about') }}">Мы</a>
         </li>
     </ul>
 </div>

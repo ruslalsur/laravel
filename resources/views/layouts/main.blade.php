@@ -14,8 +14,8 @@
 
 <header class="pb-5">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="text-primary navbar-brand font-weight-bolder {{ request()->routeIs('home') ? 'active' : "" }}"
-           href="{{ route('home') }}">НОВОСТИ</a>
+        <a class="text-primary navbar-brand font-weight-bolder {{ request()->routeIs('news.home') ? 'active' : "" }}"
+           href="{{ route('news.home') }}">НОВОСТИ</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

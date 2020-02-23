@@ -9,13 +9,15 @@
 @section('content')
     <div class="content">
         <h4 class="mt-3 mb-3">Новость из категории
-            <a class="btn btn-secondary btn-sm shadow" href="{{ route('currentCategory', $newsOne['category_id']) }}">
-                <span class="font-weight-bolder lead">{{ $categoryName }}</span>
-            </a> от {{ $newsOne['date'] }}
+            <a class="text-decoration-none"
+               href="{{ route('news.currentCategory', $newsOne['category_id']) }}">
+                "{{ $categoryName }}"
+            </a>
+            от {{ $newsOne['date'] }}
             @isset($authorizedUserInfo)
-                <a class="ml-3 btn btn-sm btn-outline-primary btn"
-                   href="{{ route('download', $newsOne['id']) }}">
-                    скачать новость
+                <a class="btn btn-outline-primary"
+                   href="{{ route('news.download', $newsOne['id']) }}">
+                    <small class="text-danger">скачать</small> json
                 </a>
             @endisset
         </h4>
@@ -27,7 +29,8 @@
 
         @isset($authorizedUserInfo)
             @if($authorizedUserInfo['role'] == 'admin')
-                <a class="btn btn-danger shadow" href="{{ route('admin.show', $newsOne['id']) }}">изменить новость</a>
+                <a class="btn btn-danger shadow" href="{{ route('admin.show', $newsOne['id']) }}">изменить эту
+                    новость</a>
             @endif
         @endisset
     </div>

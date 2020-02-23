@@ -35,7 +35,7 @@ class NewsCrudController extends Controller
 
         //сохранение преобразований обратно в сессию
         session()->push('news', $newNews);
-        return redirect()->route('currentCategory', $newNews['category_id']);
+        return redirect()->route('news.currentCategory', $newNews['category_id']);
     }
 
 
@@ -49,7 +49,7 @@ class NewsCrudController extends Controller
     {
         session()->flush();
 
-        return redirect()->route('home');
+        return redirect()->route('news.home');
     }
 
 
@@ -104,7 +104,7 @@ class NewsCrudController extends Controller
                 break;
 
             default:
-                return redirect()->route('categories');
+                return redirect()->route('news.categories');
         }
     }
 
@@ -137,7 +137,7 @@ class NewsCrudController extends Controller
         }
 
         // возврат к списку новостей с произведенными изменениями или без них
-        return redirect()->route('newsOne', $id);
+        return redirect()->route('news.newsOne', $id);
     }
 
 
@@ -154,7 +154,7 @@ class NewsCrudController extends Controller
         unset($news[$id]);
         session()->put('news', $news);
 
-        return redirect()->route('currentCategory', $delNewsCategory);
+        return redirect()->route('news.currentCategory', $delNewsCategory);
     }
 
 

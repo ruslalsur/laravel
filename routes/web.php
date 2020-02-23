@@ -10,18 +10,25 @@
 |
 */
 
-//и так тоже можно (оставлено для примера)
-Route::get('/', [
-    'uses' => 'HomeController@index',
-    'as' => 'home'
-]);
+// Новости
+Route::get('/', 'News\HomeController@index')->name('news.home');
 
-Route::get('/categories', 'NewsController@showAllCategories')->name('categories');
-Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->name('currentCategory');
-Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
-Route::get('/about', 'AboutController@index')->name('about');
-Route::get('/download/{id}', 'NewsController@download')->name('download');
+Route::group(
+    [
+        'prefix' => 'news',
+        'namespace' => 'News',
+        'as' => 'news.'
+    ],
+    function () {
+        Route::get('/categories', 'NewsController@showAllCategories')->name('categories');
+        Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->name('currentCategory');
+        Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
+        Route::get('/about', 'AboutController@index')->name('about');
+        Route::get('/download/{id}', 'NewsController@download')->name('download');
+    }
+);
 
+// авторизация
 Route::group(
     [
         'prefix' => 'auth',
@@ -35,6 +42,7 @@ Route::group(
     }
 );
 
+// crud
 Route::group(
     [
         'prefix' => 'admin',
@@ -47,5 +55,3 @@ Route::group(
         Route::get('/reset', 'NewsCrudController@reset')->name('reset');
     }
 );
-
-Route::resource('crud', 'CrudController');

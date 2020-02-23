@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\News;
 
+use App\Http\Controllers\Controller;
 use App\News;
 use App\Users;
 use Illuminate\Http\JsonResponse;
