@@ -40,8 +40,7 @@ class NewsCrudController extends Controller
 
 
     /**
-     * Сброс данных сессии надоело делать так "php artisan key:generate",
-     * может очень пригодится, когда админ на радостях удалит все новости
+     * Сброс данных сессии
      *
      * @return RedirectResponse
      */

@@ -38,6 +38,7 @@ class AuthController extends Controller
             ];
 
             session()->put('users', $users);
+            Users::saveData();
 
             return redirect()->route('auth.login');
         }

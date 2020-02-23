@@ -7,7 +7,7 @@ use File;
 
 class News
 {
-    private const PATH = __DIR__ . "/../resources/dataFiles/";
+    private const PATH = __DIR__ . "/../storage/app/";
 
 
     /**

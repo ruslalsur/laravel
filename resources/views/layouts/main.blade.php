@@ -30,12 +30,16 @@
                 @isset($authorizedUserInfo)
                     <li class="nav-item">
                         @if($authorizedUserInfo['role'] == 'admin')
-                            <a class="nav-link"
+                            <a class="text-success nav-link"
                                data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
                                href="{{ route('admin.show', 0) }}">Редактор новостей
                             </a>
                         @else
-                            {{ $authorizedUserInfo['email'] }}
+                            <a class="text-success nav-link"
+                               data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
+                               href="{{ route('news.home') }}">
+                                {{ $authorizedUserInfo['email'] }}
+                            </a>
                         @endif
                     </li>
 

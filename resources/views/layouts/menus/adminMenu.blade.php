@@ -6,6 +6,12 @@
                    data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
                    href="{{ route('news.categories') }}">Список новостей</a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link"
+                   data-toggle="tooltip" data-placement="bottom" title="сброс данных сессии"
+                   href="{{ route('admin.reset') }}">Сброс сессии</a>
+            </li>
         </ul>
     </div>
 </div>
