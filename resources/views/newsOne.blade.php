@@ -15,16 +15,21 @@
             </a>
             от {{ $newsOne['date'] }}
             @isset($authorizedUserInfo)
-                <a class="btn btn-outline-primary"
+                <a class="btn btn-sm btn-outline-primary"
                    href="{{ route('news.download', $newsOne['id']) }}">
-                    <small class="text-danger">скачать</small> json
+                    скачать в формате json
                 </a>
             @endisset
         </h4>
 
         <div class="shadow-sm p-3 mb-3 bg-white rounded">
-            <h5><strong>{{ $newsOne['title'] }}</strong></h5>
-            <h6>{{ $newsOne['description'] }}</h6>
+            <div class="media">
+                <img src="{{  $newsOne['image'] ?? asset('img/no-image.png') }}" class="col-3 mr-3" alt="картинка">
+                <div class="media-body">
+                    <h5 class="mt-0">{{ $newsOne['title'] }}</h5>
+                    {{ $newsOne['description'] }}
+                </div>
+            </div>
         </div>
 
         @isset($authorizedUserInfo)

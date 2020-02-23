@@ -9,7 +9,7 @@
 @section('content')
     <div class="content pb-5">
         <h1 class="py-4">Редактор новостей</h1>
-        <form action="{{ route('admin.edit', $newsId) }}" method="post">
+        <form enctype="multipart/form-data" action="{{ route('admin.edit', $newsId) }}" method="post">
             @csrf
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -43,10 +43,27 @@
                        placeholder="Заголовок">
             </div>
 
-            <div class="input-group">
+            <div class="media">
+                <img src="{{  $newsOne['image'] ?? asset('img/no-image.png') }}" class="col-3 mr-3" alt="картинка">
+                <div class="media-body">
+                    <div class="input-group">
+                        <textarea class="form-control" name="description" id="newsBody" rows="10"
+                                  placeholder="Текст новости">
+                            {{ $newsOne['description'] }}
+                        </textarea>
+                    </div>
+                </div>
+            </div>
 
-                <textarea class="form-control" name="description" id="newsBody" rows="10"
-                          placeholder="Текст новости">{{ $newsOne['description'] }}</textarea>
+            <div class="input-group mt-3 mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Картинка</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="fileImg" name="image">
+                    <label class="custom-file-label" data-browse="указать" for="fileImg">укажите картинку для
+                        этой новости</label>
+                </div>
             </div>
 
             <div class="form-group">
@@ -66,13 +83,15 @@
                         приватная</label>
                 </div>
             </div>
-            <button id="submit_add" type="submit" name="submit" value="add" class="font-weight-bolder btn btn-primary shadow-sm"
+            <button id="submit_add" type="submit" name="submit" value="add"
+                    class="font-weight-bolder btn btn-primary shadow-sm"
                     data-toggle="tooltip" data-placement="bottom"
                     title="создание новой новости (будет создана новая категория или новость добавиться в указанную существующую)">
                 Создать
             </button>
 
-            <button id="submit_edit" type="submit" name="submit" value="edit" class="font-weight-bolder btn btn-success shadow-sm"
+            <button id="submit_edit" type="submit" name="submit" value="edit"
+                    class="font-weight-bolder btn btn-success shadow-sm"
                     data-toggle="tooltip" data-placement="bottom"
                     title="изменение текущей новости и/или перенос ее в другую категорию (категория должна существовать)">
                 Изменить

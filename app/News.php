@@ -69,6 +69,7 @@ class News
     public static function getCurrentCategoryNews($categoryId)
     {
         $currentCategoryNews = [];
+
         if (array_key_exists($categoryId, self::getAllCategories())) {
             foreach (self::getAllNews() as $newsOne) {
                 if ($newsOne['category_id'] == $categoryId) {
@@ -118,7 +119,6 @@ class News
     public static function loadCatData()
     {
         $content = File::get(self::PATH . 'categories.json');
-
         return json_decode($content, true);
     }
 
@@ -130,7 +130,6 @@ class News
     public static function loadNewsData()
     {
         $content = File::get(self::PATH . 'news.json');
-
         return json_decode($content, true);
     }
 }

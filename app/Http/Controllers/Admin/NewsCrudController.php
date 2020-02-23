@@ -24,6 +24,11 @@ class NewsCrudController extends Controller
         //чтение данных из сессии
         $news = News::getAllNews();
         $newNews = [];
+        $image = null;
+        if ($this->request->file('image')) {
+            $image = \Storage::putFile('public', $this->request->file('image'));
+            $image = \Storage::url($image);
+        }
 
         // создание новой новости
         $newNews['id'] = count($news);
@@ -31,10 +36,13 @@ class NewsCrudController extends Controller
         $newNews['date'] = date('d.m.Y');
         $newNews['isPrivate'] = (boolean)($this->request['isPrivate'] ?? false);
         $newNews['title'] = $this->request['title'];
+        $newNews['image'] = $image;
         $newNews['description'] = $this->request['description'];
 
-        //сохранение преобразований обратно в сессию
+        //сохранение преобразований
         session()->push('news', $newNews);
+        News::saveData();
+
         return redirect()->route('news.currentCategory', $newNews['category_id'])->with('success', 'Новость добавлена');
     }
 
@@ -121,17 +129,25 @@ class NewsCrudController extends Controller
         $news = session()->get('news');
         $postCategoryName = $categories[$this->request['categoryId']]['name'];
 
+        $image = null;
+        if ($this->request->file('image')) {
+            $image = \Storage::putFile('public', $this->request->file('image'));
+            $image = \Storage::url($image);
+        }
+
         //изменение уже существующей новости, с возможностью изменения категории, создать категорию можно при создании новости
-        foreach ($categories as $key => $category) {
+        foreach ($categories as $category) {
             if ($postCategoryName == $category['name']) {
-                $news[$id]['category_id'] = $key;
+                $news[$id]['category_id'] = $category['id'];
                 $news[$id]['date'] = date('d.m.Y');
                 $news[$id]['isPrivate'] = (boolean)($this->request['isPrivate'] ?? false);
                 $news[$id]['title'] = $this->request['title'];
+                $news[$id]['image'] = $image ?? $news[$id]['image'];
                 $news[$id]['description'] = $this->request['description'];
 
                 //сохранение преобразований обратно в сессию
                 session()->put('news', $news);
+                News::saveData();
             }
         }
 
@@ -153,6 +169,7 @@ class NewsCrudController extends Controller
         $delNewsCategory = $news[$id]['category_id'];
         unset($news[$id]);
         session()->put('news', $news);
+        News::saveData();
 
         return redirect()->route('news.currentCategory', $delNewsCategory)->with('success', 'Новость удалена');
     }

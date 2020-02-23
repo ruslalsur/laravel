@@ -16,7 +16,7 @@ class NewsController extends Controller
      */
     public function showAllCategories()
     {
-        return view('categories', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories()]);
+        return view('categories', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(), 'news' => News::getAllNews()]);
     }
 
 
