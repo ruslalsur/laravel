@@ -35,7 +35,7 @@ class NewsCrudController extends Controller
 
         //сохранение преобразований обратно в сессию
         session()->push('news', $newNews);
-        return redirect()->route('news.currentCategory', $newNews['category_id']);
+        return redirect()->route('news.currentCategory', $newNews['category_id'])->with('success', 'Новость добавлена');
     }
 
 
@@ -48,7 +48,7 @@ class NewsCrudController extends Controller
     {
         session()->flush();
 
-        return redirect()->route('news.home');
+        return redirect()->route('news.home')->with('failure', 'Все данные сессии токашта пропали');
     }
 
 
@@ -136,7 +136,8 @@ class NewsCrudController extends Controller
         }
 
         // возврат к списку новостей с произведенными изменениями или без них
-        return redirect()->route('news.newsOne', $id);
+        return redirect()->route('news.newsOne', $id)->with('success', 'Вам была предоставлена возможность внести
+        изменения в содержание новость, возможно вы ее упустили и оставили все как было');
     }
 
 
@@ -153,7 +154,7 @@ class NewsCrudController extends Controller
         unset($news[$id]);
         session()->put('news', $news);
 
-        return redirect()->route('news.currentCategory', $delNewsCategory);
+        return redirect()->route('news.currentCategory', $delNewsCategory)->with('success', 'Новость удалена');
     }
 
 
@@ -181,7 +182,7 @@ class NewsCrudController extends Controller
         $categories[] = ['id' => $newId, 'name' => $categoryName];
         session()->put('categories', $categories);
 
-        return redirect()->route('admin.show', $newsId);
+        return redirect()->route('admin.show', $newsId)->with('success', "Создана категория $categoryName");
     }
 
 
@@ -208,13 +209,14 @@ class NewsCrudController extends Controller
         //еслии категория не пуста, не производить удаление категории
         foreach ($news as $key => $newsOne) {
             if ($categoryIdToDelete == $newsOne['category_id']) {
-                return redirect()->route('admin.show', $newsId);
+                return redirect()->route('admin.show', $newsId)->with('failure', "Категория $categoryName содержит
+                новости, переместите их в другую категорию при помощи редактора новостей и повторите операцию удаления категории");
             }
         }
 
         unset($categories[$categoryIdToDelete]);
         session()->put('categories', $categories);
 
-        return redirect()->route('admin.show', $newsId);
+        return redirect()->route('admin.show', $newsId)->with('success', "Удалена категория $categoryName");
     }
 }
