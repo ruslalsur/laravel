@@ -14,7 +14,8 @@
 
 <header class="pb-5">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="{{ asset('/') }}">НОВОСТИ</a>
+        <a class="text-primary navbar-brand font-weight-bolder {{ request()->routeIs('home') ? 'active' : "" }}"
+           href="{{ route('home') }}">НОВОСТИ</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,27 +24,27 @@
 
         @yield('menu')
 
-
         <div class="collapse navbar-collapse flex justify-content-md-end" id="navbarNavDropdown">
             <ul class="navbar-nav  font-weight-bolder my-2">
 
                 @isset($authorizedUserInfo)
                     <li class="nav-item">
-                        <h5 class="nav-link pb-0 mb-0 font-weight-bolder text-success pr-4">
-
-                            @if($authorizedUserInfo['role'] == 'admin')
-                                <a class="text-decoration-none text-success"
-                                   href="{{ route('admin.show', 0) }}">{{ $authorizedUserInfo['email'] }}</a>
-                            @else
-                                {{ $authorizedUserInfo['email'] }}
-                            @endif
-
-                        </h5>
+                        @if($authorizedUserInfo['role'] == 'admin')
+                            <a class="nav-link"
+                               data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
+                               href="{{ route('admin.show', 0) }}">Редактор новостей
+                            </a>
+                        @else
+                            {{ $authorizedUserInfo['email'] }}
+                        @endif
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('auth.logout') }}">Выход</a>
                     </li>
+
                 @else
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('auth.reg') }}">Регистрация</a>
                     </li>
@@ -54,9 +55,7 @@
                 @endisset
             </ul>
         </div>
-
     </nav>
-
 </header>
 
 <main id="app" class="container mt-5 mb-2">

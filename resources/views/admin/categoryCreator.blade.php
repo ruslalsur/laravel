@@ -34,19 +34,19 @@
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <button class="font-weight-bolder btn btn-danger" type="submit" id="submit_delCategory"
+                    <button class="font-weight-bolder btn btn-danger shadow" type="submit" id="submit_delCategory"
                             name="submit" value="delCategory"
                             data-toggle="tooltip" data-placement="bottom" title="удаление старой категории">
                         Удалить
                     </button>
                 </div>
 
-                <input type="text" name="newCategoryName" class="form-control"
+                <input type="text" name="newCategoryName" class="form-control shadow"
                        id="newCategory"
                        placeholder="Введите название категории">
 
                 <div class="input-group-append">
-                    <button class="font-weight-bolder btn btn-primary" type="submit" id="submit_newCategory"
+                    <button class="font-weight-bolder btn btn-primary shadow" type="submit" id="submit_newCategory"
                             name="submit" value="addCategory"
                             data-toggle="tooltip" data-placement="bottom" title="создание новой категории">
                         Добавить

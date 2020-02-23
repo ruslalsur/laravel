@@ -45,7 +45,7 @@ class ExampleTest extends TestCase
     public function testJsonDataFragment()
     {
         $response = $this->get(route('download', 0));
-        $response->assertJsonFragment(["isPrivate" => true, 'date' => '29.01.2020'])
+        $response->assertJsonFragment(["isPrivate" => true])
         ->assertJsonMissing(['category_id' => 2]);
 
         $response = $this->get(route('download', 1));

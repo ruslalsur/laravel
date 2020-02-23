@@ -66,20 +66,20 @@
                         приватная</label>
                 </div>
             </div>
-            <button id="submit_add" type="submit" name="submit" value="add" class="font-weight-bolder btn btn-primary"
+            <button id="submit_add" type="submit" name="submit" value="add" class="font-weight-bolder btn btn-primary shadow-sm"
                     data-toggle="tooltip" data-placement="bottom"
                     title="создание новой новости (будет создана новая категория или новость добавиться в указанную существующую)">
                 Создать
             </button>
 
-            <button id="submit_edit" type="submit" name="submit" value="edit" class="font-weight-bolder btn btn-success"
+            <button id="submit_edit" type="submit" name="submit" value="edit" class="font-weight-bolder btn btn-success shadow-sm"
                     data-toggle="tooltip" data-placement="bottom"
                     title="изменение текущей новости и/или перенос ее в другую категорию (категория должна существовать)">
                 Изменить
             </button>
 
             <button id="submit_delete" type="submit" name="submit" value="delete"
-                    class="font-weight-bolder btn btn-danger"
+                    class="font-weight-bolder btn btn-danger shadow-sm"
                     data-toggle="tooltip" data-placement="bottom"
                     title="удаление текущей новости совсем (категория при удалении не затрагивается)">
                 Удалить

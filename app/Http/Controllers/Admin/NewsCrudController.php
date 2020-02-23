@@ -13,18 +13,6 @@ use Illuminate\View\View;
 class NewsCrudController extends Controller
 {
     /**
-     * вывод списка новостей для выбора с последующим редактированием
-     *
-     * @return View
-     */
-//    public function index()
-//    {
-//        News::saveData();
-//        return view('admin.adminList', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(), 'news' => News::getAllNews()]);
-//    }
-
-
-    /**
      * Создание новой новости и/или новой категории вместе с ней
      *
      * @param int $id идентификатор новости

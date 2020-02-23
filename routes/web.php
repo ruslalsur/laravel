@@ -42,7 +42,6 @@ Route::group(
         'as' => 'admin.'
     ],
     function () {
-        Route::get('/list', 'NewsCrudController@index')->name('list');
         Route::get('/show/{id}', 'NewsCrudController@showCrudForm')->name('show');
         Route::post('/edit/{id}', 'NewsCrudController@edit')->name('edit');
         Route::get('/reset', 'NewsCrudController@reset')->name('reset');

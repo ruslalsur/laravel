@@ -1,4 +1,4 @@
-<div class="collapse navbar-collapse mr-auto py-3" id="navbarNavDropdown">
+<div class="collapse navbar-collapse mr-auto" id="navbarNavDropdown">
     <div class="btn-group navbar-nav" role="group" aria-label="Basic example">
         <ul class="navbar-nav font-weight-bolder mr-auto py-3">
             <li class="nav-item">
@@ -8,6 +8,4 @@
             </li>
         </ul>
     </div>
-
-
 </div>

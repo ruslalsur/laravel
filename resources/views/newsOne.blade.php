@@ -9,7 +9,7 @@
 @section('content')
     <div class="content">
         <h4 class="mt-3 mb-3">Новость из категории
-            <a class="btn btn-secondary btn-sm" href="{{ route('currentCategory', $newsOne['category_id']) }}">
+            <a class="btn btn-secondary btn-sm shadow" href="{{ route('currentCategory', $newsOne['category_id']) }}">
                 <span class="font-weight-bolder lead">{{ $categoryName }}</span>
             </a> от {{ $newsOne['date'] }}
             @isset($authorizedUserInfo)
@@ -27,7 +27,7 @@
 
         @isset($authorizedUserInfo)
             @if($authorizedUserInfo['role'] == 'admin')
-                <a class="nav-link" href="{{ route('admin.show', $newsOne['id']) }}">изменить новость</a>
+                <a class="btn btn-danger shadow" href="{{ route('admin.show', $newsOne['id']) }}">изменить новость</a>
             @endif
         @endisset
     </div>
