@@ -104,6 +104,7 @@
                 Удалить
             </button>
         </form>
+
         <div class="mt-4 alert alert-success alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">Выберите новость для внесения изменений</h4>
             <hr>

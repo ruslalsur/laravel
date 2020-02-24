@@ -23,8 +23,8 @@ class ExampleTest extends TestCase
     {
         $response = $this->get(route('news.categories'));
         $response->assertViewIs('categories')
-            ->assertViewHas($key = 'categories', $value = \App\News::getAllCategories())
-            ->assertSee('Категории')
+            ->assertViewHas($key = 'categories', \App\News::getAllCategories())
+            ->assertSee('новостей')
             ->assertDontSeeText('приватна');
     }
 
@@ -55,7 +55,7 @@ class ExampleTest extends TestCase
 
     public function testHeaderData()
     {
-        $response = $this->get(route('news.download', 0));
+        $response = $this->get(route('news.download', 1));
         $response->assertHeader('Content-Type', $value = 'application/json');
     }
 
