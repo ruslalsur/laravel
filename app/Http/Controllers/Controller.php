@@ -26,7 +26,7 @@ class Controller extends BaseController
         $this->request = $request;
 
         // запись в сессию исходных данных
-        News::init();
+//        News::init();
         Users::init();
     }
 }

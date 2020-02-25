@@ -8,58 +8,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class NewsCrudController extends Controller
 {
-    /**
-     * Создание новой новости и/или новой категории вместе с ней
-     *
-     * @param int $id идентификатор новости
-     * @return RedirectResponse|Redirector
-     *
-     */
-    public function create($id)
-    {
-        //чтение данных из сессии
-        $news = News::getAllNews();
-        $newNews = [];
-        $image = null;
-        if ($this->request->file('image')) {
-            $image = \Storage::putFile('public', $this->request->file('image'));
-            $image = \Storage::url($image);
-        }
-
-        // создание новой новости
-        $newNews['id'] = count($news);
-        $newNews['category_id'] = $this->request['categoryId'];
-        $newNews['date'] = date('d.m.Y');
-        $newNews['isPrivate'] = (boolean)($this->request['isPrivate'] ?? false);
-        $newNews['title'] = $this->request['title'];
-        $newNews['image'] = $image;
-        $newNews['description'] = $this->request['description'];
-
-        //сохранение преобразований
-        session()->push('news', $newNews);
-        News::saveData();
-
-        return redirect()->route('news.currentCategory', $newNews['category_id'])->with('success', 'Новость добавлена');
-    }
-
-
-    /**
-     * Сброс данных сессии
-     *
-     * @return RedirectResponse
-     */
-    public function reset()
-    {
-        session()->flush();
-
-        return redirect()->route('news.home')->with('failure', 'Все данные сессии токашта пропали');
-    }
-
-
     /**
      * Отображение формы для внесения изменений администратором
      *
@@ -68,15 +21,16 @@ class NewsCrudController extends Controller
      */
     public function showCrudForm($id)
     {
-        $categoryId = News::getAllNews()[$id]['category_id'];
+        $newsOne = News::getNewsOne($id);
+
         return view('admin.editNews',
-            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(),
-                'currentCategoryName' => News::getNewsCategoryName($categoryId), 'newsId' => $id, 'newsOne' => News::getAllNews()[$id]]);
+            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getCategories(),
+                'currentCategoryName' => News::getCategory($newsOne->category_id)->name, 'newsOne' => $newsOne]);
     }
 
 
     /**
-     * обработка данных запроса администоратора
+     * как то незаметно для себя написал маршрутизатор, надо убрать потом
      *
      * @param int $id идентификатор новости
      * @return Factory|RedirectResponse|Redirector
@@ -85,7 +39,7 @@ class NewsCrudController extends Controller
     {
         switch ($this->request['submit']) {
             case 'newCategory':
-                return view('admin.categoryCreator', ['categories' => News::getAllCategories(), 'newsId' => $id]);
+                return view('admin.categoryCreator', ['categories' => News::getCategories(), 'newsId' => $id]);
                 break;
 
             case 'addCategory':
@@ -117,6 +71,35 @@ class NewsCrudController extends Controller
 
 
     /**
+     * Создание новой новости и/или новой категории вместе с ней
+     *
+     * @param int $id идентификатор новости
+     * @return RedirectResponse|Redirector
+     *
+     */
+    public function create($id)
+    {
+        $image = null;
+        if ($this->request->file('image')) {
+            $image = \Storage::putFile('public', $this->request->file('image'));
+            $image = \Storage::url($image);
+        }
+
+        $newNews = [];
+        $newNews['category_id'] = $this->request['categoryId'];
+        $newNews['date'] = date('Y-m-d');
+        $newNews['isPrivate'] = (boolean)($this->request['isPrivate'] ?? false);
+        $newNews['title'] = $this->request['title'];
+        $newNews['image'] = $image;
+        $newNews['description'] = $this->request['description'];
+
+        DB::table('news')->insert($newNews);
+
+        return redirect()->route('news.currentCategory', $newNews['category_id'])->with('success', 'Новость добавлена');
+    }
+
+
+    /**
      * изменение новости
      *
      * @param int $id идентификатор новости
@@ -124,36 +107,24 @@ class NewsCrudController extends Controller
      */
     public function update($id)
     {
-        //чтение данных из сессии
-        $categories = session()->get('categories');
-        $news = session()->get('news');
-        $postCategoryName = $categories[$this->request['categoryId']]['name'];
-
         $image = null;
         if ($this->request->file('image')) {
             $image = \Storage::putFile('public', $this->request->file('image'));
             $image = \Storage::url($image);
         }
 
-        //изменение уже существующей новости, с возможностью изменения категории, создать категорию можно при создании новости
-        foreach ($categories as $category) {
-            if ($postCategoryName == $category['name']) {
-                $news[$id]['category_id'] = $category['id'];
-                $news[$id]['date'] = date('d.m.Y');
-                $news[$id]['isPrivate'] = (boolean)($this->request['isPrivate'] ?? false);
-                $news[$id]['title'] = $this->request['title'];
-                $news[$id]['image'] = $image ?? $news[$id]['image'];
-                $news[$id]['description'] = $this->request['description'];
+        $updateData = [
+            'category_id' => $this->request['categoryId'],
+            'date' => date('Y.m.d'),
+            'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
+            'title' => $this->request['title'],
+            'image' => $image ?? News::getNewsOne($id)->image,
+            'description' => $this->request['description']
+        ];
 
-                //сохранение преобразований обратно в сессию
-                session()->put('news', $news);
-                News::saveData();
-            }
-        }
+        DB::table('news')->where('id', $id)->update($updateData);
 
-        // возврат к списку новостей с произведенными изменениями или без них
-        return redirect()->route('news.newsOne', $id)->with('success', 'Вам была предоставлена возможность внести
-        изменения в содержание новость, возможно вы ее упустили и оставили все как было');
+        return redirect()->route('news.newsOne', $id)->with('success', 'Эта новость была только что изменена');
     }
 
 
@@ -165,13 +136,10 @@ class NewsCrudController extends Controller
      */
     public function destroy($id)
     {
-        $news = session()->get('news');
-        $delNewsCategory = $news[$id]['category_id'];
-        unset($news[$id]);
-        session()->put('news', $news);
-        News::saveData();
+        $deleletedNewsCategory = News::getNewsOne($id)->category_id;
+        DB::table('news')->delete($id);
 
-        return redirect()->route('news.currentCategory', $delNewsCategory)->with('success', 'Новость удалена');
+        return redirect()->route('news.currentCategory', $deleletedNewsCategory)->with('success', 'Новость удалена');
     }
 
 
@@ -185,21 +153,11 @@ class NewsCrudController extends Controller
      */
     private function categoryCreator($categoryName, $newsId)
     {
-        $categories = News::getAllCategories();
-
-        if (empty($categoryName)) {
-            return view('admin.categoryCreator', ['categories' => $categories, 'newsId' => $newsId]);
+        if (News::createCategory($categoryName)) {
+            return view('admin.categoryCreator', ['categories' => News::getCategories(), 'newsId' => $newsId]);
         }
 
-        if (array_search($categoryName, array_column($categories, 'name'))) {
-            return redirect()->route('admin.show', $newsId);
-        }
-
-        $newId = count($categories);
-        $categories[] = ['id' => $newId, 'name' => $categoryName];
-        session()->put('categories', $categories);
-
-        return redirect()->route('admin.show', $newsId)->with('success', "Создана категория $categoryName");
+        return view('admin.categoryCreator', ['categories' => News::getCategories(), 'newsId' => $newsId]);
     }
 
 
@@ -208,32 +166,28 @@ class NewsCrudController extends Controller
      *
      * @param $categoryName
      * @param $newsId
-     * @return RedirectResponse|Redirector
+     * @return Factory|View
      */
     private function categoryEraser($categoryName, $newsId)
     {
-        $categories = News::getAllCategories();
-        $news = News::getAllNews();
-        $categoryIdToDelete = null;
-
-        foreach ($categories as $key => $category) {
-            if ($categoryName == $category['name']) {
-                $categoryIdToDelete = $key;
-                break;
-            }
+        if (News::deleteCategory($categoryName)) {
+            return view('admin.categoryCreator', ['categories' => News::getCategories(), 'newsId' => $newsId]);
         }
 
-        //еслии категория не пуста, не производить удаление категории
-        foreach ($news as $key => $newsOne) {
-            if ($categoryIdToDelete == $newsOne['category_id']) {
-                return redirect()->route('admin.show', $newsId)->with('failure', "Категория $categoryName содержит
-                новости, переместите их в другую категорию при помощи редактора новостей и повторите операцию удаления категории");
-            }
-        }
+//        return redirect()->route('admin.categoryCreator', $newsId)->with('failure', "Ошибка удаления категории $categoryName");
+        return view('admin.categoryCreator', ['categories' => News::getCategories(), 'newsId' => $newsId]);
+    }
 
-        unset($categories[$categoryIdToDelete]);
-        session()->put('categories', $categories);
 
-        return redirect()->route('admin.show', $newsId)->with('success', "Удалена категория $categoryName");
+    /**
+     * Сброс данных сессии
+     *
+     * @return RedirectResponse
+     */
+    public function reset()
+    {
+        session()->flush();
+
+        return redirect()->route('news.home')->with('failure', 'Все данные сессии токашта пропали');
     }
 }

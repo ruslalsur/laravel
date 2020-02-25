@@ -29,18 +29,11 @@
 
                 @isset($authorizedUserInfo)
                     <li class="nav-item">
-                        @if($authorizedUserInfo['role'] == 'admin')
-                            <a class="text-success nav-link"
-                               data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
-                               href="{{ route('admin.show', 0) }}">Редактор новостей
-                            </a>
-                        @else
-                            <a class="text-success nav-link"
-                               data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
-                               href="{{ route('news.home') }}">
-                                {{ $authorizedUserInfo['email'] }}
-                            </a>
-                        @endif
+                        <a class="text-success nav-link"
+                           data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
+                           href="{{ route('news.home') }}">
+                            {{ $authorizedUserInfo['email'] }}
+                        </a>
                     </li>
 
                     <li class="nav-item">
@@ -62,14 +55,14 @@
     </nav>
 </header>
 
-<main id="app" class="container mt-5 mb-2">
+<main id="app" class="container mt-4 py-4">
     @if(session('success'))
-    <div class="mt-2 alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+        <div class="mt-2 alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     @endif
     @if(session('failure'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">

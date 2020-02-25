@@ -16,7 +16,7 @@ class NewsController extends Controller
      */
     public function showAllCategories()
     {
-        return view('categories', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getAllCategories(), 'news' => News::getAllNews()]);
+        return view('categories', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getCategories()]);
     }
 
 
@@ -32,7 +32,7 @@ class NewsController extends Controller
             [
                 'authorizedUserInfo' => Users::getAuthorizedUserInfo(),
                 'category_id' => $category_id,
-                'currentCategoryName' => News::getAllCategories()[$category_id]['name'], 'currentCategoryNews' => News::getCurrentCategoryNews($category_id)
+                'currentCategoryName' => News::getCategory($category_id)->name, 'currentCategoryNews' => News::getCurrentCategoryNews($category_id)
             ]);
     }
 
@@ -45,16 +45,11 @@ class NewsController extends Controller
      */
     public function showNewsOne($id)
     {
-        $news = News::getAllNews();
+        $newsOne = News::getNewsOne($id);
+        $currentCategoryName = News::getCategory($newsOne->category_id)->name;
 
-        if (array_key_exists($id, $news)) {
-            $currentCategoryName = News::getNewsCategoryName($news[$id]['category_id']);
-
-            return view('newsOne', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
-                'categoryName' => $currentCategoryName, 'newsOne' => News::getAllNews()[$id]]);
-        }
-
-        return $this->showAllCategories();
+        return view('newsOne', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+            'categoryName' => $currentCategoryName, 'newsOne' => $newsOne]);
     }
 
 
@@ -66,8 +61,8 @@ class NewsController extends Controller
      */
     public function download($newsId)
     {
-        $userQueryNews = News::getAllNews()[$newsId];
-        $filename = 'news_' . $userQueryNews['id'] . '_from_' . $userQueryNews['date'];
+        $userQueryNews = News::getNewsOne($newsId);
+        $filename = 'news_' . $userQueryNews->id . '_from_' . $userQueryNews->date;
 
         return response()
             ->json($userQueryNews)

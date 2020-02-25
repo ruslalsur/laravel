@@ -19,11 +19,11 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($categories as $key => $category)
+            @foreach($categories as $category)
                 <tr>
-                    <td><h6 class="font-weight-bolder">{{ $category['name'] }}</h6></td>
-                    <td class="text-center">{{ $key }}</td>
-                    <td class="text-center">{{ count(\App\News::getCurrentCategoryNews($key)) }}</td>
+                    <td><h6 class="font-weight-bolder">{{ $category->name }}</h6></td>
+                    <td class="text-center">{{ $category->id }}</td>
+                    <td class="text-center">{{ count(\App\News::getCurrentCategoryNews($category->id)) }}</td>
                 </tr>
             @endforeach
             </tbody>

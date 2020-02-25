@@ -12,7 +12,7 @@
         <div class="shadow p-3 mb-5 bg-white rounded">
             @foreach($categories as $category)
                 <a class="nav-link font-weight-bolder"
-                   href="{{ route('news.currentCategory', $category['id']) }}">{{ $category['name'] }}</a>
+                   href="{{ route('news.currentCategory', $category->id) }}">{{ $category->name }}</a>
             @endforeach
         </div>
     </div>
