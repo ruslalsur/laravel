@@ -72,17 +72,10 @@
                         </div>
                         <div class="d-flex flex-column ">
                             <button id="submit_edit" type="submit" name="submit" value="edit"
-                                    class="my-3 font-weight-bolder btn btn-sm btn-success shadow-sm"
+                                    class="font-weight-bolder btn btn-sm btn-primary shadow-sm"
                                     data-toggle="tooltip" data-placement="bottom"
                                     title="изменение текущей новости и/или перенос ее в другую категорию (категория должна существовать)">
-                                Изменить
-                            </button>
-
-                            <button id="submit_delete" type="submit" name="submit" value="delete"
-                                    class="font-weight-bolder btn btn-sm btn-danger shadow-sm"
-                                    data-toggle="tooltip" data-placement="bottom"
-                                    title="удаление текущей новости совсем (категория при удалении не затрагивается)">
-                                Удалить
+                                Применить
                             </button>
                         </div>
                     </div>

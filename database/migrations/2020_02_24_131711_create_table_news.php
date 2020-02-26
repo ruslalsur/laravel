@@ -19,9 +19,8 @@ class CreateTableNews extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('image')->nullable(true)->default(null);
-            $table->date('date');
             $table->boolean('isPrivate')->default(false);
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('created_at');
             $table->timestamp('updated_at')->useCurrent();
         });
     }

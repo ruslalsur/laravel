@@ -14,45 +14,6 @@ use Illuminate\View\View;
 class NewsCrudController extends Controller
 {
     /**
-     * Отображение формы для внесения изменений администратором
-     *
-     * @param int $id идентификатор новости
-     * @return View
-     */
-    public function showCrudForm($id)
-    {
-        $newsOne = News::getNewsOne($id);
-
-        return view('admin.editNews',
-            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getCategories(),
-                'currentCategoryName' => News::getCategory($newsOne->category_id)->name, 'newsOne' => $newsOne]);
-    }
-
-
-    /**
-     * как то незаметно для себя написал маршрутизатор, надо убрать потом
-     *
-     * @param int $id идентификатор новости
-     * @return Factory|RedirectResponse|Redirector
-     */
-    public function edit($id)
-    {
-        switch ($this->request['submit']) {
-            case 'edit':
-                return $this->update($id);
-                break;
-
-            case 'delete':
-                return $this->destroy($id);
-                break;
-
-            default:
-                return redirect()->route('news.categories');
-        }
-    }
-
-
-    /**
      * Создание новой новости и/или новой категории вместе с ней
      *
      * @param int $id идентификатор новости
@@ -74,7 +35,7 @@ class NewsCrudController extends Controller
 
         $newNews = [
             'category_id' => $this->request['categoryId'],
-            'date' => date('Y-m-d'),
+            'created_at' => date('Y-m-d'),
             'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
             'title' => $this->request['title'],
             'image' => $image,
@@ -91,10 +52,18 @@ class NewsCrudController extends Controller
      * изменение новости
      *
      * @param int $id идентификатор новости
-     * @return RedirectResponse|Redirector
+     * @return Factory|RedirectResponse|Redirector|View
      */
     public function update($id)
     {
+        if ($this->request->isMethod('get')) {
+            $newsOne = News::getNewsOne($id);
+
+            return view('admin.editNews',
+                ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getCategories(),
+                    'currentCategoryName' => News::getCategory($newsOne->category_id)->name, 'newsOne' => $newsOne]);
+        }
+
         $image = null;
         if ($this->request->file('image')) {
             $image = \Storage::putFile('public', $this->request->file('image'));
@@ -103,7 +72,7 @@ class NewsCrudController extends Controller
 
         $updateData = [
             'category_id' => $this->request['categoryId'],
-            'date' => date('Y.m.d'),
+            'updated_at' => date('Y.m.d'),
             'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
             'title' => $this->request['title'],
             'image' => $image ?? News::getNewsOne($id)->image,
