@@ -62,7 +62,7 @@ class NewsController extends Controller
     public function download($newsId)
     {
         $userQueryNews = News::getNewsOne($newsId);
-        $filename = 'news_' . $userQueryNews->id . '_from_' . $userQueryNews->date;
+        $filename = 'news_' . $userQueryNews->id . '_from_' . $userQueryNews->event_date;
 
         return response()
             ->json($userQueryNews)

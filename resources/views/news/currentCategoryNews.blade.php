@@ -14,15 +14,15 @@
             @forelse($currentCategoryNews as $newsOne)
                 @isset($authorizedUserInfo)
                     <a class="nav-link font-weight-bolder" href="{{ route('news.newsOne', $newsOne->id) }}">
-                        <small class="mr-2 text-secondary">{{ date("d.m.Y", strtotime($newsOne->created_at)) }}</small> {{ $newsOne->title }}</a>
+                        <small class="mr-2 text-secondary">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small> {{ $newsOne->title }}</a>
                 @else
                     @if($newsOne->isPrivate)
                         <a class="nav-link font-weight-bolder" href="{{ route('auth.login') }}">
-                            <small class="mr-2 text-secondary ">{{ date("d.m.Y", strtotime($newsOne->created_at)) }}</small>
+                            <small class="mr-2 text-secondary ">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small>
                             {{ $newsOne->title }} <span class="badge badge-danger">приватная</span></a>
                     @else
                         <a class="nav-link font-weight-bolder" href="{{ route('news.newsOne', $newsOne->id) }}">
-                            <small class="mr-2 text-secondary ">{{ date("d.m.Y", strtotime($newsOne->created_at)) }}</small>
+                            <small class="mr-2 text-secondary ">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small>
                             {{ $newsOne->title }}</a>
                     @endif
                 @endisset

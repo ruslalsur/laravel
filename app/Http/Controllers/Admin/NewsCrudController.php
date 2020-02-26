@@ -35,7 +35,7 @@ class NewsCrudController extends Controller
 
         $newNews = [
             'category_id' => $this->request['categoryId'],
-            'created_at' => date("Y-m-d H:i:s"),
+            'event_date' => date("Y-m-d H:i:s"),
             'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
             'title' => $this->request['title'],
             'image' => $image,
@@ -72,7 +72,7 @@ class NewsCrudController extends Controller
 
         $updateData = [
             'category_id' => $this->request['categoryId'],
-            'updated_at' => date("Y-m-d H:i:s"),
+            'event_date' => date("Y-m-d H:i:s"),
             'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
             'title' => $this->request['title'],
             'image' => $image ?? News::getNewsOne($id)->image,

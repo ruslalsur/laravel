@@ -18,9 +18,10 @@ class CreateTableNews extends Migration
             $table->integer('category_id')->nullable(true);;
             $table->string('title');
             $table->text('description');
-            $table->string('image')->nullable(true)->default(null);
+            $table->string('image')->nullable(true);
+            $table->dateTime('event_date');
             $table->boolean('isPrivate')->default(false);
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
     }

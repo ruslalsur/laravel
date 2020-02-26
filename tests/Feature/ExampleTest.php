@@ -22,18 +22,10 @@ class ExampleTest extends TestCase
     public function testCategoriesView()
     {
         $response = $this->get(route('news.categories'));
-        $response->assertViewIs('categories')
-            ->assertViewHas($key = 'categories', \App\News::getAllCategories())
+        $response->assertViewIs('news.categories')
+            ->assertViewHas($key = 'categories', \App\News::getCategories())
             ->assertSee('новостей')
             ->assertDontSeeText('приватна');
-    }
-
-    public function testSession()
-    {
-        $response = $this->get(route('news.categories'));
-        $response->assertSessionHas('categories', \App\News::getAllCategories())
-            ->assertSessionHas('news')
-            ->assertSessionHas('users');
     }
 
     public function testCategoriesCookie()
@@ -44,12 +36,8 @@ class ExampleTest extends TestCase
 
     public function testJsonDataFragment()
     {
-        $response = $this->get(route('news.download', 0));
-        $response->assertJsonFragment(["isPrivate" => true])
-        ->assertJsonMissing(['category_id' => 2]);
-
         $response = $this->get(route('news.download', 1));
-        $response->assertJsonFragment(["isPrivate" => false])
+        $response->assertJsonFragment(["isPrivate" => 1])
             ->assertJsonMissing(['category_id' => 2]);
     }
 
@@ -58,7 +46,4 @@ class ExampleTest extends TestCase
         $response = $this->get(route('news.download', 1));
         $response->assertHeader('Content-Type', $value = 'application/json');
     }
-
-
-
 }
