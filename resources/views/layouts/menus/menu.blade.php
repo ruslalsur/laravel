@@ -6,6 +6,11 @@
                href="{{ route('news.categories') }}">Категории</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link"
+               data-toggle="tooltip" data-placement="bottom" title="добавить новость"
+               href="{{ route('admin.add', 1) }}">Создание новости</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('news.about') }}">Мы</a>
         </li>
     </ul>

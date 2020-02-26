@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="content">
-        <h4 class="my-4">Новости по категории <span class="text-primary">{{ $currentCategoryName }} </span></h4>
+        <h4 class="my-4">Новости из категории <span class="text-primary">{{ $currentCategoryName }} </span></h4>
 
         <div class="shadow p-3 mb-3 bg-white rounded">
             @forelse($currentCategoryNews as $newsOne)

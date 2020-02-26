@@ -25,11 +25,11 @@
                     @endforeach
                 </select>
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit" id="submit_newCategory"
-                            name="submit" value="newCategory"
-                            data-toggle="tooltip" data-placement="bottom" title="создание новой категории">
+                    <a class="btn btn-secondary"
+                       href="{{ route('admin.categoryCreator') }}"
+                       data-toggle="tooltip" data-placement="bottom" title="редактор категорий">
                         Редактор категорий
-                    </button>
+                    </a>
 
                 </div>
             </div>
@@ -71,13 +71,6 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column ">
-                            <button id="submit_add" type="submit" name="submit" value="add"
-                                    class="font-weight-bolder btn btn-sm btn-primary shadow-sm"
-                                    data-toggle="tooltip" data-placement="bottom"
-                                    title="создание новой новости (будет создана новая категория или новость добавиться в указанную существующую)">
-                                Создать
-                            </button>
-
                             <button id="submit_edit" type="submit" name="submit" value="edit"
                                     class="my-3 font-weight-bolder btn btn-sm btn-success shadow-sm"
                                     data-toggle="tooltip" data-placement="bottom"

@@ -52,6 +52,8 @@ Route::group(
     function () {
         Route::get('/show/{id}', 'NewsCrudController@showCrudForm')->name('show');
         Route::post('/edit/{id}', 'NewsCrudController@edit')->name('edit');
+        Route::match(['GET', 'POST'],'/add', 'NewsCrudController@create')->name('add');
+        Route::match(['GET', 'POST'],'/categoryCreator', 'NewsCrudController@categoryCreator')->name('categoryCreator');
         Route::get('/reset', 'NewsCrudController@reset')->name('reset');
     }
 );

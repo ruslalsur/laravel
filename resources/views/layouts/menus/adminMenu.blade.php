@@ -9,8 +9,8 @@
 
             <li class="nav-item">
                 <a class="nav-link"
-                   data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
-                   href="{{ route('admin.show', 1) }}">Редактор новостей</a>
+                   data-toggle="tooltip" data-placement="bottom" title="добавить новость"
+                   href="{{ route('admin.add', 1) }}">Создание новости</a>
             </li>
 
             <li class="nav-item">
