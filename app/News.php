@@ -3,134 +3,124 @@
 
 namespace App;
 
-use File;
+use Illuminate\Support\Facades\DB;
 
 class News
 {
-    private const PATH = __DIR__ . "/../resources/dataFiles/";
-
-
     /**
-     * запись данных  в глобальный массив, если там их еще нету,
-     * вызывается в конструкторе базового контролера
-     *
-     */
-    public static function init()
-    {
-        if (!session()->exists('categories')) {
-            session()->put('categories', self::loadCatData());
-        }
-
-        if (!session()->exists('news')) {
-            session()->put('news', self::loadNewsData());
-        }
-    }
-
-
-
-    /**
-     * геттер новостей из глобального массива
-     *
+     * получение всех новостей из базы данных
      * @return array
      */
-    public static function getAllNews()
+    public static function getNews()
     {
-        if (session()->exists('news')) {
-            return session()->get('news');
-        }
-
-        return null;
+        return DB::table('news')->get()->toArray();
     }
 
 
-
     /**
-     * геттер категорий из глобального массива
-     *
+     * получение всех категорий из базы данных
      * @return array
      */
-    public static function getAllCategories()
+    public static function getCategories()
     {
-        if (session()->exists('categories')) {
-            return session()->get('categories');
-        }
-
-        return null;
+        return DB::table('categories')->get()->toArray();
     }
 
 
+    /**
+     * поиск конкретной новости в базе данных
+     * @param $newsId
+     * @return object
+     */
+    public static function getNewsOne($newsId)
+    {
+        return DB::table('news')->find($newsId);
+    }
+
 
     /**
-     * Возвращает подборку новостей по переданному Id категории
+     * поиск конкретной категории в базе данных
+     * @param $categoryId
+     * @return object
+     */
+    public static function getCategory($categoryId)
+    {
+        return DB::table('categories')->find($categoryId);
+    }
+
+
+    /**
+     * возвращает список новостей по переданному идентификатору категории
      *
      * @param int $categoryId
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public static function getCurrentCategoryNews($categoryId)
     {
-        $currentCategoryNews = [];
-        if (array_key_exists($categoryId, self::getAllCategories())) {
-            foreach (self::getAllNews() as $newsOne) {
-                if ($newsOne['category_id'] == $categoryId) {
-                    $currentCategoryNews[] = $newsOne;
-                }
+        return DB::table('news')->where('category_id', '=', $categoryId)->get();
+    }
+
+
+    /**
+     * создание новой категории
+     *
+     * @param int $categoryName
+     * @return boolean
+     */
+    public static function createCategory($categoryName)
+    {
+        if (isset($categoryName)) {
+            $categoryContains = self::categoryContainsNews($categoryName);
+
+
+            if (!isset($categoryContains)) {
+                return DB::table('categories')->insert(['name' => $categoryName]);
             }
         }
-        return $currentCategoryNews;
+        return false;
     }
 
 
-
     /**
-     * выяснение названия категории у новости по идентификатору новости
+     * удаление категории
      *
-     * @param $categoryId
-     * @return string
+     * @param int $categoryName
+     * @return boolean
      */
-    public static function getNewsCategoryName($categoryId)
+    public static function deleteCategory($categoryName)
     {
-        return self::getAllCategories()[$categoryId]['name'];
-    }
+        $categoryContains = self::categoryContainsNews($categoryName);
 
+        if (isset($categoryContains)) {
+            $categoryId = $categoryContains['categoryId'];
+            $howManyNewsContainsInCategory = $categoryContains['howManyNewsContainsInCategory'];
 
-
-    /**
-     * сохранение изменений на диск
-     */
-    public static function saveData()
-    {
-        if (session()->exists('categories')) {
-            $content = json_encode(self::getAllCategories(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-            File::put(self::PATH . 'categories.json', $content);
+            if (!$howManyNewsContainsInCategory) {
+                return DB::table('categories')->where('id', '=', $categoryId)->delete();
+            }
         }
 
-        if (session()->exists('news')) {
-            $content = json_encode(self::getAllNews(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-            File::put(self::PATH . 'news.json', $content);
+        return false;
+    }
+
+    /**
+     * сервисный метод
+     * принимая на входе имя категории, возвращает ee идентификатор количество содержащихся в ней или null
+     *
+     * @param int $categoryName
+     * @return array| null
+     */
+    private static function categoryContainsNews($categoryName)
+    {
+        $categoryId = DB::table('categories')->where('name', '=', $categoryName)->first();
+
+        if (isset($categoryId)) {
+            $categoryId = $categoryId->id;
+            $howManyNewsContainsInCategory = DB::table('news')->where('category_id', '=', $categoryId)->count();
+
+            return ['categoryId' => $categoryId, 'howManyNewsContainsInCategory' => $howManyNewsContainsInCategory];
         }
-    }
 
-
-
-    /**
-     * загрузка данных из файла категорий
-     */
-    public static function loadCatData()
-    {
-        $content = File::get(self::PATH . 'categories.json');
-
-        return json_decode($content, true);
-    }
-
-
-
-    /**
-     * загрузка данных из файла новостей
-     */
-    public static function loadNewsData()
-    {
-        $content = File::get(self::PATH . 'news.json');
-
-        return json_decode($content, true);
+        return null;
     }
 }

@@ -4,25 +4,11 @@
 namespace App;
 
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Storage;
+
 class Users
 {
-    private static $usersData = [
-        '0' => [
-            'id' => 0,
-            'email' => 'admin@admin.com',
-            'password' => 'admin',
-            'role' => 'admin'
-        ],
-
-        '1' => [
-            'id' => 1,
-            'email' => 'user@user.com',
-            'password' => 'user',
-            'role' => 'user'
-        ],
-    ];
-
-
     /**
      * запись данных  в глобальный массив, если там их еще нету,
      * вызывается в конструкторе базового контролера
@@ -31,10 +17,7 @@ class Users
     public static function init()
     {
         if (!session()->exists('users')) {
-            self::$usersData[0]['password'] =  password_hash('admin', PASSWORD_DEFAULT);
-            self::$usersData[1]['password'] =  password_hash('user', PASSWORD_DEFAULT);
-
-            session()->put('users', self::$usersData);
+          session()->put('users', self::loadUsersData());
         }
     }
 
@@ -68,7 +51,6 @@ class Users
     }
 
 
-
     /**
      * Выясняет имеет ли пользователь повыщенные права
      *
@@ -80,5 +62,28 @@ class Users
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * загрузка данных из файла c пользователями
+     * @return array
+     * @throws FileNotFoundException
+     */
+    public static function loadUsersData()
+    {
+        return json_decode(Storage::disk('local')->get('users.json'), true);
+    }
+
+
+    /**
+     * сохранение изменений на диск вызывается, например, при регистрации нового пользователя
+     */
+    public static function saveData()
+    {
+        if (session()->exists('users')) {
+            $registeredUsers = json_encode(self::getRegisteredUsers(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+            Storage::disk('local')->put('users.json', $registeredUsers);
+        }
     }
 }

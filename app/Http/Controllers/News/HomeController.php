@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\News;
 
+use App\Http\Controllers\Controller;
 use App\Users;
 
 class HomeController extends Controller
@@ -13,6 +14,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index', ['authorizedUserInfo' => Users::getAuthorizedUserInfo()]);
+        return view('news/index', ['authorizedUserInfo' => Users::getAuthorizedUserInfo()]);
     }
 }

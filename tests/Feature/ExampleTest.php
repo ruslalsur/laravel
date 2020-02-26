@@ -14,51 +14,36 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/');
+        $response = $this->get(route('news.home'));
 
         $response->assertStatus(200);
     }
 
     public function testCategoriesView()
     {
-        $response = $this->get(route('categories'));
-        $response->assertViewIs('categories')
-            ->assertViewHas($key = 'categories', $value = \App\News::getAllCategories())
-            ->assertSee('Категории')
+        $response = $this->get(route('news.categories'));
+        $response->assertViewIs('news.categories')
+            ->assertViewHas($key = 'categories', \App\News::getCategories())
+            ->assertSee('новостей')
             ->assertDontSeeText('приватна');
-    }
-
-    public function testSession()
-    {
-        $response = $this->get(route('categories'));
-        $response->assertSessionHas('categories', \App\News::getAllCategories())
-            ->assertSessionHas('news')
-            ->assertSessionHas('users');
     }
 
     public function testCategoriesCookie()
     {
-        $response = $this->get(route('categories'));
+        $response = $this->get(route('news.categories'));
         $response->assertCookie('XSRF-TOKEN');
     }
 
     public function testJsonDataFragment()
     {
-        $response = $this->get(route('download', 0));
-        $response->assertJsonFragment(["isPrivate" => true, 'date' => '29.01.2020'])
-        ->assertJsonMissing(['category_id' => 2]);
-
-        $response = $this->get(route('download', 1));
-        $response->assertJsonFragment(["isPrivate" => false])
+        $response = $this->get(route('news.download', 1));
+        $response->assertJsonFragment(["isPrivate" => 1])
             ->assertJsonMissing(['category_id' => 2]);
     }
 
     public function testHeaderData()
     {
-        $response = $this->get(route('download', 0));
+        $response = $this->get(route('news.download', 1));
         $response->assertHeader('Content-Type', $value = 'application/json');
     }
-
-
-
 }

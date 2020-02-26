@@ -14,20 +14,64 @@
 
 <header class="pb-5">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="{{ asset('/') }}">НОВОСТИ</a>
+        <a class="text-primary navbar-brand font-weight-bolder {{ request()->routeIs('news.home') ? 'active' : "" }}"
+           href="{{ route('news.home') }}">НОВОСТИ</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-            @yield('menu')
+        @yield('menu')
 
+        <div class="collapse navbar-collapse flex justify-content-md-end" id="navbarNavDropdown">
+            <ul class="navbar-nav  font-weight-bolder my-2">
+
+                @isset($authorizedUserInfo)
+                    <li class="nav-item">
+                        <a class="text-success nav-link"
+                           data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
+                           href="{{ route('news.home') }}">
+                            {{ $authorizedUserInfo['email'] }}
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('auth.logout') }}">Выход</a>
+                    </li>
+
+                @else
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('auth.reg') }}">Регистрация</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('auth.login') }}">Вход</a>
+                    </li>
+                @endisset
+            </ul>
+        </div>
     </nav>
-
 </header>
 
-<main id="app" class="container mt-5 mb-2">
+<main id="app" class="container mt-4 py-4">
+    @if(session('success'))
+        <div class="mt-2 alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if(session('failure'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('failure') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
     @yield('content')
 

@@ -1,0 +1,26 @@
+[
+    {
+        "id": 0,
+        "email": "admin@admin.com",
+        "password": "$2y$10$\/HsT08I\/mL4IPkWOd.kfA.PjCvxxJQopd1pQrv0KzucBTFOjzmm\/q",
+        "role": "admin"
+    },
+    {
+        "id": 1,
+        "email": "user@user.com",
+        "password": "$2y$10$iTrU8VOJ8SQX3MagUtU9iO2uN15zXbWIyLZkm9qUBWAbi.rRqTS.S",
+        "role": "user"
+    },
+    {
+        "id": 2,
+        "email": "ru@ru.ru",
+        "password": "$2y$10$W6f3d1bGy0GAKlEAYRpOIeR.AIsDekED3ZqT8L6e8jJHboZxQgKQO",
+        "role": "user"
+    },
+    {
+        "id": 3,
+        "email": "ruur@ru.ru",
+        "password": "$2y$10$JW7I\/h0H0okK.sk9jtL57u5x70wqZS3\/sQtxkPA629fSIMacSJL\/2",
+        "role": "user"
+    }
+]

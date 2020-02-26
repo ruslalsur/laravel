@@ -23,10 +23,11 @@ class Controller extends BaseController
      */
     public function __construct(Request $request)
     {
+        date_default_timezone_set('Asia/Krasnoyarsk');
+
         $this->request = $request;
 
         // запись в сессию исходных данных
-        News::init();
         Users::init();
     }
 }
