@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="d-flex flex-column justify-content-between col-3 mb-1">
                     <img src="{{  $newsOne->image ? asset($newsOne->image) : asset('img/no-image.png') }}"
-                         class="embed-responsive card-img">
+                         class="embed-responsive card-img" alt="image">
                     <div class="mt-2">
                         <div class="custom-file my-2">
                             <input type="file" class="custom-file-input" id="fileImg" name="image">

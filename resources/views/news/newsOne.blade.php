@@ -20,7 +20,7 @@
             <h3 class="mt-0 mb-3 ml-2">{{ $newsOne->title }}</h3>
             <div class="row">
                 <div class="d-flex flex-column justify-content-between col-3 mb-1">
-                    <img src="{{  $newsOne->image ? asset($newsOne->image) : asset('img/no-image.png') }}" class="embed-responsive mt-2 card-img">
+                    <img src="{{  $newsOne->image ? asset($newsOne->image) : asset('img/no-image.png') }}" alt="image" class="embed-responsive mt-2 card-img">
                     <div class="mt-2">
                         @isset($authorizedUserInfo)
                             <a class="embed-responsive btn btn-sm btn-outline-primary mb-2 "

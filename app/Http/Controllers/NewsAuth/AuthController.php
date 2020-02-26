@@ -73,7 +73,8 @@ class AuthController extends Controller
                     session()->put('authorizedUserId', $authorizedUserId);
 
                     //полное совпадение
-                    return redirect()->route('news.categories')->with('success', 'Авторизация прошла успешно');
+                    return redirect()->route('news.categories')->with('success', 'Авторизация прошла успешно.
+                    Теперь доступен просмотр всех новостей');
                 }
 
                 //пароль не совпал

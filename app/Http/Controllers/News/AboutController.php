@@ -8,6 +8,6 @@ use App\Users;
 class AboutController extends Controller
 {
     public function index() {
-        return view('about', ['authorizedUserInfo' => Users::getAuthorizedUserInfo()]);
+        return view('news/about', ['authorizedUserInfo' => Users::getAuthorizedUserInfo()]);
     }
 }
