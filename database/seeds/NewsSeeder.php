@@ -23,7 +23,7 @@ class NewsSeeder extends Seeder
             $data[] = [
                 'category_id' => rand(1, 5),
                 'title' => $faker->realText(rand(40, 60)),
-                'created_at' => $faker->date('Y-m-d'),
+                'created_at' => $faker->date(),
                 'description' => $faker->realText(rand(1000, 2500)),
                 'image' => rand(0, 1) ? 'img/news.jpg' : null,
                 'isPrivate' => (boolean)rand(0, 1)
