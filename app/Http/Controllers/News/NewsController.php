@@ -40,16 +40,18 @@ class NewsController extends Controller
     /**
      * Отображение одной новости по переданному идентификатору
      *
-     * @param int $id
+     *
      * @return \Illuminate\View\View
      */
-    public function showNewsOne($id)
+    public function showNewsOne()
     {
-        $newsOne = News::getNewsOne($id);
-        $currentCategoryName = News::getCategory($newsOne->category_id)->name;
 
-        return view('news/newsOne', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
-            'categoryName' => $currentCategoryName, 'newsOne' => $newsOne]);
+        dd(News::all());
+//        $newsOne::query()->where('is_private', 0)->get();
+//        dd($newsOne);
+
+//        return view('news/newsOne', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+//        'categoryName' => "Заглушка", 'newsOne' => $newsOne]);
     }
 
 

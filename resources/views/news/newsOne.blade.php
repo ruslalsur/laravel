@@ -10,12 +10,12 @@
     <div class="content">
         <h4 class="my-4">Новость из категории
             <a class="text-decoration-none"
-               href="{{ route('news.currentCategory', $newsOne->category_id) }}">
-                "{{ $categoryName }}"
+{{--               href="{{ route('news.currentCategory', $newsOne->category_id) }}">--}}
+                >"{{ $categoryName }}"
             </a>
             от <small>{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small>
         </h4>
-
+{{--@dd($newsOne);--}}
         <div class="shadow-sm p-3 mb-3 bg-white rounded">
             <h3 class="mt-0 mb-3 ml-2">{{ $newsOne->title }}</h3>
             <div class="row">

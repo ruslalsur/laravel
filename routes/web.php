@@ -22,7 +22,7 @@ Route::group(
     function () {
         Route::get('/categories', 'NewsController@showAllCategories')->name('categories');
         Route::get('/currentCategory/{id}', 'NewsController@showCurrentCategoryNews')->name('currentCategory');
-        Route::get('/newsOne/{id}', 'NewsController@showNewsOne')->name('newsOne');
+        Route::get('/newsOne', 'NewsController@showNewsOne')->name('newsOne');
         Route::get('/about', 'AboutController@index')->name('about');
         Route::get('/download/{id}', 'NewsController@download')->name('download');
     }
