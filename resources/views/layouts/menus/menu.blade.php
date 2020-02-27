@@ -14,7 +14,7 @@
 @endif
 
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('news.about') }}">Мы</a>
+    <a class="nav-link" href="{{ route('about') }}">Мы</a>
 </li>
 </ul>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\News;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\News;
 use App\Users;
@@ -10,64 +11,60 @@ use Illuminate\Http\JsonResponse;
 class NewsController extends Controller
 {
     /**
-     * Отображение списка всех категорий
+     * Отображение списка категорий новостей
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showAllCategories()
     {
-        return view('news/categories', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getCategories()]);
+        return view('news/categories', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+            'categories' => Category::query()->get()]);
     }
 
 
     /**
-     * Отображение новостей по переданной категории
+     * Отображение новостей по категории
      *
-     * @param int $category_id
+     * @param Category $category
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showCurrentCategoryNews($category_id)
+    public function showCurrentCategoryNews(Category $category)
     {
         return view('news/currentCategoryNews',
             [
                 'authorizedUserInfo' => Users::getAuthorizedUserInfo(),
-                'category_id' => $category_id,
-                'currentCategoryName' => News::getCategory($category_id)->name, 'currentCategoryNews' => News::getCurrentCategoryNews($category_id)
+                'category_id' => $category->id,
+                'currentCategoryName' => $category->name,
+                'currentCategoryNews' => News::query()->where('category_id', $category->id)->paginate(7)
             ]);
     }
 
 
     /**
-     * Отображение одной новости по переданному идентификатору
+     * Отображение одной новости
      *
      *
      * @return \Illuminate\View\View
      */
-    public function showNewsOne()
+    public function showNewsOne(News $news)
     {
-
-        dd(News::all());
-//        $newsOne::query()->where('is_private', 0)->get();
-//        dd($newsOne);
-
-//        return view('news/newsOne', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
-//        'categoryName' => "Заглушка", 'newsOne' => $newsOne]);
+        return view('news/newsOne', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+        'categoryName' => Category::query()->where('id', $news->category_id)->first()->name, 'newsOne' => $news]);
     }
 
 
     /**
      * отдача новости в формате json по запросу пользователя
      *
-     * @param $newsId
+     * @param News $news
      * @return JsonResponse|\Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function download($newsId)
+    public function download(News $news)
     {
-        $userQueryNews = News::getNewsOne($newsId);
-        $filename = 'news_' . $userQueryNews->id . '_from_' . $userQueryNews->event_date;
+        $filename = 'news_' . $news->id . '_from_' . $news->event_date;
 
         return response()
-            ->json($userQueryNews)
+            ->json($news)
             ->header('Content-Disposition', 'attachment; filename = "' . $filename . '.json"')
             ->setEncodingOptions(JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     }

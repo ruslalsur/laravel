@@ -22,6 +22,7 @@ class NewsCrudController extends Controller
      */
     public function create()
     {
+
         if ($this->request->isMethod('get')) {
 
             return view('admin.addNews', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),'categories' => News::getCategories()]);
@@ -31,20 +32,26 @@ class NewsCrudController extends Controller
         if ($this->request->file('image')) {
             $image = \Storage::putFile('public', $this->request->file('image'));
             $image = \Storage::url($image);
+
         }
 
-        $newNews = [
-            'category_id' => $this->request['categoryId'],
-            'event_date' => date("Y-m-d H:i:s"),
-            'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
-            'title' => $this->request['title'],
-            'image' => $image,
-            'description' => $this->request['description'],
-        ];
+        $newsNew = new News();
+        $newsNew->fill($this->request->all());
+        $newsNew->save();
+        die('saved');
 
-        DB::table('news')->insert($newNews);
+//        $newNews = [
+//            'category_id' => $this->request['categoryId'],
+//            'event_date' => date("Y-m-d H:i:s"),
+//            'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
+//            'title' => $this->request['title'],
+//            'image' => $image,
+//            'description' => $this->request['description'],
+//        ];
 
-        return redirect()->route('news.currentCategory', $newNews['category_id'])->with('success', 'Новость добавлена');
+//        DB::table('news')->insert($newNews);
+
+//        return redirect()->route('news.currentCategory', $newNews['category_id'])->with('success', 'Новость добавлена');
     }
 
 

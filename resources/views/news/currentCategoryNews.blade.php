@@ -30,5 +30,6 @@
                 <h4>Ничего новенького</h4>
             @endforelse
         </div>
+        {{ $currentCategoryNews->links() }}
     </div>
 @endsection
