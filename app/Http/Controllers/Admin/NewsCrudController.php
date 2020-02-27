@@ -2,56 +2,46 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\News;
 use App\Users;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Storage;
 
 class NewsCrudController extends Controller
 {
     /**
      * Создание новой новости и/или новой категории вместе с ней
      *
-     * @param int $id идентификатор новости
      * @return Factory|RedirectResponse|View
      *
      */
     public function create()
     {
+        $newsNew = new News();
 
         if ($this->request->isMethod('get')) {
-
-            return view('admin.addNews', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),'categories' => News::getCategories()]);
+            return view('admin.addNews', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+                'categories' => Category::all(), 'newsOne' => $newsNew, 'title' => 'Создание новой', 'rout' => 'admin.add']);
         }
 
         $image = null;
         if ($this->request->file('image')) {
-            $image = \Storage::putFile('public', $this->request->file('image'));
-            $image = \Storage::url($image);
-
+            $image = Storage::putFile('public', $this->request->file('image'));
+            $image = Storage::url($image);
         }
 
-        $newsNew = new News();
         $newsNew->fill($this->request->all());
+        $newsNew->image = $image;
+        $newsNew->event_date = date("Y-m-d H:i:s");
+        $newsNew->is_private = $this->request->is_private ? 1 : 0;
         $newsNew->save();
-        die('saved');
 
-//        $newNews = [
-//            'category_id' => $this->request['categoryId'],
-//            'event_date' => date("Y-m-d H:i:s"),
-//            'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
-//            'title' => $this->request['title'],
-//            'image' => $image,
-//            'description' => $this->request['description'],
-//        ];
-
-//        DB::table('news')->insert($newNews);
-
-//        return redirect()->route('news.currentCategory', $newNews['category_id'])->with('success', 'Новость добавлена');
+        return redirect()->route('news.currentCategory', $newsNew['category_id'])->with('success', 'Новость добавлена');
     }
 
 
@@ -61,76 +51,84 @@ class NewsCrudController extends Controller
      * @param int $id идентификатор новости
      * @return Factory|RedirectResponse|Redirector|View
      */
-    public function update($id)
+    public function update(News $news)
     {
         if ($this->request->isMethod('get')) {
-            $newsOne = News::getNewsOne($id);
 
-            return view('admin.editNews',
-                ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => News::getCategories(),
-                    'currentCategoryName' => News::getCategory($newsOne->category_id)->name, 'newsOne' => $newsOne]);
+            return view('admin.addNews',
+                ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => Category::all(),
+                    'newsOne' => $news, 'title' => 'Изменение старой', 'rout' => 'admin.edit']);
         }
 
-        $image = null;
         if ($this->request->file('image')) {
-            $image = \Storage::putFile('public', $this->request->file('image'));
-            $image = \Storage::url($image);
+            $image = Storage::putFile('public', $this->request->file('image'));
+            $image = Storage::url($image);
         }
 
-        $updateData = [
-            'category_id' => $this->request['categoryId'],
-            'event_date' => date("Y-m-d H:i:s"),
-            'isPrivate' => (boolean)($this->request['isPrivate'] ?? false),
-            'title' => $this->request['title'],
-            'image' => $image ?? News::getNewsOne($id)->image,
-            'description' => $this->request['description']
-        ];
+        $news->fill($this->request->all());
+        if (isset($image)) {$news->image = $image;}
+        $news->is_private = $this->request->is_private ? 1 : 0; // патамушта приходит "on", а два делать это уже тогда можно радио
+        $news->save();
 
-        DB::table('news')->where('id', $id)->update($updateData);
-
-        return redirect()->route('news.newsOne', $id)->with('success', 'Эта новость была только что изменена');
+        return redirect()->route('news.newsOne', $news->id)->with('success', 'Эта новость была только что изменена');
     }
 
 
     /**
      * удаление новости
      *
-     * @param int $id идентификатор новости
+     * @param News $news модель новости
      * @return RedirectResponse|Redirector
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        $deleletedNewsCategory = News::getNewsOne($id)->category_id;
-        DB::table('news')->delete($id);
+        $deleletedNewsCategory = $news->category_id;
+        $news->delete();
 
         return redirect()->route('news.currentCategory', $deleletedNewsCategory)->with('success', 'Новость удалена');
     }
 
 
     /**
-     * добавление категорий
+     * добавление и удаление категорий
      *
      * @return Factory|RedirectResponse|Redirector|View
+     * @throws \Exception
      */
     public function categoryCreator()
     {
         if ($this->request->isMethod('get')) {
-            return view('admin.categoryCreator', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),'categories' => News::getCategories()]);
+            return view('admin.categoryCreator', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => Category::all()]);
+        }
+
+        if ($this->request->newCategoryName === null) {
+            return redirect()->route('admin.categoryCreator')->with('failure', 'Нужно ввести название категории,
+            чтобы удалить или добавть ее в список категорий');
         }
 
         switch ($this->request['submit']) {
-
             case 'addCategory':
-                if (News::createCategory($this->request['newCategoryName'])) {
-                    return redirect()->route('admin.categoryCreator')->with('success', 'Была создана категория ' . $this->request['newCategoryName']);
+                if (Category::query()->where('name', $this->request->newCategoryName)->exists()) {
+                    return redirect()->route('admin.categoryCreator')->with('failure', 'Категория "' . $this->request['newCategoryName'] . '" уже существует');
                 }
-                return redirect()->route('admin.categoryCreator')->with('failure', 'Ошибка создания категории ' . $this->request['newCategoryName']);
+
+                $category = new Category();
+                $category->name = $this->request->newCategoryName;
+                $category->save();
+
+                return redirect()->route('admin.categoryCreator')->with('success', 'Была создана категория ' . $this->request['newCategoryName']);
 
             case 'delCategory':
-                if (News::deleteCategory($this->request['newCategoryName'])) {
-                    return redirect()->route('admin.categoryCreator')->with('success', 'Была удалена категория ' . $this->request['newCategoryName']);
+                $targetCategory = Category::query()->where('name', $this->request->newCategoryName)->first();
+
+                if ($targetCategory->news()->exists()) {
+                    return redirect()->route('admin.categoryCreator')->with('failure', 'Категория "' .
+                        $this->request['newCategoryName'] . '" содержит новости, нужно удалить из нее новости, перед удалением категории');
                 }
-                return redirect()->route('admin.categoryCreator')->with('failure', 'Ошибка удаления категории ' . $this->request['newCategoryName']);
+
+                $targetCategory->delete();
+                return redirect()->route('admin.categoryCreator')->with('success', 'Была удалена категория ' . $this->request['newCategoryName']);
         }
     }
 

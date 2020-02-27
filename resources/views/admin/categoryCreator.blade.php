@@ -23,7 +23,7 @@
                 <tr>
                     <td><h6 class="font-weight-bolder">{{ $category->name }}</h6></td>
                     <td class="text-center">{{ $category->id }}</td>
-                    <td class="text-center">{{ count(\App\News::getCurrentCategoryNews($category->id)) }}</td>
+                    <td class="text-center">{{ $category->news()->get()->count() }}</td>
                 </tr>
             @endforeach
             </tbody>
@@ -58,7 +58,6 @@
         <div class="alert alert-primary alert-dismissible fade show" role="alert">
             <h4 class="alert-heading">Внимание!</h4>
             <p class="mb-0">Можно <span class="text-danger"><strong>удалить только пустую</strong></span> существующую категорию</p>
-            <p class="mb-0 mt-2">В <a class="font-weight-bold card-link" href="{{ route('admin.edit', 1) }}"> редакторе новостей</a> можно присвоить новостям другую категорию или же удалить все новости из этой категории</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
