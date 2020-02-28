@@ -20,13 +20,6 @@
                         <option value="{{ $category->id }}" @if($category->id == $newsOne->category_id) selected @endif>{{ $category->name }}</option>
                     @endforeach
                 </select>
-                <div class="input-group-append">
-                    <a class="btn btn-secondary"
-                            href="{{ route('admin.categoryCreator') }}"
-                            data-toggle="tooltip" data-placement="bottom" title="редактор категорий">
-                        Редактор категорий
-                    </a>
-                </div>
             </div>
 
             <div class="input-group mb-3">
