@@ -12,7 +12,7 @@
 
 // Атчипенцы
 Route::get('/', 'News\HomeController@index')->name('news.home');
-Route::get('/about', 'AboutController@index')->name('about');
+Route::get('/about', 'News\AboutController@index')->name('about');
 
 // Новости
 Route::group(
@@ -43,18 +43,21 @@ Route::group(
     }
 );
 
-// CRUD
-Route::group(
-    [
-        'prefix' => 'admin',
-        'namespace' => 'Admin',
-        'as' => 'admin.'
-    ],
-    function () {
-        Route::match(['GET', 'POST'],'/edit/{news}', 'NewsCrudController@update')->name('edit');
-        Route::match(['GET', 'POST'],'/add', 'NewsCrudController@create')->name('add');
-        Route::match(['GET', 'POST'],'/delete/{news}', 'NewsCrudController@destroy')->name('delete');
-        Route::match(['GET', 'POST'],'/categoryCreator', 'NewsCrudController@categoryCreator')->name('categoryCreator');
-        Route::get('/reset', 'NewsCrudController@reset')->name('reset');
-    }
-);
+//// CRUD
+//Route::group(
+//    [
+//        'prefix' => 'admin',
+//        'namespace' => 'Admin',
+//        'as' => 'admin.'
+//    ],
+//    function () {
+////        Route::match(['GET', 'POST'],'/edit/{news}', 'NewsCrudController@update')->name('edit');
+////        Route::match(['GET', 'POST'],'/add', 'NewsCrudController@create')->name('add');
+////        Route::delete('/delete/{news}', 'NewsCrudController@destroy')->name('delete');
+//        Route::match(['GET', 'POST'],'/categoryCreator', 'NewsCrudController@categoryCreator')->name('categoryCreator');
+//        Route::get('/reset', 'NewsCrudController@reset')->name('reset');
+//    }
+//);
+
+Route::resource('news', 'Admin\NewsCrudResourceController', ['except' => ['index', 'show']]);
+Route::resource('category', 'Admin\CategoryCrudResourceController')->only(['create', 'store', 'destroy']);

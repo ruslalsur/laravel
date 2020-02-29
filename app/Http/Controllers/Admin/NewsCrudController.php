@@ -37,7 +37,7 @@ class NewsCrudController extends Controller
 
         $newsNew->fill($this->request->all());
         $newsNew->image = $image;
-        $newsNew->event_date = date("Y-m-d H:i:s");
+        $newsNew->event_date = date("Y-m-d");
         $newsNew->is_private = $this->request->is_private ? 1 : 0;
         $newsNew->save();
 
@@ -83,7 +83,7 @@ class NewsCrudController extends Controller
      */
     public function destroy(News $news)
     {
-        $deleletedNewsCategory = $news->category_id;
+        $deleletedNewsCategory = $news->category;
         $news->delete();
 
         return redirect()->route('news.currentCategory', $deleletedNewsCategory)->with('success', 'Новость удалена');
@@ -130,18 +130,5 @@ class NewsCrudController extends Controller
                 $targetCategory->delete();
                 return redirect()->route('admin.categoryCreator')->with('success', 'Была удалена категория ' . $this->request['newCategoryName']);
         }
-    }
-
-
-    /**
-     * Сброс данных сессии
-     *
-     * @return RedirectResponse
-     */
-    public function reset()
-    {
-        session()->flush();
-
-        return redirect()->route('news.home')->with('failure', 'Все данные сессии токашта пропали');
     }
 }

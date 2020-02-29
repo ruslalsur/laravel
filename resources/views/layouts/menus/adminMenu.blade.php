@@ -12,7 +12,7 @@
             <li class="nav-item">
                 <a class="nav-link"
                    data-toggle="tooltip" data-placement="bottom" title="добавить новость"
-                   href="{{ route('admin.add') }}">
+                   href="{{ route('news.create') }}">
                     Создание новости
                 </a>
             </li>
@@ -20,16 +20,8 @@
             <li class="nav-item">
                 <a class="nav-link"
                    data-toggle="tooltip" data-placement="bottom" title="добавить категорию"
-                   href="{{ route('admin.categoryCreator') }}">
+                   href="{{ route('category.create') }}">
                     Создание категории
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link"
-                   data-toggle="tooltip" data-placement="bottom" title="сброс данных сессии"
-                   href="{{ route('admin.reset') }}">
-                    Сброс сессии
                 </a>
             </li>
         </ul>

@@ -33,7 +33,7 @@ class NewsController extends Controller
         return view('news/currentCategoryNews',
             [
                 'authorizedUserInfo' => Users::getAuthorizedUserInfo(),
-                'category_id' => $category->id,
+                'category_id' => $category,
                 'currentCategoryName' => $category->name,
                 'currentCategoryNews' => $category->news()->paginate(7)
             ]);

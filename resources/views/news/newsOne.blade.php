@@ -24,23 +24,27 @@
                          class="embed-responsive mt-2 card-img">
                     <div class="mt-2">
                         @isset($authorizedUserInfo)
-                            <a class="embed-responsive btn btn-outline-primary"
-                               href="{{ route('news.download', $newsOne->id) }}">
+                            <a class="embed-responsive btn btn-outline-secondary"
+                               href="{{ route('news.download', $newsOne) }}">
                                 Скачать
                             </a>
                         @endisset
                         @isset($authorizedUserInfo)
                             @if($authorizedUserInfo['role'] == 'admin')
                                 <a class="mb-2 mt-4 embed-responsive btn btn-primary shadow"
-                                   href="{{ route('admin.edit', $newsOne->id) }}">
+                                   href="{{ route('news.edit', $newsOne) }}">
                                     Изменить
                                 </a>
-                                <a class="embed-responsive font-weight-bolder btn btn-danger shadow-sm"
-                                   href="{{ route('admin.delete', $newsOne->id) }}"
-                                   data-toggle="tooltip" data-placement="bottom"
-                                   title="удаление текущей новости совсем (категория при удалении не затрагивается)">
-                                    Удалить
-                                </a>
+
+                                <form action="{{ route('news.destroy', $newsOne) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="embed-responsive font-weight-bolder btn btn-danger shadow-sm"
+                                            type="submit" data-toggle="tooltip" data-placement="bottom"
+                                            title="удаление текущей новости совсем (категория при удалении не затрагивается)">
+                                        Удалить
+                                    </button>
+                                </form>
                             @endif
                         @endisset
                     </div>

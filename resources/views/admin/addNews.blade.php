@@ -9,15 +9,16 @@
 @section('content')
     <div class="content pb-5">
         <h1 class="py-4">{{ $title }} новости</h1>
-        <form enctype="multipart/form-data" action="{{ route($rout, $newsOne->id) }}" method="post">
+        <form enctype="multipart/form-data" action="{{ route($rout, $newsOne) }}" method="post">
             @csrf
+            @method($method)
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="currentCategory">Категория</label>
                 </div>
                 <select name="category_id" class="custom-select" id="currentCategory">
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}" @if($category->id == $newsOne->category_id) selected @endif>{{ $category->name }}</option>
+                        <option value="{{ $category }}" @if($category->id == $newsOne->category_id) selected @endif>{{ $category->name }}</option>
                     @endforeach
                 </select>
             </div>
