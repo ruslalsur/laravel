@@ -20,9 +20,13 @@ class NewsCrudResourceController extends Controller
     {
         $newsNew = new News();
 
-        return view('admin.addNews', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
-            'categories' => Category::all(), 'newsOne' => $newsNew, 'title' => 'Создание новой', 'rout' => 'news.store',
-            'method' => 'POST']);
+        return view('admin.addNews',
+            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+                'categories' => Category::all(),
+                'newsOne' => $newsNew,
+                'title' => 'Создание новой',
+                'rout' => 'news.store',
+                'method' => 'POST']);
     }
 
     /**
@@ -44,9 +48,15 @@ class NewsCrudResourceController extends Controller
         $newsNew->image = $image;
         $newsNew->event_date = date("Y-m-d");
         $newsNew->is_private = $this->request->is_private ? 1 : 0;
-        $newsNew->save();
 
-        return redirect()->route('news.currentCategory', $newsNew->category())->with('success', 'Новость добавлена');
+        if (isset($newsNew->title) & isset($newsNew->description)) {
+            $newsNew->save();
+            return redirect()->route('news.currentCategory',
+                $newsNew->category())->with('success', 'Новость добавлена');
+        }
+
+        return redirect()->route('news.create',
+            $newsNew->category())->with('failure', 'Ошибка заполнения полей');
     }
 
     /**
@@ -58,8 +68,12 @@ class NewsCrudResourceController extends Controller
     public function edit(News $news)
     {
         return view('admin.addNews',
-            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => Category::all(),
-                'newsOne' => $news, 'title' => 'Изменение старой', 'rout' => 'news.update', 'method' => 'PUT']);
+            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+                'categories' => Category::all(),
+                'newsOne' => $news,
+                'title' => 'Изменение старой',
+                'rout' => 'news.update',
+                'method' => 'PUT']);
     }
 
     /**
@@ -77,10 +91,11 @@ class NewsCrudResourceController extends Controller
 
         $news->fill($this->request->all());
         if (isset($image)) {$news->image = $image;}
-        $news->is_private = $this->request->is_private ? 1 : 0; // патамушта приходит "on", а два делать это уже тогда можно радио
+        $news->is_private = $this->request->is_private ? 1 : 0;
         $news->save();
 
-        return redirect()->route('news.newsOne', $news)->with('success', 'Эта новость была только что изменена');
+        return redirect()->route('news.newsOne',
+            $news)->with('success', 'Эта новость была только что изменена');
     }
 
     /**
@@ -98,6 +113,7 @@ class NewsCrudResourceController extends Controller
         } catch (Exception $e) {
         }
 
-        return redirect()->route('news.currentCategory', $deleletedNewsCategory)->with('success', 'Новость удалена');
+        return redirect()->route('news.currentCategory',
+            $deleletedNewsCategory)->with('success', 'Новость удалена');
     }
 }

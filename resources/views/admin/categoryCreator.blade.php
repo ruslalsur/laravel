@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="content pb-5">
+    <div class="content pb-2">
         <h1 class="py-4">Редактор категорий</h1>
 
         <table class="table table-borderless">
@@ -30,7 +30,6 @@
         </table>
 
         <div class="input-group-prepend">
-
             <form class="input-group mr-2" action="{{ route('category.destroy', $category) }}" method="post">
                 @csrf
                 @method('DELETE')
@@ -39,7 +38,7 @@
                         id="submit_delCategory"
                         type="submit"
                         data-toggle="tooltip" data-placement="bottom" title="удаление старой категории">
-                    Удалить
+                    x
                 </button>
                 <select name="id" class="custom-select" id="currentCategory">
                     @foreach($categories as $category)
@@ -59,18 +58,25 @@
                             id="submit_newCategory"
                             type="submit"
                             data-toggle="tooltip" data-placement="bottom" title="создание новой категории">
-                        Добавить
+                        +
                     </button>
                 </div>
             </form>
+
         </div>
+        <div class="mt-3 d-flex justify-content-center">{{ $categories->links() }}</div>
     </div>
 
     <div class="alert alert-primary alert-dismissible fade show" role="alert">
         <h4 class="alert-heading">Внимание!</h4>
-        <p class="mb-0">Можно <span class="text-danger"><strong>удалить только пустую</strong></span>
-            существующую
-            категорию</p>
+        <p class="mb-0">Можно
+            <span class="text-danger">
+                <strong>
+                    удалить только пустую
+                </strong>
+            </span>
+            существующую категорию
+        </p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

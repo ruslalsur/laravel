@@ -15,7 +15,7 @@ class CategoryCrudResourceController extends Controller
      */
     public function create()
     {
-        return view('admin.categoryCreator', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => Category::all()]);
+        return view('admin.categoryCreator', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => Category::query()->paginate(5)]);
     }
 
     /**

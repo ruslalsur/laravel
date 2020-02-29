@@ -57,11 +57,14 @@
                                     class="font-weight-bolder btn btn-sm btn-primary shadow-sm"
                                     data-toggle="tooltip" data-placement="bottom"
                                     title="создание новой новости (будет создана новая категория или новость добавиться в указанную существующую)">
-                                @if($newsOne->id)Применить@elseСоздать@endif
+                                @if($newsOne->id)
+                                    Применить
+                                @else
+                                    Создать
+                                @endif
                             </button>
                         </div>
                     </div>
-
                 </div>
                 <div class="input-group col-9">
                     <textarea class="form-control" name="description" id="newsBody" rows="10"
