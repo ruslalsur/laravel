@@ -15,12 +15,12 @@ class CreateTableNews extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->comment('коментарий');
-            $table->integer('category_id')->nullable(true);;
+            $table->bigInteger('category_id')->unsigned()->default(1);
             $table->string('title');
             $table->text('description');
             $table->string('image')->nullable(true);
-            $table->dateTime('event_date');
-            $table->boolean('isPrivate')->default(false);
+            $table->date('event_date');
+            $table->boolean('is_private')->default(false);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

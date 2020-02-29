@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Category;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
@@ -23,7 +23,7 @@ class ExampleTest extends TestCase
     {
         $response = $this->get(route('news.categories'));
         $response->assertViewIs('news.categories')
-            ->assertViewHas($key = 'categories', \App\News::getCategories())
+            ->assertViewHas($key = 'categories', Category::all())
             ->assertSee('новостей')
             ->assertDontSeeText('приватна');
     }
@@ -37,7 +37,7 @@ class ExampleTest extends TestCase
     public function testJsonDataFragment()
     {
         $response = $this->get(route('news.download', 1));
-        $response->assertJsonFragment(["isPrivate" => 1])
+        $response->assertJsonFragment(['updated_at' => null])
             ->assertJsonMissing(['category_id' => 2]);
     }
 

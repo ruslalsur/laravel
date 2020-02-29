@@ -4,19 +4,25 @@
             <li class="nav-item">
                 <a class="nav-link"
                    data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
-                   href="{{ route('news.categories') }}">Категории</a>
+                   href="{{ route('news.categories') }}">
+                    Категории
+                </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link"
                    data-toggle="tooltip" data-placement="bottom" title="добавить новость"
-                   href="{{ route('admin.add', 1) }}">Создание новости</a>
+                   href="{{ route('news.create') }}">
+                    Создание новости
+                </a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link"
-                   data-toggle="tooltip" data-placement="bottom" title="сброс данных сессии"
-                   href="{{ route('admin.reset') }}">Сброс сессии</a>
+                   data-toggle="tooltip" data-placement="bottom" title="добавить категорию"
+                   href="{{ route('category.create') }}">
+                    Создание категории
+                </a>
             </li>
         </ul>
     </div>
