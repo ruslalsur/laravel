@@ -18,7 +18,7 @@
                 </div>
                 <select name="category_id" class="custom-select" id="currentCategory">
                     @foreach($categories as $category)
-                        <option value="{{ $category }}" @if($category->id == $newsOne->category_id) selected @endif>{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" @if($category->id == $newsOne->category_id) selected @endif>{{ $category->name }}</option>
                     @endforeach
                 </select>
             </div>
