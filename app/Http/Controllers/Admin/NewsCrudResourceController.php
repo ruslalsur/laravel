@@ -7,7 +7,8 @@ use App\News;
 use App\Http\Controllers\Controller;
 use App\Users;
 use Exception;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
+use Storage;
 
 class NewsCrudResourceController extends Controller
 {
@@ -19,6 +20,10 @@ class NewsCrudResourceController extends Controller
     public function create()
     {
         $newsNew = new News();
+
+        if (!empty($this->request->old())) {
+            $newsNew->fill($this->request->old());
+        }
 
         return view('admin.addNews',
             ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
@@ -33,10 +38,13 @@ class NewsCrudResourceController extends Controller
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws ValidationException
      */
     public function store()
     {
         $newsNew = new News();
+
+        $newsNew->fill($this->validate($this->request, News::rules(), [], News::attributeNames()));
 
         $image = null;
         if ($this->request->file('image')) {
@@ -44,29 +52,27 @@ class NewsCrudResourceController extends Controller
             $image = Storage::url($image);
         }
 
-        $newsNew->fill($this->request->all());
         $newsNew->image = $image;
         $newsNew->event_date = date("Y-m-d");
         $newsNew->is_private = $this->request->is_private ? 1 : 0;
+        $newsNew->save();
 
-        if (isset($newsNew->title) & isset($newsNew->description)) {
-            $newsNew->save();
-            return redirect()->route('news.currentCategory',
-                $newsNew->category())->with('success', 'Новость добавлена');
-        }
-
-        return redirect()->route('news.create',
-            $newsNew->category())->with('failure', 'Ошибка заполнения полей');
+        return redirect()->route('news.currentCategory',
+            $newsNew->category())->with('success', 'Новость добавлена');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  News $news
+     * @param News $news
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(News $news)
     {
+        if (!empty($this->request->old())) {
+            $news->fill($this->request->old());
+        }
+
         return view('admin.addNews',
             ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
                 'categories' => Category::all(),
@@ -79,18 +85,22 @@ class NewsCrudResourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  News $news
+     * @param News $news
      * @return \Illuminate\Http\RedirectResponse
+     * @throws ValidationException
      */
     public function update(News $news)
     {
+        $news->fill($this->validate($this->request, News::rules(), [], News::attributeNames()));
+
         if ($this->request->file('image')) {
             $image = Storage::putFile('public', $this->request->file('image'));
             $image = Storage::url($image);
         }
 
-        $news->fill($this->request->all());
-        if (isset($image)) {$news->image = $image;}
+        if (isset($image)) {
+            $news->image = $image;
+        }
         $news->is_private = $this->request->is_private ? 1 : 0;
         $news->save();
 
@@ -106,7 +116,7 @@ class NewsCrudResourceController extends Controller
      */
     public function destroy(News $news)
     {
-        $deleletedNewsCategory = $news->category();
+        $deletedNewsCategory = $news->category();
 
         try {
             $news->delete();
@@ -114,6 +124,6 @@ class NewsCrudResourceController extends Controller
         }
 
         return redirect()->route('news.currentCategory',
-            $deleletedNewsCategory)->with('success', 'Новость удалена');
+            $deletedNewsCategory)->with('success', 'Новость удалена');
     }
 }

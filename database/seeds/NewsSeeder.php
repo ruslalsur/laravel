@@ -1,5 +1,6 @@
 <?php
 
+use App\News;
 use Illuminate\Database\Seeder;
 
 class NewsSeeder extends Seeder
@@ -11,7 +12,8 @@ class NewsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('news')->insert($this->getData());
+        factory(News::class, 100)->create();
+//        DB::table('news')->insert($this->getData());
     }
 
     private function getData()

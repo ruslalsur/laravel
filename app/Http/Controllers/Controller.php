@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\News;
 use App\Users;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
