@@ -26,6 +26,11 @@ class News extends Model
         return $this->belongsTo(Category::class, 'category_id')->first();
     }
 
+    /**
+     * Правила валидации
+     *
+     * @return array
+     */
     public static function rules() {
         $table = (new Category())->getTable();
 
@@ -38,6 +43,11 @@ class News extends Model
         ];
     }
 
+    /**
+     * Кастомизация наименований валидируемых полей при выводе сообщений об ошибках
+     *
+     * @return array
+     */
     public static function attributeNames() {
         return [
             'title' => '"Заголовок"',
