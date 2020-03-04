@@ -20,11 +20,11 @@
                         <label class="input-group-text" for="currentCategory">Категория</label>
                     </div>
                     <select name="category_id" class="custom-select" id="currentCategory" aria-describedby="titleValidateBlock">
-                        <option value="600000000006000000000006">Исключительно для злоумышленников</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}"
                                     @if($category->id == $newsOne->category_id) selected @endif>{{ $category->name }}</option>
                         @endforeach
+{{--                        <option value="600000000006000000000006">Исключительно для злоумышленников</option>--}}
                     </select>
                 </div>
                 @if($errors->has('category_id'))
