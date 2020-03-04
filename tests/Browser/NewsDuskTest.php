@@ -8,9 +8,12 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Throwable;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class NewsDuskTest extends DuskTestCase
 {
+    use RefreshDatabase;
+
     private $news;
 
     /**
