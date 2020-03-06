@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Auth;
+use Auth as AuthAlias;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'is_admin',
     ];
 
     /**
@@ -36,4 +38,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Правила валидации
+     *
+     * @return array
+     */
+    public static function rules() {
+        return [
+            'name' => 'required|string|min:5|max:50',
+            'email' => 'required|email',
+            'password' => 'required',
+            'newPassword' => 'required|string|min:3',
+            'is_admin' => 'sometimes|in:on'
+        ];
+    }
+
+    public static function attributeNames() {
+        return [
+            'name' => 'Пользователь',
+            'password' => 'Старый пароль',
+            'newPassword' => 'Новый пароль'
+        ];
+    }
 }

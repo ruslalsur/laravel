@@ -29,8 +29,7 @@
                                 Скачать
                             </a>
                         @endisset
-                        @isset($authorizedUserInfo)
-                            @if($authorizedUserInfo['role'] == 'admin')
+                            @if(Auth::user()->is_admin)
                                 <a class="mb-2 mt-4 embed-responsive btn btn-primary shadow"
                                    href="{{ route('news.edit', $newsOne) }}">
                                     Изменить
@@ -46,7 +45,6 @@
                                     </button>
                                 </form>
                             @endif
-                        @endisset
                     </div>
                 </div>
                 <div class="col-9">

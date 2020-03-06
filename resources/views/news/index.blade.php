@@ -3,7 +3,7 @@
 @section('title')@parentприветствия@endsection
 
 @section('menu')
-    @include('layouts.menus.adminMenu')
+    @include('layouts.menus.menu')
 @endsection
 
 @section('content')
