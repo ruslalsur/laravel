@@ -45,7 +45,7 @@ Route::group(
 
 // CRUD
 Route::resource('news', 'Admin\NewsCrudResourceController', ['except' => ['index', 'show']])->middleware('auth');
-Route::match(['GET', 'POST'], '/admin/profile{user}', 'Admin\ProfileController@update')->name('admin.updateProfile')->middleware('auth');
+Route::match(['GET', 'POST'], '/admin/profile{user}', 'Admin\ProfileController@update')->name('admin.updateProfile')->middleware(['auth', 'profval']);
 Route::resource('category', 'Admin\CategoryCrudResourceController')->only(['create', 'store', 'destroy']);
 
 //Авторизация

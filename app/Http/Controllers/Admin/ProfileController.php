@@ -17,8 +17,6 @@ class ProfileController extends Controller
             return view('admin.profile', ['user' => $user]);
         }
 
-        $this->validate($this->request, User::rules(), [], User::attributeNames());
-
         if (Hash::check($this->request->post('password'), $user->password) |
             $this->request->post('password') === $user->password) {
             $user->fill([
