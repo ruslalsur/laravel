@@ -23,19 +23,18 @@
                     <img src="{{  $newsOne->image ? asset($newsOne->image) : asset('img/no-image.png') }}" alt="image"
                          class="embed-responsive mt-2 card-img">
                     <div class="mt-2">
-                        @isset($authorizedUserInfo)
+                        @if (!Auth::guest())
                             <a class="embed-responsive btn btn-outline-secondary"
                                href="{{ route('news.download', $newsOne) }}">
                                 Скачать
                             </a>
-                        @endisset
                             @if(Auth::user()->is_admin)
                                 <a class="mb-2 mt-4 embed-responsive btn btn-primary shadow"
-                                   href="{{ route('news.edit', $newsOne) }}">
+                                   href="{{ route('admin.news.edit', $newsOne) }}">
                                     Изменить
                                 </a>
 
-                                <form action="{{ route('news.destroy', $newsOne) }}" method="post">
+                                <form action="{{ route('admin.news.destroy', $newsOne) }}" method="post">
                                     @csrf
                                     @method('delete')
                                     <button class="embed-responsive font-weight-bolder btn btn-danger shadow-sm"
@@ -45,6 +44,7 @@
                                     </button>
                                 </form>
                             @endif
+                        @endif
                     </div>
                 </div>
                 <div class="col-9">

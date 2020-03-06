@@ -17,6 +17,12 @@
                 admin@admin.com
                 <small class="text-danger">(123)</small>
             </h4>
+            <h4>
+                <small>логин</small>
+                <small class="text-danger">(пароль)</small>
+                user@user.com
+                <small class="text-danger">(123)</small>
+            </h4>
         </div>
     </div>
 @endsection

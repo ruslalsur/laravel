@@ -30,7 +30,7 @@
         </table>
 
         <div class="input-group-prepend">
-            <form class="input-group mr-2" action="{{ route('category.destroy', $category) }}" method="post">
+            <form class="input-group mr-2" action="{{ route('admin.category.destroy', $category) }}" method="post">
                 @csrf
                 @method('DELETE')
 
@@ -47,7 +47,7 @@
                 </select>
             </form>
 
-            <form class="input-group" action="{{ route('category.store') }}" method="post">
+            <form class="input-group" action="{{ route('admin.category.store') }}" method="post">
                 @csrf
                 <div class="input-group">
                     <input type="text" name="name" class="form-control"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 
 class IsAdmin
@@ -15,6 +16,9 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
+        if (!Auth::user()->is_admin) {
+            return redirect()->route('home');
+        }
         return $next($request);
     }
 }

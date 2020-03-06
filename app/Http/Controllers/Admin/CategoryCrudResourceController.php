@@ -15,7 +15,7 @@ class CategoryCrudResourceController extends Controller
      */
     public function create()
     {
-        return view('admin.categoryCreator', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(), 'categories' => Category::query()->paginate(5)]);
+        return view('admin.categoryCreator', ['categories' => Category::query()->paginate(5)]);
     }
 
     /**
@@ -27,7 +27,7 @@ class CategoryCrudResourceController extends Controller
     public function store()
     {
         if ($this->request->name === null) {
-            return redirect()->route('category.create')->with('failure', 'Нужно ввести название категории,
+            return redirect()->route('admin.category.create')->with('failure', 'Нужно ввести название категории,
             чтобы удалить или добавть ее в список категорий');
         }
 

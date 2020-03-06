@@ -12,12 +12,12 @@
 
         <div class="shadow p-3 mb-3 bg-white rounded">
             @forelse($currentCategoryNews as $newsOne)
-                @isset($authorizedUserInfo)
+                @if(!Auth::guest())
                     <a class="nav-link font-weight-bolder" href="{{ route('news.newsOne', $newsOne->id) }}">
                         <small class="mr-2 text-secondary">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small> {{ $newsOne->title }}</a>
                 @else
                     @if($newsOne->is_private)
-                        <a class="nav-link font-weight-bolder" href="{{ route('news.currentCategory', $newsOne->category_id) }}">
+                        <a class="nav-link font-weight-bolder" href="{{ route('login') }}">
                             <small class="mr-2 text-secondary ">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small>
                             {{ $newsOne->title }} <span class="badge badge-danger">приватная</span></a>
                     @else
@@ -25,7 +25,7 @@
                             <small class="mr-2 text-secondary ">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small>
                             {{ $newsOne->title }}</a>
                     @endif
-                @endisset
+                @endif
             @empty
                 <h4>Ничего новенького</h4>
             @endforelse

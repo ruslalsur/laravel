@@ -17,8 +17,7 @@ class NewsController extends Controller
      */
     public function showAllCategories()
     {
-        return view('news/categories', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
-            'categories' => Category::all()]);
+        return view('news/categories', ['categories' => Category::all()]);
     }
 
 
@@ -32,7 +31,6 @@ class NewsController extends Controller
     {
         return view('news/currentCategoryNews',
             [
-                'authorizedUserInfo' => Users::getAuthorizedUserInfo(),
                 'category_id' => $category,
                 'currentCategoryName' => $category->name,
                 'currentCategoryNews' => $category->news()->paginate(7)
@@ -48,8 +46,7 @@ class NewsController extends Controller
      */
     public function showNewsOne(News $news)
     {
-        return view('news/newsOne', ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
-        'categoryName' => $news->category()->name, 'newsOne' => $news]);
+        return view('news/newsOne', ['categoryName' => $news->category()->name, 'newsOne' => $news]);
     }
 
 

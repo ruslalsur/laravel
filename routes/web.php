@@ -29,29 +29,36 @@ Route::group(
     }
 );
 
-// Авторизация старая
-//Route::group(
-//    [
-//        'prefix' => 'auth',
-//        'namespace' => 'NewsAuth',
-//        'as' => 'auth.'
-//    ],
-//    function () {
-//        Route::match(['GET', 'POST'], '/reg', 'AuthController@reg')->name('reg');
-//        Route::match(['GET', 'POST'], '/login', 'AuthController@login')->name('login');
-//        Route::get('/logout', 'AuthController@logout')->name('logout');
-//    }
-//);
 
 // CRUD
-Route::resource('news', 'Admin\NewsCrudResourceController', ['except' => ['index', 'show']])->middleware('auth');
-Route::match(['GET', 'POST'], '/admin/profile{user}', 'Admin\ProfileController@update')->name('admin.updateProfile')->middleware(['auth', 'profval']);
-Route::resource('category', 'Admin\CategoryCrudResourceController')->only(['create', 'store', 'destroy']);
+Route::group(
+    [
+        'prefix' => 'admin',
+        'namespace' => 'Admin',
+        'as' => 'admin.',
+        'middleware' => ['auth', 'isAdmin']
+    ],
+    function () {
+        Route::resource('news', 'NewsCrudResourceController', ['except' => ['index', 'show']]);
+        Route::match(['GET', 'POST'], '/profile{user}', 'ProfileController@update')->name('updateProfile')->middleware(['auth', 'profVal', 'isAdmin']);
+        Route::resource('category', 'CategoryCrudResourceController')->only(['create', 'store', 'destroy']);
+    }
+);
 
-//Авторизация
-//Auth::routes();
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+// Авторизация
+Route::group(
+    [
+        'prefix' => 'auth',
+        'namespace' => 'Auth',
+        'as' => 'auth.'
+    ],
+    function () {
+        Route::get('login', 'LoginController@showLoginForm')->name('login');
+        Route::post('login', 'LoginController@login');
+        Route::post('logout', 'LoginController@logout')->name('logout');
 
+        Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
+        Route::post('register', 'RegisterController@register');
+    }
+);
 

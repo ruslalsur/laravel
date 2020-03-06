@@ -25,9 +25,6 @@ class Controller extends BaseController
         date_default_timezone_set('Asia/Krasnoyarsk');
 
         $this->request = $request;
-
-        // запись в сессию исходных данных
-        Users::init();
     }
 }
 

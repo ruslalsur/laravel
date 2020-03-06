@@ -26,12 +26,13 @@ class NewsCrudResourceController extends Controller
         }
 
         return view('admin.addNews',
-            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+            [
                 'categories' => Category::all(),
                 'newsOne' => $newsNew,
                 'title' => 'Создание новой',
-                'rout' => 'news.store',
-                'method' => 'POST']);
+                'rout' => 'admin.news.store',
+                'method' => 'POST'
+            ]);
     }
 
     /**
@@ -74,12 +75,13 @@ class NewsCrudResourceController extends Controller
         }
 
         return view('admin.addNews',
-            ['authorizedUserInfo' => Users::getAuthorizedUserInfo(),
+            [
                 'categories' => Category::all(),
                 'newsOne' => $news,
                 'title' => 'Изменение старой',
-                'rout' => 'news.update',
-                'method' => 'PUT']);
+                'rout' => 'admin.news.update',
+                'method' => 'PUT'
+            ]);
     }
 
     /**
