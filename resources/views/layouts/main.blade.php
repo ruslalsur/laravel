@@ -5,6 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <title>@section('title')Страница @show</title>
@@ -14,8 +17,8 @@
 
 <header class="pb-5">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="text-primary navbar-brand font-weight-bolder {{ request()->routeIs('news.home') ? 'active' : "" }}"
-           href="{{ route('news.home') }}">НОВОСТИ</a>
+        <a class="text-primary navbar-brand font-weight-bolder {{ request()->routeIs('home') ? 'active' : "" }}"
+           href="{{ route('home') }}">НОВОСТИ</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="#navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,31 +28,36 @@
         @yield('menu')
 
         <div class="collapse navbar-collapse flex justify-content-md-end" id="navbarNavDropdown">
-            <ul class="navbar-nav  font-weight-bolder my-2">
-
-                @isset($authorizedUserInfo)
+            <ul class="navbar-nav ml-auto">
+                <!-- Authentication Links -->
+                @guest
                     <li class="nav-item">
-                        <a class="text-success nav-link"
-                           data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
-                           href="{{ route('news.home') }}">
-                            {{ $authorizedUserInfo['email'] }}
-                        </a>
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('auth.logout') }}">Выход</a>
-                    </li>
-
+                    @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                    @endif
                 @else
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('auth.reg') }}">Регистрация</a>
-                    </li>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('auth.login') }}">Вход</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
                     </li>
-                @endisset
+                @endguest
             </ul>
         </div>
     </nav>

@@ -10,9 +10,8 @@
 |
 */
 
-// Атчипенцы
-Route::get('/', 'News\HomeController@index')->name('news.home');
-Route::get('/about', 'News\AboutController@index')->name('about');
+//Страница приветствия
+Route::get('/', 'HomeController@index')->name('home');
 
 // Новости
 Route::group(
@@ -26,23 +25,33 @@ Route::group(
         Route::get('/currentCategory/{category}', 'NewsController@showCurrentCategoryNews')->name('currentCategory');
         Route::get('/newsOne{news}', 'NewsController@showNewsOne')->name('newsOne');
         Route::get('/download/{news}', 'NewsController@download')->name('download');
+        Route::get('/about', 'AboutController@index')->name('about');
     }
 );
 
-// Авторизация
-Route::group(
-    [
-        'prefix' => 'auth',
-        'namespace' => 'NewsAuth',
-        'as' => 'auth.'
-    ],
-    function () {
-        Route::match(['GET', 'POST'], '/reg', 'AuthController@reg')->name('reg');
-        Route::match(['GET', 'POST'], '/login', 'AuthController@login')->name('login');
-        Route::get('/logout', 'AuthController@logout')->name('logout');
-    }
-);
+// Авторизация старая
+//Route::group(
+//    [
+//        'prefix' => 'auth',
+//        'namespace' => 'NewsAuth',
+//        'as' => 'auth.'
+//    ],
+//    function () {
+//        Route::match(['GET', 'POST'], '/reg', 'AuthController@reg')->name('reg');
+//        Route::match(['GET', 'POST'], '/login', 'AuthController@login')->name('login');
+//        Route::get('/logout', 'AuthController@logout')->name('logout');
+//    }
+//);
 
 // CRUD
-Route::resource('news', 'Admin\NewsCrudResourceController', ['except' => ['index', 'show']]);
+Route::resource('news', 'Admin\NewsCrudResourceController', ['except' => ['index', 'show']])->middleware('auth');
+Route::match(['get', 'post'], '/admin/profile', 'Admin\ProfileController@update')->name('updateProfile')->middleware('auth');
 Route::resource('category', 'Admin\CategoryCrudResourceController')->only(['create', 'store', 'destroy']);
+
+//Авторизация
+//Auth::routes();
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+
