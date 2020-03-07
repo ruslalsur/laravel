@@ -50,12 +50,10 @@
             {{--            пароли--}}
             <div class="input-group mt-3">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="password">старый пароль</label>
+                    <label class="input-group-text" for="password">новый пароль</label>
                 </div>
-                <input name="password" value="{{ old('password') ?? $user->password }}" type="password"
-                       class="form-control"
-                       id="password" placeholder="старый"
-                       aria-describedby="passwordHelp">
+                <input name="password" type="password" class="form-control"
+                       id="password" placeholder="оставьте пустым, чтобы сохранить старый" aria-describedby="passwordHelp">
             </div>
             @if($errors->has('password'))
                 <small id="passwordHelp" class="form-text text-danger">
@@ -64,32 +62,15 @@
                     @endforeach
                 </small>
             @endif
-            <div class="input-group mt-3">
 
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="newPassword">новый пароль</label>
-                </div>
-                <input name="newPassword" value="{{ old('newPassword') ?? $user->password }}" type="password"
-                       class="form-control"
-                       id="newPassword" placeholder="новый"
-                       aria-describedby="newPasswordHelp">
-            </div>
-            @if($errors->has('password'))
-                <small id="passwordHelp" class="form-text text-danger">
-                    @foreach($errors->get('newPassword') as $error)
-                    {{ $error }}&NoBreak;
-                    @endforeach
-                </small>
-            @endif
-
-            {{--администратор ли--}}
+            {{--администратор, нет ли?--}}
             <div class="mt-2 form-group">
                 <div class="form-check-inline">
                     <input type="checkbox" name="is_admin" class="form-check-input form-check"
                            aria-describedby="isAdminValidateBlock"
                            @if($user->is_admin) checked @endif
                            data-toggle="tooltip" data-placement="bottom"
-                           title="а админимтратор ли"
+                           title="а не админимтратор ли часом"
                            id="isAdminCheck">
                     <label class="form-check-label col-form-label-lg pl-1" for="isAdminCheck">
                         права администратора
@@ -104,7 +85,8 @@
                 @endif
             </div>
 
-            <button type="submit" class="btn btn-primary font-weight-bolder mt-3">Применить</button>
+{{--            кнопка применить изменения--}}
+            <button type="submit" class="btn btn-primary font-weight-bolder mt-2">Применить</button>
         </form>
     </div>
 @endsection

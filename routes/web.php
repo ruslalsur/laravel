@@ -29,7 +29,6 @@ Route::group(
     }
 );
 
-
 // CRUD
 Route::group(
     [

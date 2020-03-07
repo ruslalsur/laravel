@@ -48,8 +48,7 @@ class User extends Authenticatable
         return [
             'name' => 'required|string|min:5|max:50',
             'email' => 'required|email',
-            'password' => 'required',
-            'newPassword' => 'required|string|min:3',
+            'password' => 'string|min:3|nullable',
             'is_admin' => 'sometimes|in:on'
         ];
     }
@@ -57,8 +56,7 @@ class User extends Authenticatable
     public static function attributeNames() {
         return [
             'name' => 'Пользователь',
-            'password' => 'Старый пароль',
-            'newPassword' => 'Новый пароль'
+            'password' => 'Новый пароль',
         ];
     }
 }
