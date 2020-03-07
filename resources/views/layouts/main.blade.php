@@ -34,7 +34,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('auth.login') }}">{{ __('Войти') }}</a>
                     </li>
-                    @if (Route::has('register'))
+                    @if (Route::has('auth.register'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('auth.register') }}">{{ __('Регистрация') }}</a>
                         </li>

@@ -57,12 +57,8 @@ Route::group(
         Route::post('login', 'LoginController@login');
         Route::post('logout', 'LoginController@logout')->name('logout');
 
-//        Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
-//        Route::post('register', 'RegisterController@register');
+        Route::get('register', 'RegisterController@showRegistrationForm')->name('register');
+        Route::post('register', 'RegisterController@register');
     }
 );
-
-//если регистрация в группе, то пункта меню этого нету, несмотря на то, что маршруты один в один
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
 
