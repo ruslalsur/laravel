@@ -15,7 +15,7 @@
                         Aдминистрирование <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <h5 class="card-header">Инструменты</h5>
+                        <h5 class="card-header alert-dark">Инструменты</h5>
                         <a class="dropdown-item"
                            data-toggle="tooltip" data-placement="bottom" title="редактор новостей"
                            href="{{ route('admin.news.create') }}">Создать новость</a>
@@ -26,7 +26,7 @@
                             Редактор категорий
                         </a>
 
-                        <h5 class="card-header">Пользователи</h5>
+                        <h5 class="card-header alert-dark">Пользователи</h5>
                         @foreach(\App\User::all() as $user)
                             <a class="dropdown-item"
                                data-toggle="tooltip" data-placement="bottom" title="пользователь"
