@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
-    protected $fillable = ['title', 'description', 'is_private', 'image', 'event_date', 'category_id'];
+    protected $fillable = ['title', 'description', 'is_private', 'image', 'event_date', 'category_id', 'news_source'];
 
     public function category()
     {

@@ -164,6 +164,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\MyServiceProvider::class,
+        Orchestra\Parser\XmlServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -230,7 +231,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'ide-helper' => Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        'ide-helper' => Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        'XmlParser' => Orchestra\Parser\Xml\Facade::class
     ],
 
 ];

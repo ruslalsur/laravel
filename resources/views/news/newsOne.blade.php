@@ -48,7 +48,10 @@
                     </div>
                 </div>
                 <div class="col-9">
-                    {{ $newsOne->description }}
+                    {{ htmlspecialchars_decode($newsOne->description) }}
+                    <div class="d-flex align-items-baseline justify-content-end">
+                        <a class="nav-link font-weight-bold" target="_blank" href="{{ $newsOne->news_source }}">Источник</a>
+                    </div>
                 </div>
             </div>
         </div>

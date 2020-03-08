@@ -29,7 +29,7 @@ Route::group(
     }
 );
 
-// CRUD
+// Администрирование
 Route::group(
     [
         'prefix' => 'admin',
@@ -41,6 +41,8 @@ Route::group(
         Route::resource('news', 'NewsCrudResourceController', ['except' => ['index', 'show']]);
         Route::match(['GET', 'POST'], '/profile{user}', 'ProfileController@update')->name('updateProfile')->middleware(['auth', 'profVal', 'isAdmin']);
         Route::resource('category', 'CategoryCrudResourceController')->only(['create', 'store', 'destroy']);
+        Route::get('/newsParsing', 'NewsParserController@index')->name('parse');
+
     }
 );
 

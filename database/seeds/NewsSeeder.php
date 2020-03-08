@@ -12,26 +12,6 @@ class NewsSeeder extends Seeder
      */
     public function run()
     {
-        factory(News::class, 100)->create();
-//        DB::table('news')->insert($this->getData());
-    }
-
-    private function getData()
-    {
-        $data = [];
-        $faker = Faker\Factory::create('ru_RU');
-
-        for($i=0;$i<100;$i++) {
-            $data[] = [
-                'category_id' => rand(1, 10),
-                'title' => $faker->realText(rand(40, 60)),
-                'event_date' => $faker->date("Y-m-d"),
-                'description' => $faker->realText(rand(1000, 2500)),
-                'image' => rand(0, 1) ? 'img/news.jpg' : null,
-                'is_private' => (boolean)rand(0, 1)
-            ];
-        }
-
-        return $data;
+        factory(News::class, 50)->create();
     }
 }

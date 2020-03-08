@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use Illuminate\Database\Seeder;
 
 class CategoriesSeeder extends Seeder
@@ -11,20 +12,6 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert($this->getData());
-    }
-
-    private function getData()
-    {
-        $data = [];
-        $faker = Faker\Factory::create('ru_RU');
-
-        for($i=0;$i<10;$i++) {
-            $data[] = [
-                'name' => $faker->realText(25),
-            ];
-        }
-
-        return $data;
+        factory(Category::class, 5)->create();
     }
 }

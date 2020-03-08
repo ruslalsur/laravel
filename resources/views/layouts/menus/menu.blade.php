@@ -26,6 +26,12 @@
                             Редактор категорий
                         </a>
 
+                        <a class="dropdown-item"
+                           data-toggle="tooltip" data-placement="bottom" title="редактор категорий"
+                           href="{{ route('admin.parse') }}">
+                            Получить новости
+                        </a>
+
                         <h5 class="card-header alert-dark">Пользователи</h5>
                         @foreach(\App\User::all() as $user)
                             <a class="dropdown-item"

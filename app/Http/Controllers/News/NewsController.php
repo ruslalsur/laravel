@@ -33,7 +33,7 @@ class NewsController extends Controller
             [
                 'category_id' => $category,
                 'currentCategoryName' => $category->name,
-                'currentCategoryNews' => $category->news()->paginate(7)
+                'currentCategoryNews' => $category->news()->paginate(10)
             ]);
     }
 

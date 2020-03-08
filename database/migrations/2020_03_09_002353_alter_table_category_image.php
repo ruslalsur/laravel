@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableCategories extends Migration
+class AlterTableCategoryImage extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,20 @@ class CreateTableCategories extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+        Schema::table('categories', function (Blueprint $table) {
+            $table->string('image')->after('name')->default('img/no-image.png');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
+    *
      * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn('image');
+        });
     }
 }
