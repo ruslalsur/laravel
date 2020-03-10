@@ -39,8 +39,8 @@ Route::group(
     ],
     function () {
         Route::resource('news', 'NewsCrudResourceController', ['except' => ['index', 'show']]);
-        Route::match(['GET', 'POST'], '/profile{user}', 'ProfileController@update')->name('updateProfile')->middleware(['auth', 'profVal', 'isAdmin']);
         Route::resource('category', 'CategoryCrudResourceController')->only(['create', 'store', 'destroy']);
+        Route::resource('user', 'UserCrudResourceController')->except('show');
 
         //парсинг новостей
         Route::get('/newsParsing', 'NewsParserController@index')->name('parse');
@@ -70,5 +70,8 @@ Route::group(
         Route::get('ya/response','SocialLoginController@responseYa')->name('yaResponse');
         Route::get('git', 'SocialLoginController@requestGit')->name('gitRequest');
         Route::get('git/response','SocialLoginController@responseGit')->name('gitResponse');
+
+        //личный кабинет
+        Route::match(['GET', 'POST'], '/profile', 'ProfileController@update')->name('updateProfile')->middleware(['auth', 'profVal']);
     }
 );

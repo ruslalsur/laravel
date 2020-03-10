@@ -15,7 +15,12 @@
                         Aдминистрирование <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <h5 class="card-header alert-dark">Инструменты</h5>
+                        <a class="dropdown-item"
+                           data-toggle="tooltip" data-placement="bottom" title="редактор категорий"
+                           href="{{ route('admin.parse') }}">
+                            Загрузить новости (RSS)
+                        </a>
+
                         <a class="dropdown-item"
                            data-toggle="tooltip" data-placement="bottom" title="редактор новостей"
                            href="{{ route('admin.news.create') }}">Создать новость</a>
@@ -23,17 +28,14 @@
                         <a class="dropdown-item"
                            data-toggle="tooltip" data-placement="bottom" title="редактор категорий"
                            href="{{ route('admin.category.create') }}">
-                            Редактор категорий
+                            Создать категорию
                         </a>
 
-                        <h5 class="card-header alert-dark">Пользователи</h5>
-                        @foreach(\App\User::all() as $user)
-                            <a class="dropdown-item"
-                               data-toggle="tooltip" data-placement="bottom" title="пользователь"
-                               href="{{ route('admin.updateProfile', $user) }}">
-                                {{$user->name}}
-                            </a>
-                        @endforeach
+                        <a class="dropdown-item"
+                           data-toggle="tooltip" data-placement="bottom" title="редактор категорий"
+                           href="{{ route('admin.user.index') }}">
+                            Создать пользователя
+                        </a>
                     </div>
                 </li>
             @endif

@@ -24,7 +24,6 @@ class NewsParserController extends Controller
             'https://news.yandex.ru/army.rss',
             'https://news.yandex.ru/auto.rss',
             'https://news.yandex.ru/health.rss',
-            'http://www.svobodanews.ru/rss/',
             'http://lenta.ru/rss',
             'http://vz.ru/rss.xml',
 
@@ -89,7 +88,7 @@ class NewsParserController extends Controller
                 'description' => $item['description'],
                 'event_date' => date("Y-m-d", strtotime($item['pubDate'])),
                 'image' => $xml['image'],
-                'is_private' => 0,
+                'is_private' => (boolean)rand(0, 1),
                 'news_source' => $item['link']
             ]);
             $news->save();
