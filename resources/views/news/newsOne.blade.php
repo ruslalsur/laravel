@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="d-flex flex-column justify-content-between col-3 mb-1">
                     <img src="{{  $newsOne->image ? asset($newsOne->image) : asset('img/no-image.png') }}" alt="image"
-                         class="embed-responsive mt-2 card-img">
+                         class="embed-responsive my-2 card-img">
                     <div class="mt-2">
                         @if (!Auth::guest())
                             <a class="embed-responsive btn btn-outline-secondary"
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-9">
-                    {{ htmlspecialchars_decode($newsOne->description) }}
+                    {!! $newsOne->description !!}
                     <div class="d-flex align-items-baseline justify-content-end">
                         <a class="nav-link font-weight-bold" target="_blank" href="{{ $newsOne->news_source }}">Источник</a>
                     </div>

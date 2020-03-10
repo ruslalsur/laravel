@@ -41,10 +41,12 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <img class="rounded border border-light p-1 mr-2" src="{{ Auth::user()->avatar }}"
+                                 alt="{{ Auth::user()->avatar }}" width="50" height="50">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
-
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('auth.logout') }}"
                                onclick="event.preventDefault();

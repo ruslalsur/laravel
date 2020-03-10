@@ -165,6 +165,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\MyServiceProvider::class,
         Orchestra\Parser\XmlServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -194,7 +195,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -232,7 +232,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'ide-helper' => Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        'XmlParser' => Orchestra\Parser\Xml\Facade::class
+        'XmlParser' => Orchestra\Parser\Xml\Facade::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

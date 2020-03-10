@@ -53,9 +53,17 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary mr-3">
                                     {{ __('Login') }}
                                 </button>
+
+                                <a href="{{ route('auth.gitRequest') }}" class="font-weight-bolder btn btn-dark">
+                                    {{ __('GitHub') }}
+                                </a>
+
+                                <a href="{{ route('auth.yaRequest') }}" class="font-weight-bolder btn btn-warning">
+                                    {{ __('Yandex') }}
+                                </a>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">

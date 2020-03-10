@@ -12,7 +12,9 @@ class NewsParserController extends Controller
 {
     /**
      * регистрация источников для обработки
-     * просто добавте ссылку на источник
+     * просто добавте ссылку на источник из списка источников
+     * доступного по ссылке любезно предоставленой преодавателем
+     * https://subscribe.ru/catalog/media?rss
      *
      * @return array
      */
@@ -21,6 +23,10 @@ class NewsParserController extends Controller
         return [
             'https://news.yandex.ru/army.rss',
             'https://news.yandex.ru/auto.rss',
+            'https://news.yandex.ru/health.rss',
+            'http://www.svobodanews.ru/rss/',
+            'http://lenta.ru/rss',
+            'http://vz.ru/rss.xml',
 
         ];
     }

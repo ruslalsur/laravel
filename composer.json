@@ -14,7 +14,12 @@
         "fzaninotto/faker": "^1.9",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "orchestra/parser": "3.8"
+        "orchestra/parser": "3.8",
+        "socialiteproviders/facebook": "^1.0",
+        "socialiteproviders/github": "dev-master",
+        "socialiteproviders/google": "^3.0",
+        "socialiteproviders/vkontakte": "^4.0",
+        "socialiteproviders/yandex": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
