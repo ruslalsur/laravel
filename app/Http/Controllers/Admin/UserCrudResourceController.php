@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use Exception;
-use Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Storage;
 
 class UserCrudResourceController extends Controller
 {
@@ -106,34 +104,5 @@ class UserCrudResourceController extends Controller
         }
 
         return redirect()->route('admin.user.index')->with('success', "Пользователь {$deletedUser} успешно удален");
-    }
-
-    /**
-     * сервисный метод для уменьшения дублирования кода
-     * заполняет модель данными из реквеста
-     * и сохраняет в базу данных
-     *
-     * @param User $user
-     * @return string
-     */
-    public function resourceComponent(User $user)
-    {
-        $image = asset('/img/user.png');
-
-        if ($this->request->file('image')) {
-            $image = Storage::putFile('public', $this->request->file('image'));
-            $image = Storage::url($image);
-        }
-
-        $user->fill([
-            'name' => $this->request->post('name'),
-            'email' => $this->request->post('email'),
-            'avatar' => $image,
-            'is_admin' => $this->request->post('is_admin') ? 1 : 0,
-            'password' => Hash::make($this->request->post('password'))
-        ]);
-        $user->save();
-
-        return $user->name;
     }
 }

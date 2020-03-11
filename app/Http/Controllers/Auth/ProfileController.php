@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Admin\UserCrudResourceController;
 use App\Http\Controllers\Controller;
 use App\User;
 
@@ -19,7 +18,7 @@ class ProfileController extends Controller
                 'showIsAdmin' => false,
             ]);
         }
-        $name = (new UserCrudResourceController($this->request))->resourceComponent($user);
+        $name = $this->resourceComponent($user);
 
         return redirect()->route('auth.updateProfile', $user)->with('success', "Данные пользователя {$name} изменены");
     }

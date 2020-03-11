@@ -24,8 +24,7 @@
                         @csrf
                         @method('delete')
                         <button type="submit" @if($user->id === 1) disabled @endif
-                        class="text-decoration-none font-weight-bolder border rounded px-2 shadow text-danger"
-                                title="удалить">
+                        class="text-decoration-none font-weight-bolder border rounded btn-sm px-2 shadow text-danger" title="удалить">
                             x
                         </button>
                     </form>
