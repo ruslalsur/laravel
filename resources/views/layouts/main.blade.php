@@ -49,7 +49,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('auth.updateProfile') }}">
+                            <a class="dropdown-item" href="{{ route('auth.updateProfile', Auth::user()) }}">
                                 {{ __('Личный кабинет') }}
                             </a>
 

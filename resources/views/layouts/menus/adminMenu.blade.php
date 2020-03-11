@@ -34,7 +34,7 @@
                         <a class="dropdown-item"
                            data-toggle="tooltip" data-placement="bottom" title="редактор категорий"
                            href="{{ route('admin.user.index') }}">
-                            Создать пользователя
+                            Пользователи
                         </a>
                     </div>
                 </li>

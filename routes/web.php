@@ -44,7 +44,6 @@ Route::group(
 
         //парсинг новостей
         Route::get('/newsParsing', 'NewsParserController@index')->name('parse');
-
     }
 );
 
@@ -72,6 +71,6 @@ Route::group(
         Route::get('git/response','SocialLoginController@responseGit')->name('gitResponse');
 
         //личный кабинет
-        Route::match(['GET', 'POST'], '/profile', 'ProfileController@update')->name('updateProfile')->middleware(['auth', 'profVal']);
+        Route::match(['GET', 'POST'], '/profile{user}', 'ProfileController@update')->name('updateProfile')->middleware(['auth', 'profVal']);
     }
 );

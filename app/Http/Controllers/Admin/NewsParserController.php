@@ -40,6 +40,7 @@ class NewsParserController extends Controller
         foreach ($this->getNewsSource() as $source) {
             $this->storeNews($source);
         }
+
         return redirect()->route('news.categories');
     }
 
@@ -47,7 +48,7 @@ class NewsParserController extends Controller
     /**
      * сохраниение новостей источника в базу данных
      *
-     * @param $source ссылка на источник новостей
+     * @param $source string ссылка на источник новостей
      * @return RedirectResponse|void
      */
     private function storeNews($source)
@@ -91,6 +92,7 @@ class NewsParserController extends Controller
                 'is_private' => (boolean)rand(0, 1),
                 'news_source' => $item['link']
             ]);
+
             $news->save();
         }
     }

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title')@parentадминистрирования@endsection
+@section('title')@parent{{ $title }}@endsection
 
 @section('menu')
     @include('layouts.menus.adminMenu')

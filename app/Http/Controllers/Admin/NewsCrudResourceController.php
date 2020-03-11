@@ -123,6 +123,8 @@ class NewsCrudResourceController extends Controller
         try {
             $news->delete();
         } catch (Exception $e) {
+            return redirect()->route('news.currentCategory',
+                $deletedNewsCategory)->with('failure', 'Прямо во время удаления произошла ошибка');
         }
 
         return redirect()->route('news.currentCategory',
