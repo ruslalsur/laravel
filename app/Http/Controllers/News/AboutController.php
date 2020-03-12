@@ -8,6 +8,7 @@ use App\Users;
 class AboutController extends Controller
 {
     public function index() {
-        return view('news/about', ['authorizedUserInfo' => Users::getAuthorizedUserInfo()]);
+        session()->flash('referer', "news/about");
+        return view('news/about');
     }
 }

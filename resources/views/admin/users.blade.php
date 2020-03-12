@@ -22,15 +22,28 @@
 
             @foreach($users as $user)
                 <div class="d-flex align-items-center ml-2">
-                    <form action="{{ route('admin.user.destroy', $user) }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" @if($user->id === 1) disabled @endif
-                        class="text-decoration-none font-weight-bolder border rounded btn-sm px-2 shadow text-danger"
-                                title="удалить">
-                            x
-                        </button>
-                    </form>
+                    @if(session()->get('confirm') == $user->id)
+                        <form style="line-height: 1" action="{{ route('admin.user.destroy', $user) }}"
+                              method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" name="confirmed" @if($user->id === 1) hidden disabled @endif
+                            class="py-1 my-0 text-decoration-none font-weight-bolder border rounded
+                                btn-sm btn-danger" title="подтвердить">
+                                Подтвердить
+                            </button>
+                        </form>
+                    @else
+                        <form action="{{ route('admin.user.destroy', $user) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" @if($user->id === 1) disabled @endif
+                            class="text-decoration-none font-weight-bolder border rounded btn-sm px-2 shadow text-danger"
+                                    title="удалить">
+                                x
+                            </button>
+                        </form>
+                    @endif
 
                     <a class="dropdown-item @if($user->is_admin) font-weight-bolder text-danger @endif"
                        data-toggle="tooltip" data-placement="bottom" title="пользователь"
@@ -39,18 +52,6 @@
                              width="25">
                         {{$user->name}}
                     </a>
-                    @if(session()->get('confirm') == $user->id)
-                        <form style="line-height: 1" action="{{ route('admin.user.destroy', $user) }}"
-                              method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" name="confirmed" @if($user->id === 1) disabled @endif
-                            class="py-1 my-0 text-decoration-none font-weight-bolder border rounded
-                                btn-sm btn-danger" title="подтвердить">
-                                Подтвердить
-                            </button>
-                        </form>
-                    @endif
                 </div>
             @endforeach
         </div>

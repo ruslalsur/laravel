@@ -12,19 +12,28 @@
         <form enctype="multipart/form-data" action="{{ route($route, $user) }}" method="POST">
             @csrf
             @method($method)
-            <div class="row">
 
-                {{--            кнопка применить изменения--}}
-                <button type="submit" class="btn btn-block btn-primary shadow font-weight-bolder mb-3 ">
-                    @if($user->id)
-                        Применить все изменения
-                    @else
-                        Создать нового пользователя
-                    @endif
-                </button>
+            {{--            кнопки--}}
+            <div class="row input-group justify-content-between mb-3 w-auto">
+                <div class="col-10 input-group-prepend px-0">
+                    <button type="submit" class="btn btn-block btn-primary shadow font-weight-bolder">
+                        @if($user->id)
+                            Применить все изменения
+                        @else
+                            Создать нового пользователя
+                        @endif
+                    </button>
+                </div>
+                <div class="col-2 input-group-append pl-2 pr-0">
+                    <a href="{{ asset(session('referer')) }}" class="btn btn-block btn-outline-primary shadow font-weight-bolder">
+                        отмена
+                    </a>
+                </div>
+            </div>
+
+            {{--                    картинка--}}
+            <div class="row mb-3">
                 <div class="col-5 pl-0">
-
-                    {{--                    картинка--}}
                     <img class="border p-1 rounded shadow embed-responsive"
                          src="@if($user->id) {{ $user->avatar }} @else {{ asset('/img/user.png') }} @endif"
                          alt="{{ $user->avatar }}" width="">
@@ -43,9 +52,9 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-7 embed-responsive">
 
-                    {{--            имя--}}
+                {{--            имя--}}
+                <div class="col-7 embed-responsive">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="name">пользователь</label>
@@ -141,7 +150,6 @@
                         </div>
                     @endif
                 </div>
-
             </div>
         </form>
     </div>

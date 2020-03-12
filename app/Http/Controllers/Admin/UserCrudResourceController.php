@@ -22,6 +22,7 @@ class UserCrudResourceController extends Controller
      */
     public function index()
     {
+        session()->flash('referer', 'admin/user');
         return view('admin.users', [
             'users' => (new User())->newQuery()->paginate(12),
         ]);

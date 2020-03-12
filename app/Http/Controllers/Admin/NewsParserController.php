@@ -40,6 +40,7 @@ class NewsParserController extends Controller
         foreach ($this->getNewsSource() as $source) {
             $this->storeNews($source);
         }
+        session()->flash('referer', 'admin/newsParsing');
 
         return redirect()->route('news.categories');
     }

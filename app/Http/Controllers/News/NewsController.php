@@ -17,6 +17,7 @@ class NewsController extends Controller
      */
     public function showAllCategories()
     {
+        session()->flash('referer', "news/categories");
         return view('news/categories', ['categories' => Category::all()]);
     }
 
@@ -29,6 +30,7 @@ class NewsController extends Controller
      */
     public function showCurrentCategoryNews(Category $category)
     {
+        session()->flash('referer', "news/currentCategory/{$category->id}");
         return view('news/currentCategoryNews',
             [
                 'category_id' => $category,
@@ -46,6 +48,7 @@ class NewsController extends Controller
      */
     public function showNewsOne(News $news)
     {
+        session()->flash('referer', "news/newsOne{$news->id}");
         return view('news/newsOne', ['categoryName' => $news->category()->name, 'newsOne' => $news]);
     }
 

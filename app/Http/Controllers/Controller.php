@@ -43,8 +43,7 @@ class Controller extends BaseController
         $image = asset('/img/user.png');
 
         if ($this->request->file('image')) {
-            $image = Storage::putFile('public', $this->request->file('image'));
-            $image = Storage::url($image);
+           $image = Storage::url(Storage::putFile('public', $this->request->file('image')));
         }
 
         $user->fill([

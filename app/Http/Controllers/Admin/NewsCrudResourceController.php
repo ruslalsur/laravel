@@ -25,6 +25,8 @@ class NewsCrudResourceController extends Controller
             $newsNew->fill($this->request->old());
         }
 
+        session()->flash('referer', 'admin/news/create');
+
         return view('admin.addNews',
             [
                 'categories' => Category::all(),
@@ -73,6 +75,8 @@ class NewsCrudResourceController extends Controller
         if (!empty($this->request->old())) {
             $news->fill($this->request->old());
         }
+
+        session()->flash('referer', "admin/news/{$news->id}/edit");
 
         return view('admin.addNews',
             [
