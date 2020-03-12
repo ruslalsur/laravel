@@ -11,8 +11,8 @@ class UserCrudResourceController extends Controller
 {
     public function __construct(Request $request)
     {
-        parent::__construct($request);
         $this->middleware('profVal');
+        parent::__construct($request);
     }
 
     /**
@@ -89,20 +89,26 @@ class UserCrudResourceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param User $user
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\View\View
      * @throws Exception
      */
     public function destroy(User $user)
     {
-        $deletedUser = $user->name;
+        $deletingUser = $user->name;
+
+        if (!$this->request->exists('confirmed')) {
+            session()->flash('confirm', $user->id);
+
+            return view('admin.users', ['users' => (new User())->newQuery()->paginate(12)]);
+        }
 
         try {
             $user->delete();
         } catch (Exception $e) {
             return redirect()->route('admin.user.index')
-                ->with('failure', "Прямо во время удаления пользователя {$deletedUser} произошла ошибка");
+                ->with('failure', "Прямо во время удаления пользователя {$deletingUser} произошла ошибка");
         }
 
-        return redirect()->route('admin.user.index')->with('success', "Пользователь {$deletedUser} успешно удален");
+        return redirect()->route('admin.user.index')->with('success', "Пользователь {$deletingUser} успешно удален");
     }
 }

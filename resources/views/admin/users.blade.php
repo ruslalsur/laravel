@@ -15,16 +15,19 @@
                     text-primary" title="создать">
                     пополнить список
                 </a>
-            </small></h3>
+            </small>
+        </h3>
+
         <div class="shadow p-3 mb-3 bg-white rounded">
 
             @foreach($users as $user)
-                <div class="d-flex align-items-baseline ml-2">
+                <div class="d-flex align-items-center ml-2">
                     <form action="{{ route('admin.user.destroy', $user) }}" method="post">
                         @csrf
                         @method('delete')
                         <button type="submit" @if($user->id === 1) disabled @endif
-                        class="text-decoration-none font-weight-bolder border rounded btn-sm px-2 shadow text-danger" title="удалить">
+                        class="text-decoration-none font-weight-bolder border rounded btn-sm px-2 shadow text-danger"
+                                title="удалить">
                             x
                         </button>
                     </form>
@@ -36,6 +39,26 @@
                              width="25">
                         {{$user->name}}
                     </a>
+                    @if(session()->get('confirm') == $user->id)
+                        <div
+                            class="d-flex my-0 py-1 pl-1 pr-5 alert alert-danger alert-dismissible fade show align-items-baseline align-items-center"
+                            role="alert">
+                            <form style="line-height: 1" action="{{ route('admin.user.destroy', $user) }}"
+                                  method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" name="confirmed" @if($user->id === 1) disabled @endif
+                                class="py-0 my-0 text-decoration-none font-weight-bolder border rounded
+                                btn-sm btn-danger" title="подтвердить">
+                                    Подтвердить
+                                </button>
+                            </form>
+                            <button type="button" class="close btn btn-sm my-0 pt-0" data-dismiss="alert"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                 </div>
             @endforeach
         </div>

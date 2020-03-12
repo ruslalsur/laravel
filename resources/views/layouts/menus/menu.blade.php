@@ -34,18 +34,8 @@
                         <a class="dropdown-item"
                            data-toggle="tooltip" data-placement="bottom" title="редактор категорий"
                            href="{{ route('admin.user.index') }}">
-                            Пользователи
+                            Список пользователей
                         </a>
-
-
-{{--                        <h5 class="card-header alert-dark">Пользователи</h5>--}}
-{{--                        @foreach(\App\User::all() as $user)--}}
-{{--                            <a class="dropdown-item"--}}
-{{--                               data-toggle="tooltip" data-placement="bottom" title="пользователь"--}}
-{{--                               href="{{ route('admin.updateProfile', $user) }}">--}}
-{{--                                {{$user->name}}--}}
-{{--                            </a>--}}
-{{--                        @endforeach--}}
                     </div>
                 </li>
             @endif

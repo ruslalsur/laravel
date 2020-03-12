@@ -20,7 +20,7 @@ class ProfileValidator
      */
     public function handle($request, Closure $next)
     {
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('post') | $request->isMethod('put')) {
           Validator::validate($request->toArray(), User::rules(), [], User::attributeNames());
         }
         return $next($request);
