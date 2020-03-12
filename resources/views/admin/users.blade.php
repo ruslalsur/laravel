@@ -40,24 +40,16 @@
                         {{$user->name}}
                     </a>
                     @if(session()->get('confirm') == $user->id)
-                        <div
-                            class="d-flex my-0 py-1 pl-1 pr-5 alert alert-danger alert-dismissible fade show align-items-baseline align-items-center"
-                            role="alert">
-                            <form style="line-height: 1" action="{{ route('admin.user.destroy', $user) }}"
-                                  method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" name="confirmed" @if($user->id === 1) disabled @endif
-                                class="py-0 my-0 text-decoration-none font-weight-bolder border rounded
+                        <form style="line-height: 1" action="{{ route('admin.user.destroy', $user) }}"
+                              method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" name="confirmed" @if($user->id === 1) disabled @endif
+                            class="py-1 my-0 text-decoration-none font-weight-bolder border rounded
                                 btn-sm btn-danger" title="подтвердить">
-                                    Подтвердить
-                                </button>
-                            </form>
-                            <button type="button" class="close btn btn-sm my-0 pt-0" data-dismiss="alert"
-                                    aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                Подтвердить
                             </button>
-                        </div>
+                        </form>
                     @endif
                 </div>
             @endforeach
