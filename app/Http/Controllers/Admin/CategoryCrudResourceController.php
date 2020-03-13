@@ -15,6 +15,7 @@ class CategoryCrudResourceController extends Controller
      */
     public function create()
     {
+        session()->flash('referer', "admin/category/create");
         return view('admin.categoryCreator', ['categories' => Category::query()->paginate(5)]);
     }
 
