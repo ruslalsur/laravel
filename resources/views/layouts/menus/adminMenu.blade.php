@@ -6,6 +6,12 @@
                href="{{ route('news.categories') }}">Категории</a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link"
+               data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
+               href="{{ route('news.about') }}">мЫ</a>
+        </li>
+
         @if (!\Auth::guest())
             @if (\Auth::user()->is_admin)
                 <li class="nav-item dropdown">

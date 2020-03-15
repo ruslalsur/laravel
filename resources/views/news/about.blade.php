@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="content">
-        <h4 class="my-3">мы</h4>
+        <h4 class="my-3">мЫ</h4>
 
         <div class="shadow-sm p-3 mb-5 bg-white rounded">
             <h5>команда <strong>web</strong>-разработчиков состоящая из одного студента geekbrains и двух электронно-вычислительных машин, тихоханько агрегирующих новости в соответствии с домашним заданием</h5>

@@ -19,7 +19,8 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="currentCategory">Категория</label>
                     </div>
-                    <select name="category_id" class="custom-select" id="currentCategory" aria-describedby="titleValidateBlock">
+                    <select name="category_id" class="custom-select" id="currentCategory"
+                            aria-describedby="titleValidateBlock">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}"
                                     @if($category->id == $newsOne->category_id) selected @endif>{{ $category->name }}</option>
@@ -62,7 +63,8 @@
                             class="embed-responsive card-img" alt="image">
                         <div class="mt-2">
                             <div class="custom-file my-2">
-                                <input type="file" class="custom-file-input" id="fileImg" name="image" aria-describedby="titleValidateBlock">
+                                <input type="file" class="custom-file-input" id="fileImg" name="image"
+                                       aria-describedby="titleValidateBlock">
                                 <label class="custom-file-label" data-browse="файл" for="fileImg">выберите</label>
                                 @if($errors->has('image'))
                                     <small id="descriptionValidateBlock" class="form-text text-danger">
@@ -76,7 +78,8 @@
                             {{--приватность--}}
                             <div class="mt-2 form-group">
                                 <div class="form-check-inline">
-                                    <input type="checkbox" name="is_private" class="form-check-label" aria-describedby="titleValidateBlock"
+                                    <input type="checkbox" name="is_private" class="form-check-label"
+                                           aria-describedby="titleValidateBlock"
                                            @if($newsOne->is_private) checked @endif
                                            data-toggle="tooltip" data-placement="bottom"
                                            title="подробности будут доступны для просмотра только зарегистрированным пользователям"
@@ -113,10 +116,10 @@
 
                 {{--текст новости--}}
                 <div class="form-group col-8 mb-0 pl-0">
-                    <div class="input-group">
-                    <textarea class="form-control" name="description" id="newsBody" rows="17" aria-describedby="titleValidateBlock"
-                              placeholder="Текст новости" aria-describedby="descriptionValidateBlock">{{ $newsOne->description }}
-                    </textarea>
+                    <div class="d-flex input-group">
+                            <textarea class="form-control" name="description" id="newsBody" rows="17"
+                                      placeholder="Текст новости"
+                                      aria-describedby="descriptionValidateBlock">{!! $newsOne->description !!}</textarea>
                     </div>
                     @if($errors->has('description'))
                         <small id="descriptionValidateBlock" class="form-text text-danger">
@@ -129,4 +132,6 @@
             </div>
         </form>
     </div>
+
+    <script src={{asset("js/ckeditor4/ckeditor.js")}}></script>
 @endsection

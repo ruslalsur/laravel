@@ -166,6 +166,10 @@ return [
         App\Providers\MyServiceProvider::class,
         Orchestra\Parser\XmlServiceProvider::class,
         \SocialiteProviders\Manager\ServiceProvider::class,
+        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+
+
 
         /*
          * Package Service Providers...
@@ -234,6 +238,8 @@ return [
         'ide-helper' => Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+
     ],
 
 ];

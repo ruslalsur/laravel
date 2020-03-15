@@ -1,13 +1,11 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">заголовок</div>
 
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
+                <div class="card-body">
+                    текст
                 </div>
             </div>
         </div>
