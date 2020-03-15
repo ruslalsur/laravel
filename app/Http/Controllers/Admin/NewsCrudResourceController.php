@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\News;
 use App\Http\Controllers\Controller;
-use App\Users;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Storage;
@@ -25,11 +24,12 @@ class NewsCrudResourceController extends Controller
             $newsNew->fill($this->request->old());
         }
 
-        session()->flash('referer', 'admin/news/create');
+//        session()->flash('referer', 'admin/news/create');
 
         return view('admin.addNews',
             [
                 'categories' => Category::all(),
+                'currentCategory' => session()->get('currentCategory') ?? false,
                 'newsOne' => $newsNew,
                 'title' => 'Создание новой',
                 'rout' => 'admin.news.store',
@@ -76,7 +76,7 @@ class NewsCrudResourceController extends Controller
             $news->fill($this->request->old());
         }
 
-        session()->flash('referer', "admin/news/{$news->id}/edit");
+//        session()->flash('referer', "admin/news/{$news->id}/edit");
 
         return view('admin.addNews',
             [

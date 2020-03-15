@@ -31,6 +31,8 @@ class NewsController extends Controller
     public function showCurrentCategoryNews(Category $category)
     {
         session()->flash('referer', "news/currentCategory/{$category->id}");
+        session()->flash('currentCategory', $category->id);
+
         return view('news/currentCategoryNews',
             [
                 'category_id' => $category,

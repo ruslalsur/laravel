@@ -21,7 +21,8 @@
             <tbody>
             @foreach($categories as $category)
                 <tr>
-                    <td><h6 class="font-weight-bolder">{{ $category->name }}</h6></td>
+                    <td><a href="{{ route('news.currentCategory', $category->id) }}"
+                           class="text-decoration-none font-weight-bolder">{{ $category->name }}</a></td>
                     <td class="text-center">{{ $category->id }}</td>
                     <td class="text-center">{{ $category->news()->count() }}</td>
                 </tr>

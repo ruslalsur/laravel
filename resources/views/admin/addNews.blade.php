@@ -19,13 +19,23 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="currentCategory">Категория</label>
                     </div>
+
                     <select name="category_id" class="custom-select" id="currentCategory"
                             aria-describedby="titleValidateBlock">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}"
-                                    @if($category->id == $newsOne->category_id) selected @endif>{{ $category->name }}</option>
+                                    @if($category->id == $newsOne->category_id | $category->id == session()->get('currentCategory'))
+                                    selected
+                                    @endif>
+                                {{ $category->name }}
+                            </option>
                         @endforeach
                     </select>
+                    <div class="input-group-append">
+                        <a href="{{ route('admin.category.create') }}"
+                           class="font-weight-bolder btn btn-secondary">+</a>
+                    </div>
+
                 </div>
                 @if($errors->has('category_id'))
                     <small id="descriptionValidateBlock" class="form-text text-danger">
@@ -100,17 +110,25 @@
                     </div>
 
                     {{--кнопка submit--}}
-                    <div class="d-flex flex-column ">
-                        <button id="submit_add" type="submit" value="add"
-                                class="font-weight-bolder btn btn-sm btn-primary shadow-sm"
-                                data-toggle="tooltip" data-placement="bottom"
-                                title="создание новой новости (будет создана новая категория или новость добавиться в указанную существующую)">
-                            @if($newsOne->id)
-                                Применить
-                            @else
-                                Создать
-                            @endif
-                        </button>
+                    <div class="input-group mb-0">
+                        <div class="col-8 input-group-prepend px-0">
+                            <button id="submit_add" type="submit" value="add"
+                                    class="font-weight-bolder btn btn-block btn-primary"
+                                    data-toggle="tooltip" data-placement="bottom"
+                                    title="создание новой новости (будет создана новая категория или новость добавиться в указанную существующую)">
+                                @if($newsOne->id)
+                                    применить
+                                @else
+                                    создать
+                                @endif
+                            </button>
+                        </div>
+                        <div class="col-4 input-group-append pl-0 pr-0">
+                            <a href="{{ asset(session('referer')) }}"
+                               class="btn btn-block btn-outline-primary font-weight-bolder">
+                                отмена
+                            </a>
+                        </div>
                     </div>
                 </div>
 

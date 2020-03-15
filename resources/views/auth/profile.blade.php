@@ -16,16 +16,16 @@
             {{--            кнопки--}}
             <div class="row input-group justify-content-between mb-3 w-auto">
                 <div class="col-10 input-group-prepend px-0">
-                    <button type="submit" class="btn btn-block btn-primary shadow font-weight-bolder">
+                    <button type="submit" class="btn btn-block btn-primary font-weight-bolder">
                         @if($user->id)
-                            Применить все изменения
+                            применить все изменения
                         @else
-                            Создать нового пользователя
+                            создать нового пользователя
                         @endif
                     </button>
                 </div>
-                <div class="col-2 input-group-append pl-2 pr-0">
-                    <a href="{{ asset(session('referer')) }}" class="btn btn-block btn-outline-primary shadow font-weight-bolder">
+                <div class="col-2 input-group-append pl-0 pr-0">
+                    <a href="{{ asset(session('referer')) }}" class="btn btn-block btn-outline-primary font-weight-bolder">
                         отмена
                     </a>
                 </div>
