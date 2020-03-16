@@ -14,7 +14,7 @@ class AlterTableCategoryImage extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('image')->after('name')->default('img/no-image.png');
+            $table->string('image')->after('name')->default('storage/images/no-image.png');
         });
     }
 

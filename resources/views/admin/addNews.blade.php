@@ -69,7 +69,7 @@
                 <div class="d-flex flex-column justify-content-between col-4">
                     <div class="form-group">
                         <img
-                            src="@if($newsOne->image === null) {{ asset('img/no-image.png') }} @else {{ asset($newsOne->image) }} @endif"
+                            src="@if($newsOne->image === null) {{ asset('storage/images/no-image.png') }} @else {{ asset($newsOne->image) }} @endif"
                             class="embed-responsive card-img" alt="image">
                         <div class="mt-2">
                             <div class="custom-file my-2">

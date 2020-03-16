@@ -41,6 +41,7 @@ Route::group(
         Route::resource('news', 'NewsCrudResourceController', ['except' => ['index', 'show']]);
         Route::resource('category', 'CategoryCrudResourceController')->only(['create', 'store', 'destroy']);
         Route::resource('user', 'UserCrudResourceController')->except('show');
+        Route::resource('source', 'NewsSourcesCrudController')->only('index', 'create', 'store', 'destroy');
 
         //парсинг новостей
         Route::get('/newsParsing', 'NewsParserController@index')->name('parse');

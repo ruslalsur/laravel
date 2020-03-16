@@ -25,7 +25,7 @@ class UserRepo
                 'password' => '',
                 'social_id' => !empty($user->getId()) ? $user->getId() : '',
                 'auth_type' => $socName,
-                'avatar' => !empty($user->getAvatar()) ? $user->getAvatar() : asset('/img/user.png'),
+                'avatar' => !empty($user->getAvatar()) ? $user->getAvatar() : asset('storage/images/user.png'),
             ]);
 
             $userInDB->save();

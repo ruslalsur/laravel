@@ -35,8 +35,8 @@
             <div class="row mb-3">
                 <div class="col-5 pl-0">
                     <img class="border p-1 rounded shadow embed-responsive"
-                         src="@if($user->id) {{ $user->avatar }} @else {{ asset('/img/user.png') }} @endif"
-                         alt="{{ $user->avatar }}" width="">
+                         src="@if($user->id) {{ asset($user->avatar) }} @else {{ asset('storage/images/user.png') }} @endif"
+                         alt="{{ $user->avatar }}">
 
                     {{--                    загрузить файл--}}
                     <div class="custom-file my-2">

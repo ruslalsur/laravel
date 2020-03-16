@@ -11,7 +11,7 @@ $factory->define(News::class, function (Faker $faker) {
         'title' => $faker->realText(rand(40, 60)),
         'event_date' => $faker->date("Y-m-d"),
         'description' => $faker->realText(rand(1000, 2500)),
-        'image' => rand(0, 1) ? 'img/news.jpg' : null,
+        'image' => rand(0, 1) ? 'storage/images/news.jpg' : null,
         'is_private' => (boolean)rand(0, 1),
         'news_source' => '<a href="https://github.com/fzaninotto/Faker" class="nav-link">агенство Faker</a>'
     ];

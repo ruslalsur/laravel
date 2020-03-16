@@ -13,8 +13,10 @@
         "fideloper/proxy": "^4.0",
         "fzaninotto/faker": "^1.9",
         "laravel/framework": "5.8.*",
+        "laravel/helpers": "^1.2",
         "laravel/tinker": "^1.0",
         "orchestra/parser": "3.8",
+        "predis/predis": "^1.1",
         "socialiteproviders/github": "dev-master",
         "socialiteproviders/yandex": "^3.0",
         "unisharp/laravel-filemanager": "~1.8"

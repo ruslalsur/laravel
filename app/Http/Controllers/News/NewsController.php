@@ -18,7 +18,9 @@ class NewsController extends Controller
     public function showAllCategories()
     {
         session()->flash('referer', "news/categories");
-        return view('news/categories', ['categories' => Category::all()]);
+
+        $categories = Category::all()->isEmpty() ? null : Category::all();
+        return view('news/categories', ['categories' => $categories]);
     }
 
 

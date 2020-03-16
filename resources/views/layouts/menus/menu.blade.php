@@ -22,14 +22,14 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item"
-                           data-toggle="tooltip" data-placement="bottom" title="редактор категорий"
-                           href="{{ route('admin.parse') }}">
-                            Загрузить новости (RSS)
-                        </a>
-
-                        <a class="dropdown-item"
                            data-toggle="tooltip" data-placement="bottom" title="редактор новостей"
                            href="{{ route('admin.news.create') }}">Создать новость</a>
+
+                        <a class="dropdown-item"
+                           data-toggle="tooltip" data-placement="bottom" title="источники новостей"
+                           href="{{ route('admin.source.index') }}">
+                            Список источников
+                        </a>
 
                         <a class="dropdown-item"
                            data-toggle="tooltip" data-placement="bottom" title="редактор категорий"

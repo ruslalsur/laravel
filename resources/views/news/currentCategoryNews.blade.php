@@ -44,7 +44,7 @@
                     @endif
                 @endif
             @empty
-                <h4>Ничего новенького</h4>
+                <h4>Категория не содержит новостей</h4>
             @endforelse
         </div>
         <div class="d-flex justify-content-center">{{ $currentCategoryNews->links() }}</div>

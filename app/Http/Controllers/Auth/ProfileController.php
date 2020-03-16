@@ -20,7 +20,7 @@ class ProfileController extends Controller
                 'showIsAdmin' => false,
             ]);
         }
-        $name = $this->resourceComponent($user);
+        $name = $this->userCRUDComponent($user);
 
         return redirect()->route('auth.updateProfile', $user)->with('success', "Данные пользователя {$name} изменены");
     }

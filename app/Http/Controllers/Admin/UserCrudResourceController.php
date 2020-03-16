@@ -52,7 +52,7 @@ class UserCrudResourceController extends Controller
     public function store()
     {
         $user = new User();
-        $name = $this->resourceComponent($user);
+        $name = $this->userCRUDComponent($user);
 
         return redirect()->route('admin.user.index')->with('success', "Создан пользователь {$name}");
     }
@@ -82,7 +82,7 @@ class UserCrudResourceController extends Controller
      */
     public function update(User $user)
     {
-        $name = $this->resourceComponent($user);
+        $name = $this->userCRUDComponent($user);
         return redirect()->route('admin.user.index')->with('success', "Данные пользователя {$name} были изменены");
     }
 

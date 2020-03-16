@@ -43,7 +43,7 @@
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <img class="rounded border border-light p-1 mr-2" src="{{ Auth::user()->avatar }}"
+                            <img class="rounded border border-light p-1 mr-2" src="{{ asset(Auth::user()->avatar) }}"
                                  alt="{{ Auth::user()->avatar }}" width="50" height="50">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
@@ -59,7 +59,8 @@
                                 {{ __('Выйти') }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST"
+                                  style="display: none;">
                                 @csrf
                             </form>
                         </div>
@@ -73,7 +74,7 @@
 <main id="app" class="container mt-4 py-4">
     @if(session('success'))
         <div class="mt-2 alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
+            <h5>{{ session('success') }}</h5>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -81,7 +82,7 @@
     @endif
     @if(session('failure'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('failure') }}
+            <h5>{{ session('failure') }}</h5>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

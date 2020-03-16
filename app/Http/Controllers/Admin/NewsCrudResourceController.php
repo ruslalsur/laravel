@@ -51,7 +51,7 @@ class NewsCrudResourceController extends Controller
 
         $image = null;
         if ($this->request->file('image')) {
-            $image = Storage::putFile('public', $this->request->file('image'));
+            $image = Storage::putFile('public/images', $this->request->file('image'));
             $image = Storage::url($image);
         }
 
@@ -100,7 +100,7 @@ class NewsCrudResourceController extends Controller
         $news->fill($this->validate($this->request, News::rules(), [], News::attributeNames()));
 
         if ($this->request->file('image')) {
-            $image = Storage::putFile('public', $this->request->file('image'));
+            $image = Storage::putFile('public/images', $this->request->file('image'));
             $image = Storage::url($image);
         }
 

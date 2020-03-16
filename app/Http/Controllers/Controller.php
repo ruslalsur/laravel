@@ -38,12 +38,12 @@ class Controller extends BaseController
      * @param User $user
      * @return string
      */
-    protected function resourceComponent(User $user)
+    protected function userCRUDComponent(User $user)
     {
-        $image = asset('/img/user.png');
+        $image = asset('storage/images/user.png');
 
         if ($this->request->file('image')) {
-           $image = Storage::url(Storage::putFile('public', $this->request->file('image')));
+           $image = Storage::url(Storage::putFile('public/images', $this->request->file('image')));
         }
 
         $user->fill([
