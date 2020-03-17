@@ -10,8 +10,6 @@ class ProfileController extends Controller
     public function update(User $user)
     {
         if ($this->request->isMethod('get')) {
-//            session()->flash('referer', 'auth.updateProfile');
-
             return view('auth.profile', [
                 'user' => $user,
                 'title' => 'Личный кабинет пользователя',

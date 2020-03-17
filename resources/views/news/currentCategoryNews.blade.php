@@ -9,15 +9,14 @@
 @section('content')
     <div class="content">
         <h4 class="my-4">Новости из
-            <a class="text-primary text-decoration-none"
-               href="{{ route('news.categories') }}">
+            <a class="text-primary text-decoration-none" href="{{ route('news.categories') }}">
                 категории
             </a>
             <strong>"{{ $currentCategoryName }}"</strong>
-            @if (!\Auth::guest())
-                @if (\Auth::user()->is_admin)
+            @if (!Auth::guest())
+                @if (Auth::user()->is_admin)
                     <a class="text-primary text-decoration-none" href="{{ route('admin.news.create') }}">
-                        <small>(создать новую тут)</small>
+                        <small>(создать новость здесь)</small>
                     </a>
                 @endif
             @endif
@@ -27,20 +26,27 @@
             @forelse($currentCategoryNews as $newsOne)
                 @if(!Auth::guest())
                     <a class="nav-link font-weight-bolder" href="{{ route('news.newsOne', $newsOne->id) }}">
-                        <small
-                            class="mr-2 text-secondary">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small> {{ $newsOne->title }}
+                        <small class="mr-2 text-secondary">
+                            {{ date("d.m.Y", strtotime($newsOne->event_date)) }}
+                        </small>
+                        {{ $newsOne->title }}
                     </a>
                 @else
                     @if($newsOne->is_private)
                         <a class="nav-link font-weight-bolder" href="{{ route('auth.login') }}">
-                            <small
-                                class="mr-2 text-secondary ">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small>
-                            {{ $newsOne->title }} <span class="badge badge-danger">приватная</span></a>
+                            <small class="mr-2 text-secondary ">
+                                {{ date("d.m.Y", strtotime($newsOne->event_date)) }}
+                            </small>
+                            {{ $newsOne->title }}
+                            <span class="badge badge-danger">приватная</span>
+                        </a>
                     @else
                         <a class="nav-link font-weight-bolder" href="{{ route('news.newsOne', $newsOne->id) }}">
-                            <small
-                                class="mr-2 text-secondary ">{{ date("d.m.Y", strtotime($newsOne->event_date)) }}</small>
-                            {{ $newsOne->title }}</a>
+                            <small class="mr-2 text-secondary ">
+                                {{ date("d.m.Y", strtotime($newsOne->event_date)) }}
+                            </small>
+                            {{ $newsOne->title }}
+                        </a>
                     @endif
                 @endif
             @empty

@@ -1,6 +1,5 @@
 <?php
 
-use App\Source;
 use Illuminate\Database\Seeder;
 
 class SourceSeeder extends Seeder
@@ -44,6 +43,14 @@ class SourceSeeder extends Seeder
             [
                 'name' => 'Интернет',
                 'url' => 'https://news.yandex.ru/internet.rss',
+            ],
+            [
+                'name' => 'Наука',
+                'url' => 'https://news.yandex.ru/science.rss',
+            ],
+            [
+                'name' => 'Космос',
+                'url' => 'https://news.yandex.ru/cosmos.rss',
             ],
         ];
 

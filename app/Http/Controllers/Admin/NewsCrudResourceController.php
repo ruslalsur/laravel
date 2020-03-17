@@ -18,19 +18,13 @@ class NewsCrudResourceController extends Controller
      */
     public function create()
     {
-        $newsNew = new News();
-
-        if (!empty($this->request->old())) {
-            $newsNew->fill($this->request->old());
-        }
-
-//        session()->flash('referer', 'admin/news/create');
+        $news = new News();
 
         return view('admin.addNews',
             [
                 'categories' => Category::all(),
                 'currentCategory' => session()->get('currentCategory') ?? false,
-                'newsOne' => $newsNew,
+                'newsOne' => $news,
                 'title' => 'Создание новой',
                 'rout' => 'admin.news.store',
                 'method' => 'POST'
@@ -45,23 +39,10 @@ class NewsCrudResourceController extends Controller
      */
     public function store()
     {
-        $newsNew = new News();
-
-        $newsNew->fill($this->validate($this->request, News::rules(), [], News::attributeNames()));
-
-        $image = null;
-        if ($this->request->file('image')) {
-            $image = Storage::putFile('public/images', $this->request->file('image'));
-            $image = Storage::url($image);
-        }
-
-        $newsNew->image = $image;
-        $newsNew->event_date = date("Y-m-d");
-        $newsNew->is_private = $this->request->is_private ? 1 : 0;
-        $newsNew->save();
+        $news = $this->saveNews(new News());
 
         return redirect()->route('news.currentCategory',
-            $newsNew->category())->with('success', 'Новость добавлена');
+            $news->category())->with('success', 'Новость добавлена');
     }
 
     /**
@@ -72,12 +53,6 @@ class NewsCrudResourceController extends Controller
      */
     public function edit(News $news)
     {
-        if (!empty($this->request->old())) {
-            $news->fill($this->request->old());
-        }
-
-//        session()->flash('referer', "admin/news/{$news->id}/edit");
-
         return view('admin.addNews',
             [
                 'categories' => Category::all(),
@@ -97,18 +72,7 @@ class NewsCrudResourceController extends Controller
      */
     public function update(News $news)
     {
-        $news->fill($this->validate($this->request, News::rules(), [], News::attributeNames()));
-
-        if ($this->request->file('image')) {
-            $image = Storage::putFile('public/images', $this->request->file('image'));
-            $image = Storage::url($image);
-        }
-
-        if (isset($image)) {
-            $news->image = $image;
-        }
-        $news->is_private = $this->request->is_private ? 1 : 0;
-        $news->save();
+        $news = $this->saveNews($news);
 
         return redirect()->route('news.newsOne',
             $news)->with('success', 'Эта новость была только что изменена');
@@ -133,5 +97,32 @@ class NewsCrudResourceController extends Controller
 
         return redirect()->route('news.currentCategory',
             $deletedNewsCategory)->with('success', 'Новость удалена');
+    }
+
+
+    /**
+     * сервисный метод для уменьшения дублирования кода
+     * заполняет модель данными из реквеста
+     * и сохраняет в базу данных
+     *
+     * @param News $news
+     * @return News
+     * @throws ValidationException
+     */
+    private function saveNews(News $news)
+    {
+        $news->fill($this->validate($this->request, News::rules(), [], News::attributeNames()));
+
+        $image = $news->image ?? asset('storage/images/no-image.png');
+        if ($this->request->file('image')) {
+            $image = Storage::url(Storage::putFile('public/images', $this->request->file('image')));
+        }
+
+        $news->image = $image;
+        $news->event_date = date("Y-m-d");
+        $news->is_private = $this->request->is_private ? 1 : 0;
+        $news->save();
+
+        return $news;
     }
 }

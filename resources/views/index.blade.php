@@ -10,8 +10,8 @@
     <div class="content">
         <h1 class="mt-3 mb-5">Агрегатор новостей глубокого погружения</h1>
 
-        <div class="row container vw-100">
-            <div class="col-9 shadow-sm p-3 mb-3 bg-white rounded">
+        <div class="row container vw-100 justify-content-between">
+            <div class="col-6 shadow-sm p-3 mb-3 bg-white rounded">
                 <h4>
                     <small>логин</small>
                     <small class="text-danger">(пароль)</small>
@@ -23,6 +23,15 @@
                     <small class="text-danger">(пароль)</small>
                     user@user.com
                     <small class="text-danger">(123)</small>
+                </h4>
+            </div>
+
+            <div class="d-flex flex-column align-items-center px-auto col-2 shadow-sm p-3 mb-3 bg-white rounded">
+                <h4>
+                    <small>новостей</small>
+                </h4>
+                <h4>
+                    {{ \App\News::all()->count() }}
                 </h4>
             </div>
             <div class="col-3 pr-0">
@@ -39,7 +48,7 @@
                 <p>- CRUD пользователей</p>
                 <p>- CRUD источников</p>
                 <p>- личный кабинет авторизовавшегося пользователя</p>
-                <p>- парсинг новостей с использованием очередей</p>
+                <p>- парсинг новостей с использованием очередей (проверка на уникальность)</p>
                 <p>- авторизация через yandex или github</p>
                 <p>- приватные новости доступны только авторизававшимся пользователям</p>
             </div>

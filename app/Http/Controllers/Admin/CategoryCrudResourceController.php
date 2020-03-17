@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
-use App\Users;
 use App\Http\Controllers\Controller;
 
 class CategoryCrudResourceController extends Controller
@@ -15,56 +14,44 @@ class CategoryCrudResourceController extends Controller
      */
     public function create()
     {
-        session()->flash('referer', "admin/category/create");
-        return view('admin.categoryCreator', ['categories' => Category::query()->paginate(5)]);
+        session()->put('referer', "admin/category/create");
+
+        return view('admin.categoryCreator', ['categories' => Category::query()->paginate(10)]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store()
     {
-        if ($this->request->name === null) {
-            return redirect()->route('admin.category.create')->with('failure', 'Нужно ввести название категории,
-            чтобы удалить или добавть ее в список категорий');
-        }
-
-        $this->request->flash();
         $categoryNew = new Category();
-        $categoryNew->fill($this->request->all());
-
-        if ($categoryNew->newQuery()->where('name', $categoryNew->name)->exists()) {
-            return redirect()->route('news.currentCategory', $categoryNew)->with('failure', 'Категория "' . $categoryNew->name . '" уже существует');
-        }
+        $categoryNew->fill($this->validate($this->request,Category::rules(), [], Category::attributeNames()));
         $categoryNew->save();
 
-        return redirect()->route('news.categories')->with('success', 'Была создана категория ' . $categoryNew->name);
+        return redirect()->route('admin.category.create')->with('success', 'Была создана категория ' . $categoryNew->name);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Category $category
+     * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //не придумал как подставить модель в параметр во вьюхе взяв ее из только, что выбранного селекта до отправки
-        // сделал пока через реквест:
-        $categoryToDelete = Category::query()->find($this->request->id);
+        $name = $this->request->name;
+        if (isset($name)) {
+            $category = Category::query()->where('name', $name)->first();
+            $category = $category->fill($this->validate($this->request, Category::rulesForDelete(), [], Category::attributeNames()));
+            $category->delete();
 
-        if ($categoryToDelete->news()->exists()) {
-            return redirect()->route('news.currentCategory', $categoryToDelete)->with('failure', 'Категория "' .
-                $categoryToDelete->name . '" содержит новости, нужно удалить из нее новости, перед удалением категории');
+            return redirect()->route('admin.category.create')->with('success', 'Была удалена категория ' . $name);
         }
-        $categoryToDelete->delete();
 
-        return redirect()->route('news.categories', $categoryToDelete)->with('success', 'Была удалена категория ' . $categoryToDelete->name);
-
-
+        return redirect()->route('admin.category.create')->with('failure', 'Список категорий пуст.');
     }
 }

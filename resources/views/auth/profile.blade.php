@@ -25,7 +25,8 @@
                     </button>
                 </div>
                 <div class="col-2 input-group-append pl-0 pr-0">
-                    <a href="{{ asset(session('referer')) }}" class="btn btn-block btn-outline-primary font-weight-bolder">
+                    <a href="{{ asset(session()->get('referer')) }}"
+                       class="btn btn-block btn-outline-primary font-weight-bolder">
                         отмена
                     </a>
                 </div>

@@ -9,11 +9,11 @@
         <li class="nav-item">
             <a class="nav-link"
                data-toggle="tooltip" data-placement="bottom" title="список имеющихся категорий новостей"
-               href="{{ route('news.about') }}">мЫ</a>
+               href="{{ route('about') }}">мЫ</a>
         </li>
 
-        @if (!\Auth::guest())
-            @if (\Auth::user()->is_admin)
+        @if (!Auth::guest())
+            @if (Auth::user()->is_admin)
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                        data-toggle="dropdown"

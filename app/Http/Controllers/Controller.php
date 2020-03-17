@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Users;
 use Hash;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
@@ -34,16 +33,17 @@ class Controller extends BaseController
      * сервисный метод для уменьшения дублирования кода
      * заполняет модель данными из реквеста
      * и сохраняет в базу данных
+     * используется двумя дочерними контролерами
      *
      * @param User $user
      * @return string
      */
-    protected function userCRUDComponent(User $user)
+    protected function saveUser(User $user)
     {
-        $image = asset('storage/images/user.png');
+        $image = $user->image ?? asset('storage/images/user.png');
 
         if ($this->request->file('image')) {
-           $image = Storage::url(Storage::putFile('public/images', $this->request->file('image')));
+            $image = Storage::url(Storage::putFile('public/images', $this->request->file('image')));
         }
 
         $user->fill([

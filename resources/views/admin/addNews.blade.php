@@ -21,12 +21,14 @@
                     </div>
 
                     <select name="category_id" class="custom-select" id="currentCategory"
-                            aria-describedby="titleValidateBlock">
+                            aria-describedby="categoryValidateBlock">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}"
+                                    {{-- @if ($category->id == (old('category_id') ?? $newsOne->category_id)) selected
+                                    не подошло для "создать новость в этой категории", тк приходит пустая модель --}}
                                     @if($category->id == $newsOne->category_id | $category->id == session()->get('currentCategory'))
                                     selected
-                                    @endif>
+                                @endif>
                                 {{ $category->name }}
                             </option>
                         @endforeach
@@ -38,7 +40,7 @@
 
                 </div>
                 @if($errors->has('category_id'))
-                    <small id="descriptionValidateBlock" class="form-text text-danger">
+                    <small id="categoryValidateBlock" class="form-text text-danger">
                         @foreach($errors->get('category_id') as $error)
                         {{ $error }}&NoBreak;
                         @endforeach
@@ -53,7 +55,7 @@
                         <label class="input-group-text" for="newsHeader">Заголовок</label>
                     </div>
                     <input type="text" name="title" class="form-control" id="newsHeader" placeholder="Заголовок"
-                           aria-describedby="titleValidateBlock" value="{{ $newsOne->title }}">
+                           aria-describedby="titleValidateBlock" value="{{ old('title') ?? $newsOne->title ?? '' }}">
                 </div>
                 @if($errors->has('title'))
                     <small id="titleValidateBlock" class="form-text text-danger">
@@ -74,10 +76,10 @@
                         <div class="mt-2">
                             <div class="custom-file my-2">
                                 <input type="file" class="custom-file-input" id="fileImg" name="image"
-                                       aria-describedby="titleValidateBlock">
+                                       aria-describedby="pictureValidateBlock">
                                 <label class="custom-file-label" data-browse="файл" for="fileImg">выберите</label>
                                 @if($errors->has('image'))
-                                    <small id="descriptionValidateBlock" class="form-text text-danger">
+                                    <small id="pictureValidateBlock" class="form-text text-danger">
                                         @foreach($errors->get('image') as $error)
                                         {{ $error }}&NoBreak;
                                         @endforeach
@@ -89,7 +91,7 @@
                             <div class="mt-2 form-group">
                                 <div class="form-check-inline">
                                     <input type="checkbox" name="is_private" class="form-check-label"
-                                           aria-describedby="titleValidateBlock"
+                                           aria-describedby="privareValidateBlock"
                                            @if($newsOne->is_private) checked @endif
                                            data-toggle="tooltip" data-placement="bottom"
                                            title="подробности будут доступны для просмотра только зарегистрированным пользователям"
@@ -99,7 +101,7 @@
                                     </label>
                                 </div>
                                 @if($errors->has('is_private'))
-                                    <small id="descriptionValidateBlock" class="form-text text-danger">
+                                    <small id="privareValidateBlock" class="form-text text-danger">
                                         @foreach($errors->get('is_private') as $error)
                                         {{ $error }}&NoBreak;
                                         @endforeach
@@ -137,7 +139,7 @@
                     <div class="d-flex input-group">
                             <textarea class="form-control" name="description" id="newsBody" rows="17"
                                       placeholder="Текст новости"
-                                      aria-describedby="descriptionValidateBlock">{!! $newsOne->description !!}</textarea>
+                                      aria-describedby="descriptionValidateBlock">{!! old('description') ?? $newsOne->description ?? '' !!}</textarea>
                     </div>
                     @if($errors->has('description'))
                         <small id="descriptionValidateBlock" class="form-text text-danger">
@@ -151,5 +153,5 @@
         </form>
     </div>
 
-    <script src={{asset("js/ckeditor4/ckeditor.js")}}></script>
+    <script src={{ asset("js/ckeditor4/ckeditor.js") }}></script>
 @endsection

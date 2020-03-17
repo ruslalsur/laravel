@@ -10,10 +10,12 @@
 |
 */
 
-//Страница приветствия
+//Не сгруппированно
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/about', 'AboutController@index')->name('about');
 
-//Новости
+
+//группа "Новости"
 Route::group(
     [
         'prefix' => 'news',
@@ -25,11 +27,10 @@ Route::group(
         Route::get('/currentCategory/{category}', 'NewsController@showCurrentCategoryNews')->name('currentCategory');
         Route::get('/newsOne{news}', 'NewsController@showNewsOne')->name('newsOne');
         Route::get('/download/{news}', 'NewsController@download')->name('download');
-        Route::get('/about', 'AboutController@index')->name('about');
     }
 );
 
-//Администрирование
+//группа "Администрирование"
 Route::group(
     [
         'prefix' => 'admin',
@@ -48,7 +49,7 @@ Route::group(
     }
 );
 
-//Авторизация
+//группа "Авторизация"
 Route::group(
     [
         'prefix' => 'auth',
@@ -67,9 +68,9 @@ Route::group(
 
         //авторизация по соцсетям
         Route::get('ya', 'SocialLoginController@requestYa')->name('yaRequest');
-        Route::get('ya/response','SocialLoginController@responseYa')->name('yaResponse');
+        Route::get('ya/response', 'SocialLoginController@responseYa')->name('yaResponse');
         Route::get('git', 'SocialLoginController@requestGit')->name('gitRequest');
-        Route::get('git/response','SocialLoginController@responseGit')->name('gitResponse');
+        Route::get('git/response', 'SocialLoginController@responseGit')->name('gitResponse');
 
         //личный кабинет
         Route::match(['GET', 'POST'], '/profile{user}', 'ProfileController@update')->name('updateProfile')->middleware(['auth', 'profVal']);

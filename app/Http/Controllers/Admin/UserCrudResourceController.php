@@ -6,6 +6,7 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Storage;
 
 class UserCrudResourceController extends Controller
 {
@@ -22,7 +23,7 @@ class UserCrudResourceController extends Controller
      */
     public function index()
     {
-        session()->flash('referer', 'admin/user');
+        session()->put('referer', 'admin/user');
         return view('admin.users', [
             'users' => (new User())->newQuery()->paginate(12),
         ]);
@@ -52,7 +53,7 @@ class UserCrudResourceController extends Controller
     public function store()
     {
         $user = new User();
-        $name = $this->userCRUDComponent($user);
+        $name = $this->saveUser($user);
 
         return redirect()->route('admin.user.index')->with('success', "Создан пользователь {$name}");
     }
@@ -82,7 +83,7 @@ class UserCrudResourceController extends Controller
      */
     public function update(User $user)
     {
-        $name = $this->userCRUDComponent($user);
+        $name = $this->saveUser($user);
         return redirect()->route('admin.user.index')->with('success', "Данные пользователя {$name} были изменены");
     }
 

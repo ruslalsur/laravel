@@ -5,7 +5,6 @@ namespace App\Http\Controllers\News;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\News;
-use App\Users;
 use Illuminate\Http\JsonResponse;
 
 class NewsController extends Controller
@@ -17,7 +16,7 @@ class NewsController extends Controller
      */
     public function showAllCategories()
     {
-        session()->flash('referer', "news/categories");
+        session()->put('referer', "news/categories");
 
         $categories = Category::all()->isEmpty() ? null : Category::all();
         return view('news/categories', ['categories' => $categories]);
@@ -32,7 +31,7 @@ class NewsController extends Controller
      */
     public function showCurrentCategoryNews(Category $category)
     {
-        session()->flash('referer', "news/currentCategory/{$category->id}");
+        session()->put('referer', "news/currentCategory/{$category->id}");
         session()->flash('currentCategory', $category->id);
 
         return view('news/currentCategoryNews',
@@ -52,7 +51,7 @@ class NewsController extends Controller
      */
     public function showNewsOne(News $news)
     {
-        session()->flash('referer', "news/newsOne{$news->id}");
+        session()->put('referer', "news/newsOne{$news->id}");
         return view('news/newsOne', ['categoryName' => $news->category()->name, 'newsOne' => $news]);
     }
 
