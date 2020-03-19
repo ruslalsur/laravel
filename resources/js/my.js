@@ -16,9 +16,8 @@ $(document).ready(function () {
         filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token=',
     };
 
-    //замена элемента с id='newsBody'
+    // замена элемента с id='newsBody'
     CKEDITOR.replace('newsBody', options);
-
     CKEDITOR.config.width = '100%';
     CKEDITOR.config.height = '400';
 });

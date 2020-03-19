@@ -29,7 +29,6 @@ require('./bootstrap');
 //     el: '#app'
 // });
 
-// require('../../node_modules/ckeditor4/ckeditor');
 
 //My js-scripts
 require('./my.js');
