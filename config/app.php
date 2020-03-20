@@ -161,14 +161,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\MyServiceProvider::class,
         Orchestra\Parser\XmlServiceProvider::class,
-        \SocialiteProviders\Manager\ServiceProvider::class,
-        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
-
+        SocialiteProviders\Manager\ServiceProvider::class,
 
 
         /*
@@ -237,8 +233,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'Image' => Intervention\Image\Facades\Image::class,
-
     ],
 
 ];
